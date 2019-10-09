@@ -1,5 +1,6 @@
 <?php
 $get = $_REQUEST["get"] ?? "";
 $post = $_POST["post"] ?? "";
-echo $get.$post;
+print_r($get);
+print_r($post);
 ?>
