@@ -45,4 +45,10 @@ You need to replace the username with the username of the MySQL Server. Then do 
 The dbname parameter defines the name of the Database in the MySQL Server.
 If you don't have one already, leave it at its default value.
 
+The following lines shall be executed within the sql shell to setup the SQL Server.
+```
+create database ProjectSpyder;
+use ProjectSpyder;
+(unfinished, more lines will be added soon)
+```
 
