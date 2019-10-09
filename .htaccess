@@ -1,0 +1,3 @@
+<Files credentials.php>
+	deny from all
+</Files>
