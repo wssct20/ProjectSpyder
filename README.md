@@ -4,9 +4,17 @@ SmartHome by WSSCT20
 ## How to install
 The software uses the Apache2 webserver with PHP enabled and a MySQL Server.
 
-It runs on Apache2 in the root web folder using a symlink to the Projects current Git Clone.
+Debian/Raspbian install commands:
+```
+sudo apt install apache2 mysql php
+sudo a2enmod php7
+```
+
+It runs on Apache2 in the root web folder using a symlink to a git clone of the project.
 You may need to run the following commands as root or change the permissions of affected folders
-The following shell commands will create a file named "updatefromgit.sh" which should be run every once in a while to update to the current version. You need to run the script at least once to get the latest files.
+The following shell script will create a file named "updatefromgit.sh", 
+which should be run every once in a while to update to the current version.
+You need to run the script at least once to get the latest files.
 ```
 cd /var/www
 ln -s -T /var/www/ProjectSpyder html
