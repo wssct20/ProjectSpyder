@@ -2,7 +2,7 @@
 SmartHome by WSSCT20
 
 ## How to install
-The software uses the Apache2 webserver and a MySQL Server.
+The software uses the Apache2 webserver with PHP enabled and a MySQL Server.
 
 It runs on Apache2 in the root web folder using a symlink to the Projects current Git Clone.
 You may need to run the following commands as root or change the permissions of affected folders
