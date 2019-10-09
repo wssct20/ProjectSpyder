@@ -7,7 +7,7 @@ The software uses the Apache2 webserver with PHP enabled and a MySQL Server.
 Debian/Raspbian install commands:
 ```
 sudo apt install apache2 mysql php
-sudo a2enmod php7
+sudo a2enmod php*
 ```
 
 It runs on Apache2 in the root web folder using a symlink to a git clone of the project.
@@ -35,8 +35,9 @@ crontab makes it easy to keep up to date:
 
 To ensure the Server is reachable, we use NETBIOS and/or DNS of the router.
 For this you will need to configure your router and set the machines hostname to the correct one.
+If you are using Raspbian, you might need to run raspi-config and change the hostname in there.
 ```
-hostname SpyderHub
+sudo hostname SpyderHub
 ```
 
 After that you need to setup basic settings and credentials for the MySQL Server.
@@ -47,13 +48,14 @@ It needs to contain these lines:
 $sqluser = "username";
 $sqlpass = "password";
 $sqldbname = "ProjectSpyder";
+$sqlhost = "localhost";
 ?>
 ```
-You need to replace the username with the username of the MySQL Server. Then do the same for the password.
+You need to replace username with the username of the MySQL Server. Then do the same for the password.
 The dbname parameter defines the name of the Database in the MySQL Server.
 If you don't have one already, leave it at its default value.
 
-The following lines shall be executed within the sql shell to setup the SQL Server.
+The following lines should be executed within the sql shell to setup the SQL Server.
 ```
 create database ProjectSpyder;
 use ProjectSpyder;
