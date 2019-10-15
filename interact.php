@@ -1,7 +1,4 @@
 <?php
-require_once("system.php");
-
-
-
+require_once ("system.php");
 
 ?>

@@ -1,3 +1,9 @@
+<Files *.php>
+	allow from all
+</Files>
 <Files credentials.php>
+	deny from all
+</Files>
+<Files system.php>
 	deny from all
 </Files>
