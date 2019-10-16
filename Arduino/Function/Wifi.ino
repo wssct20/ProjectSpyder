@@ -1,10 +1,9 @@
 #include "WiFi.h"
-
-#include "WifiCredentials"
+#include "WifiCredentials.h"
 
 const char * hostname = "SpyderClient";
 
-void setup()
+void wifi()
 {
     Serial.begin(115200);
     WiFi.mode(WIFI_STA);
@@ -24,12 +23,4 @@ void setup()
     
     Serial.println("Wifi Connected");
     Serial.println(WiFi.getHostname());
-}
-
-void loop()
-{
-    delay(1000);
-
-    //Serial.println(WiFi.RSSI());
-
 }
