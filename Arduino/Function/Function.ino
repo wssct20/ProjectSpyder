@@ -1,9 +1,8 @@
 
-void wifi();
 
 void setup() {
 
- 
+  wifi();
 
 }
 
