@@ -66,6 +66,10 @@ use ProjectSpyder;
 
 Add a file named `WifiCredentials.h` inside `Arduino/ESP32_consistent_code_parts`. Put these contents inside it:
 ```
+/*
+ * Insert here the ssid and password of your Wifi
+ */
+
 const char * ssid = "WIFISSID";
 const char * password = "WIFIPASSWORD";
 ```
@@ -76,8 +80,8 @@ After that you must add a second file named `ESP32_code_filepath.h` in `Arduino/
  */
 
 //...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\Wifi.ino
-#include "...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\wifi.ino"
+#include "path"
 
 //...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\PHP.ino
-#include "...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\php.ino"
+#include "path"
 ```
