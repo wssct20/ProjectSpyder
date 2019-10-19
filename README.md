@@ -64,8 +64,20 @@ use ProjectSpyder;
 
 ## How to install clients
 
-Add a file named "WifiCredentials.h" inside Arduino/Function. Put these contents inside it.
+Add a file named `WifiCredentials.h` inside `Arduino/ESP32_consistent_code_parts`. Put these contents inside it:
 ```
 const char * ssid = "WIFISSID";
 const char * password = "WIFIPASSWORD";
+```
+After that you must add a second file named `ESP32_code_filepath.h` in `Arduino/"client"`. Put these contents inside it:
+```
+/*
+ * Insert here the file path of the mentioned files
+ */
+
+//...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\Wifi.ino
+#include "...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\wifi.ino"
+
+//...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\PHP.ino
+#include "...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\php.ino"
 ```
