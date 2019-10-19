@@ -1,7 +1,7 @@
 # ProjectSpyder
 SmartHome by WSSCT20
 
-## How to install
+## How to install server
 The software uses the Apache2 webserver with PHP enabled and a MySQL Server.
 
 Debian/Raspbian install commands:
@@ -62,3 +62,10 @@ use ProjectSpyder;
 (unfinished, more lines will be added soon)
 ```
 
+## How to install clients
+
+Add a file named "WifiCredentials.h" inside Arduino/Function. Put these contents inside it.
+```
+const char * ssid = "WIFISSID";
+const char * password = "WIFIPASSWORD";
+```
