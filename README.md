@@ -69,7 +69,7 @@ Add a file named `WifiCredentials.h` inside `Arduino/ESP32_consistent_code_parts
 const char * ssid = "WIFISSID";
 const char * password = "WIFIPASSWORD";
 ```
-After that you must add a second file named `ESP32_code_filepath.h` in `Arduino/"client"`. Put these contents inside it:
+After that you must add a second file named `ESP32_code_filepath.h` in `Arduino/"client"`. Put these contents inside it and complete the path (open files in explorer and copy path):
 ```
 /*
  * Insert here the file path of the mentioned files
