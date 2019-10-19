@@ -79,9 +79,9 @@ After that you must add a second file named `ESP32_code_filepath.h` in `Arduino/
  * Insert here the file path of the mentioned files
  */
 
-//...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\Wifi.ino
+//...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\wifi.ino
 #include "file_path"
 
-//...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\PHP.ino
+//...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\php.ino
 #include "file_path"
 ```
