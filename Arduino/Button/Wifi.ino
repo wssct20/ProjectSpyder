@@ -5,7 +5,6 @@ const char * hostname = "SpyderClient";
 
 void wifi()
 {
-    Serial.begin(115200);
     WiFi.mode(WIFI_STA);
     WiFi.setHostname(hostname);
 

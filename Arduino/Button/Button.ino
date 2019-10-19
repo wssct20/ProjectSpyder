@@ -2,6 +2,8 @@
 const int buttonPin = 5;
 
 void setup() {
+  
+  Serial.begin(115200);
 
   wifi();
   php();
