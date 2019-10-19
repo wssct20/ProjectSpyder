@@ -1,5 +1,5 @@
-#include "WiFi.h"
 #include "WifiCredentials.h"
+#include "WiFi.h"
 
 const char * hostname = "SpyderClient";
 
