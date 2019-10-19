@@ -80,8 +80,8 @@ After that you must add a second file named `ESP32_code_filepath.h` in `Arduino/
  */
 
 //...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\Wifi.ino
-#include "path"
+#include "file_path"
 
 //...\ProjectSpyder\Arduino\ESP32_consistent_code_parts\PHP.ino
-#include "path"
+#include "file_path"
 ```
