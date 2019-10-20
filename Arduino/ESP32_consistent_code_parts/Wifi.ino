@@ -3,8 +3,6 @@
 
 const char * hostname = "SpyderClient";
 
-byte mac[6];
-
 void wifi()
 {
     WiFi.mode(WIFI_STA);
@@ -21,11 +19,12 @@ void wifi()
       delay(5000);
     }
     Serial.println();    
-    Serial.print("Wifi Connected to \"");
+    Serial.print("Wifi Connected to \"");     // Wifi connection
     Serial.print(ssid);
     Serial.println("\"");
-    Serial.print("IP address: ");
+    Serial.print("IP address: ");             // IP address
     Serial.println(WiFi.localIP());
+    byte mac[6];                              // MAC address
     WiFi.macAddress(mac);
     Serial.print("MAC address: ");
     Serial.print(mac[0],HEX);
@@ -39,7 +38,7 @@ void wifi()
     Serial.print(mac[4],HEX);
     Serial.print(":");
     Serial.println(mac[5],HEX);
-    Serial.print("Hostname: ");
+    Serial.print("Hostname: ");               // Hostname
     Serial.println(WiFi.getHostname());
     Serial.println("_________________________________");
 }
