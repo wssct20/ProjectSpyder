@@ -1,5 +1,5 @@
 const char * serverhostname = "SpyderHub";
-//const char * hostip = "192.168.177.2";
+//const char * hostip = "192.168.177.22";
 
 int value = 123;
 

@@ -16,7 +16,7 @@ void setup() {
 }
 
 void loop() {
-
+/*
   if (digitalRead(buttonPin) == HIGH)
   {
     Serial.println("button LOW");
@@ -26,5 +26,9 @@ void loop() {
     Serial.println("button HIGH");
     digitalWrite(LED_BUILTIN, HIGH);
   }
-  delay(50);
+  delay(1000);
+*/
+
+  php();
+  delay(5000);
 }
