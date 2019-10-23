@@ -1,9 +1,9 @@
-#include "WifiCredentials.h"
+
 #include "WiFi.h"
 
 const char * hostname = "SpyderClient";
 
-void wifi()
+void wifisetup()
 {
     WiFi.mode(WIFI_STA);
     WiFi.setHostname(hostname);

@@ -1,10 +1,12 @@
+#include "WiFi.h"
+
 const char * serverhostname = "SpyderHub";
 //const char * hostip = "192.168.177.22";
 
 int value = 123;
 
 
-void php()
+void phprequest()
 {
   Serial.println("php start");
   Serial.print("php conecting to ");
