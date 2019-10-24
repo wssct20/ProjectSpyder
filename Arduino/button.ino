@@ -22,5 +22,5 @@ void buttonloop() {
   }
   delay(1000);
 */
-  delay(5000);
+  delay(10000);
 }
