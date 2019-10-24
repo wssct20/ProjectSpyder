@@ -57,14 +57,14 @@ function checktypes($inputtype, $inputsubtype) {
 			breaK;
 		}
 	}
-	if (! $typevalid) return false;
+	if (! $typevalid) return "typeinvalid";
 	foreach ($subtypes[$inputtype] as $subtype) {
 		if ($subtype == $inputsubtype) {
 			$subtypevalid = true;
 			break;
 		}
 	}
-	if (! $subtypevalid) return false;
+	if (! $subtypevalid) return "subtypeinvalid";
 	return true;
 }
 

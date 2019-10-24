@@ -7,6 +7,7 @@ $subtype = $_REQUEST["subtype"];
 $now = time();
 
 $typesvalid = checktypes($type, $subtype);
+die ($typesvalid);
 if (!$typesvalid) {
 	die("TYPEINVALID");
 }
