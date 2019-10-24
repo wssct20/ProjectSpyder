@@ -4,7 +4,7 @@ require_once("system.php");
 
 
 $typesvalid = checktypes($type, $subtype);
-print_r(get_definied_vars());
+print_r(get_defined_vars());
 if (!$typesvalid) {
 	die("TYPEINVALID");
 }
