@@ -36,6 +36,7 @@ $subtypes = array(
 );
 
 require_once ("functions.php");
+require_once ("sqlfunctions.php");
 require("credentials.php");
 
 $db = new mysqli($sqlhost, $sqluser, $sqlpass, $sqldbname);
