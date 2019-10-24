@@ -1,8 +1,7 @@
 <?php
-//$get = $_REQUEST["get"] ?? "";
-//$post = $_POST["post"] ?? "";
-//print_r($get);
-//print_r($post);
-print_r($_REQUEST);
-print_r($_POST);
+require("functions.php");
+//print_r($_REQUEST);
+//print_r($_POST);
+$debug = "test123;";
+echo formatreturnvalues($_REQUEST, $debug);
 ?>

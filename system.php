@@ -1,5 +1,4 @@
 <?php
-require_once ("functions.php");
 //algoryhtm used by computing hash for authentication purposes
 //$hashalgo = "sha512"; //64 bytes
 $hashalgo = "sha256"; //32 bytes
@@ -7,12 +6,12 @@ $hashalgo = "sha256"; //32 bytes
 //$hashalgo = "crc32"; //4 bytes
 //hash prefix for individualization
 $hashprefix = "WSS";
-//following to arrays define which client types this system is compatible with
+//following two arrays define which client types this system is compatible with
 //general types of clients
 $types = array(
-	"actuator",
+	//"actuator",
 	"sensor",
-	"gui",
+	//"gui",
 );
 //more specific types of clients, all general types need to be found here
 $subtypes = array(
@@ -24,7 +23,7 @@ $subtypes = array(
 		//"epaper",
 	),
 	"sensor" => array(
-		//"button",
+		"button",
 		//"finger",
 		//"temp",
 		//"rotation",
@@ -35,15 +34,15 @@ $subtypes = array(
 	),
 );
 
+require_once ("functions.php");
+require("credentials.php");
+
 $db = new mysqli($sqlhost, $sqluser, $sqlpass, $sqldbname);
 if ($db->connect_errno) {
-	// die("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
+	die("Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error);
 	die("ERRSQLDB");
 }
 
-function calculateauthcode($id, $ipaddress, $pairtime) {
-	$data = $hashprefix.$id.$ipaddress.$pairtime;
-	return hash($hashalgo, $data, false);
-}
+
 
 ?>
