@@ -1,18 +1,23 @@
 <?php
 
-function preparereturnvalues($data, $debug) {
+function calculateauthcode($id, $ipaddress, $pairtime) {
+	$data = $hashprefix.$id.$ipaddress.$pairtime;
+	return hash($hashalgo, $data, false);
+}
+
+function formatreturnvalues($data, $debug) {
 	$returntext = "";
-	if (sizeof($debug) > 0) {
+	$returntext = $returntext."#START\n";
+	if (isset($debug) > 0) {
 		$returntext = $returntext."#DEBUG\n";
-		foreach ($debug as $key => $value) {
-			$returntext = $returntext."[".$key."]"."=>".$value."\n";
-		}
+		$returntext = $returntext.$debug."\n";
 	}
 	$returntext = $returntext."#DATA\n";
 	foreach ($data as $key => $value) {
 		$returntext = $returntext."[".$key."]"."=>".$value."\n";
 	}
-	$returntext = $returntext."#END\n";
+	$returntext = $returntext."#END";
+	//$returntext = $returntext."\n";
 	return $returntext;
 }
 
