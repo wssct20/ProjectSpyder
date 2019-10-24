@@ -1,12 +1,11 @@
-
 #include "WiFi.h"
 
-const char * hostname = "SpyderClient";
+const char * clienthostname = "SpyderClient";
 
 void wifisetup()
 {
     WiFi.mode(WIFI_STA);
-    WiFi.setHostname(hostname);
+    WiFi.setHostname(clienthostname);
 
     Serial.print("Connecting...");
     
