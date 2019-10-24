@@ -1,4 +1,5 @@
 <?php
+global $hashalgo, $hashprefix, $types, $subtypes, $db;
 //algoryhtm used by computing hash for authentication purposes
 //$hashalgo = "sha512"; //64 bytes
 $hashalgo = "sha256"; //32 bytes

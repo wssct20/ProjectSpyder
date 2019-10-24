@@ -1,6 +1,7 @@
 <?php
 
 function calculateauthcode($type, $subtype, $ipaddress, $pairtime) {
+	global $hashprefix, $hashalgo;
 	$data = $hashprefix . $type . $subtype . $ipaddress . $pairtime;
 	return hash($hashalgo, $data, false);
 }
@@ -49,6 +50,7 @@ function getipaddress() {
 }
 
 function checktypes($inputtype, $inputsubtype) {
+	global $types, $subtypes;
 	$typevalid = false;
 	$subtypevalid = false;
 	foreach ($types as $type) {
@@ -57,14 +59,14 @@ function checktypes($inputtype, $inputsubtype) {
 			breaK;
 		}
 	}
-	if (! $typevalid) return "typeinvalid";
+	if (! $typevalid) return false;
 	foreach ($subtypes[$inputtype] as $subtype) {
 		if ($subtype == $inputsubtype) {
 			$subtypevalid = true;
 			break;
 		}
 	}
-	if (! $subtypevalid) return "subtypeinvalid";
+	if (! $subtypevalid) return false;
 	return true;
 }
 
