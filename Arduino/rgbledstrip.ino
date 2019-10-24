@@ -1,8 +1,8 @@
 
-void rgbledstripsetup() {
+void clientsetup() {
   
 }
 
-void rgbledstriploop() {
+void clientloop() {
   
 }
