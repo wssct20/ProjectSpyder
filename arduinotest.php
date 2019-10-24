@@ -1,5 +1,5 @@
 <?php
-require("system.php");
+require("functions.php");
 //print_r($_REQUEST);
 //print_r($_POST);
 $debug = "test123;";
