@@ -4,8 +4,6 @@ const int LED_BUILTIN = 2;
 
 void buttonsetup() {
   
-  Serial.begin(115200);
-
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
 
