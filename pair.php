@@ -28,4 +28,9 @@ if (!$statement->execute()) {
 	die("Execute failed: (" . $statement->errno . ") " . $statement->error);
 }
 
+$returnvalues = array(
+	"authcode" => $authcode,
+);
+echo formatreturnvalues($returnvalues);
+
 ?>
