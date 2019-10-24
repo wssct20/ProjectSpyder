@@ -16,8 +16,8 @@ $pairtime = $now;
 $authcode = calculateauthcode($type,$subtype,$ip,$pairtime);
 
 // Prepared statement, stage 1: prepare
-if (!($statement = $db->prepare("INSERT INTO devices(type, subtype, ipaddress, pairtime, lastact, authcode) VALUES (?, ?, ?, ?, ?, ?, ?)"))) {
-	die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
+if (!($statement = $db->prepare("INSERT INTO devices(type, subtype, ipaddress, pairtime, lastact, authcode) VALUES (?, ?, ?, ?, ?, ?)"))) {
+	die("Prepare failed: (" . $db->errno . ") " . $db->error);
 }
 // Prepared statement, stage 2: bind
 if (!$statement->bind_param("sssiis", $type, $subtype, $ip, $pairtime, $now, $authcode)) {
