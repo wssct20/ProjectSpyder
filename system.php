@@ -10,9 +10,9 @@ $hashprefix = "WSS";
 //following to arrays define which client types this system is compatible with
 //general types of clients
 $types = array(
-	"actuator",
+	//"actuator",
 	"sensor",
-	"gui",
+	//"gui",
 );
 //more specific types of clients, all general types need to be found here
 $subtypes = array(
@@ -44,21 +44,6 @@ if ($db->connect_errno) {
 function calculateauthcode($id, $ipaddress, $pairtime) {
 	$data = $hashprefix.$id.$ipaddress.$pairtime;
 	return hash($hashalgo, $data, false);
-}
-
-function preparereturnvalues($data, $debug) {
-	$returntext = "";
-	if (sizeof($debug) > 0) {
-		$returntext = $returntext."#DEBUG\n";
-		foreach ($debug as $key => $value) {
-			$returntext = $returntext."[".$key."]"."=>".$value."\n";
-		}
-	}
-	$returntext = $returntext."#DATA\n";
-	foreach ($data as $key => $value) {
-		$returntext = $returntext."[".$key."]"."=>".$value."\n";
-	}
-	$returntext = $returntext."#END\n";
 }
 
 ?>
