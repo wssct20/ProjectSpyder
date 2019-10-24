@@ -9,10 +9,10 @@ $ip = getipaddress();
 
 //var_dump($result);
 
-if (sizeof($result) == 0) die("AUTHFAILED");
-if ($result["authcode"] != $authcode) die ("AUTHSQLFAIL"); //should never happen
 
 $device = getdevice($authcode);
+if (sizeof($device) == 0) die("AUTHFAILED");
+if ($device["authcode"] != $authcode) die ("AUTHSQLFAIL"); //should never happen
 
 updatedevice($device["id"], $now, $ip);
 
