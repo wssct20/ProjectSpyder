@@ -6,7 +6,7 @@ $hashalgo = "sha256"; //32 bytes
 //$hashalgo = "crc32"; //4 bytes
 //hash prefix for individualization
 $hashprefix = "WSS";
-//following to arrays define which client types this system is compatible with
+//following two arrays define which client types this system is compatible with
 //general types of clients
 $types = array(
 	//"actuator",
@@ -23,7 +23,7 @@ $subtypes = array(
 		//"epaper",
 	),
 	"sensor" => array(
-		//"button",
+		"button",
 		//"finger",
 		//"temp",
 		//"rotation",

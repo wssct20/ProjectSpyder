@@ -1,7 +1,7 @@
 <?php
 
-function calculateauthcode($id, $ipaddress, $pairtime) {
-	$data = $hashprefix . $id . $ipaddress . $pairtime;
+function calculateauthcode($type, $subtype, $ipaddress, $pairtime) {
+	$data = $hashprefix . $type . $subtype . $ipaddress . $pairtime;
 	return hash($hashalgo, $data, false);
 }
 
@@ -57,14 +57,14 @@ function checktypes($inputtype, $inputsubtype) {
 			breaK;
 		}
 	}
-	if (!$typevalid) return false;
+	if (! $typevalid) return false;
 	foreach ($subtypes[$inputtype] as $subtype) {
 		if ($subtype == $inputsubtype) {
 			$subtypevalid = true;
 			break;
 		}
 	}
-	if (!$subtypevalid) return false;
+	if (! $subtypevalid) return false;
 	return true;
 }
 

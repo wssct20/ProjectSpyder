@@ -1,31 +1,34 @@
 <?php 
 require_once("system.php");
 
+$type = $_REQUEST["type"];
+$subtype = $_REQUEST["subtype"];
 
+$now = time();
 
 $typesvalid = checktypes($type, $subtype);
-print_r(get_defined_vars());
 if (!$typesvalid) {
 	die("TYPEINVALID");
 }
 
 
 $ip = getipaddress();
-/*
+
+$pairtime = $now;
+
+$authcode = calculateauthcode($type,$subtype,$ip,$pairtime);
+
 // Prepared statement, stage 1: prepare
-if (!($stmt = $mysqli->prepare("INSERT INTO devices() VALUES (?)"))) {
-	echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+if (!($statement = $db->prepare("INSERT INTO devices(type, subtype, ipaddress, pairtime, lastact, authcode) VALUES (?, ?, ?, ?, ?, ?, ?)"))) {
+	die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
 }
-
 // Prepared statement, stage 2: bind
-$id = 1;
-if (!$stmt->bind_param("i", $id)) {
-    echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+if (!$statement->bind_param("sssiis", $type, $subtype, $ip, $pairtime, $now, $authcode)) {
+	die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 }
-
 // Prepared statement, stage 3: execute
-if (!$stmt->execute()) {
-    echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-}*/
+if (!$statement->execute()) {
+	die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+}
 
 ?>
