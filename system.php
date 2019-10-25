@@ -12,7 +12,6 @@ $hashprefix = "WSS";
 $types = array(
 	//"actuator",
 	"sensor",
-	//"gui",
 );
 //more specific types of clients, all general types need to be found here
 $subtypes = array(
@@ -30,9 +29,6 @@ $subtypes = array(
 		//"rotation",
 		//"rgb",
 	),
-	"gui" => array(
-		//"gui",
-	),
 );
 
 require_once ("functions.php");
@@ -44,6 +40,7 @@ if ($db->connect_errno) {
 	die("Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error);
 	die("ERRSQLDB");
 }
+checktables();
 
 
 

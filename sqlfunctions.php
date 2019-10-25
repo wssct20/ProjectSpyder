@@ -2,12 +2,29 @@
 
 function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 	global $db;
+	// Create device entry
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("INSERT INTO devices(type, subtype, ipaddress, pairtime, lastact, authcode) VALUES (?, ?, ?, ?, ?, ?)"))) {
 		die("Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
 	if (!$statement->bind_param("sssiis", $type, $subtype, $ip, $pairtime, $now, $authcode)) {
+		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	
+	$id = getdevice($authcode)["id"];
+	
+	// Create type specific entry
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("INSERT INTO ?(id) VALUES (?)"))) {
+		die("Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("i", $id)) {
 		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
@@ -51,6 +68,52 @@ function updatedevice($id, $now, $ipaddress) {
 	// Stage 3: execute
 	if (!$statement->execute()) {
 		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+}
+
+function updatedata($id, $type, $state) {
+	global $db;
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("UPDATE ? SET state=? WHERE id=?"))) {
+		die("Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("ssi", $type, $state, $id)) {
+		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+}
+
+function checktables() {
+	if (!$db->query("create table if not exists devices(
+			id INT NOT NULL AUTO_INCREMENT, 
+			name TEXT, 
+			type TEXT NOT NULL, 
+			ipaddress TEXT NOT NULL, 
+			lastact BIGINT NOT NULL, 
+			pairtime BIGINT NOT NULL, 
+			subtype TEXT NOT NULL, 
+			authcode TEXT NOT NULL, 
+			PRIMARY KEY (id)
+			);
+		")
+	) {
+		die("Table creation failed: (" . $mysqli->errno . ") " . $mysqli->error);
+	}
+	global $types;
+	foreach ($types as $type) {
+		if (!$db->query("create table if not exists " + $type + "(
+			id INT NOT NULL,
+			state TEXT,
+			PRIMARY KEY(id)
+			);
+		")
+		) {
+			die("Table creation failed: (" . $mysqli->errno . ") " . $mysqli->error);
+		}
 	}
 }
 

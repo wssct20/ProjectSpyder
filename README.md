@@ -57,22 +57,12 @@ $sqlhost = "localhost";
 You need to replace username with the username of the MySQL Server. Then do the same for the password.
 The dbname parameter defines the name of the Database in the MySQL Server.
 If you don't have one already, leave it at its default value.
+Please ensure its possible for the user to log in and modify everything within the database.
 
 The following lines should be executed within the MySQL shell to setup the MySQL Server.
 ```
 create database ProjectSpyder;
 use ProjectSpyder;
-create table devices(
-id INT NOT NULL AUTO_INCREMENT, 
-name TEXT, 
-type TEXT NOT NULL, 
-ipaddress TEXT NOT NULL, 
-lastact BIGINT NOT NULL, 
-pairtime BIGINT NOT NULL, 
-subtype TEXT NOT NULL, 
-authcode TEXT NOT NULL, 
-PRIMARY KEY (id)
-);
 (unfinished, more lines will be added soon)
 ```
 
