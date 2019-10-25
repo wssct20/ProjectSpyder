@@ -16,7 +16,7 @@ function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	
-	$id = getdevice($authcode)["id"];
+	$device = getdevice($authcode);
 	
 	// Create type specific entry
 	// Stage 1: prepare
@@ -24,7 +24,7 @@ function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 		die("Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
-	if (!$statement->bind_param("i", $id)) {
+	if (!$statement->bind_param("si", $device["type"], $device["id"])) {
 		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
