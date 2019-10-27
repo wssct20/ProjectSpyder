@@ -9,7 +9,7 @@ function calculateauthcode($type, $subtype, $ipaddress, $pairtime) {
 function formatreturnvalues($data, $debug) {
 	$returntext = "";
 	$returntext = $returntext . "#START\n";
-	if (isset($debug) > 0) {
+	if (isset($debug)) {
 		$returntext = $returntext . "#DEBUG\n";
 		$returntext = $returntext . $debug . "\n";
 	}

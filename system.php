@@ -1,5 +1,5 @@
 <?php
-global $hashalgo, $hashprefix, $types, $subtypes, $db;
+global $hashalgo, $hashprefix, $updatetime, $types, $subtypes, $db;
 //algoryhtm used by computing hash for authentication purposes
 //$hashalgo = "sha512"; //64 bytes
 $hashalgo = "sha256"; //32 bytes
@@ -7,6 +7,8 @@ $hashalgo = "sha256"; //32 bytes
 //$hashalgo = "crc32"; //4 bytes
 //hash prefix for individualization
 $hashprefix = "WSS";
+//updatetime defines how long a client should wait until next update push/request
+$updatetime = 10;
 //following two arrays define which client types this system is compatible with
 //general types of clients
 $types = array(
