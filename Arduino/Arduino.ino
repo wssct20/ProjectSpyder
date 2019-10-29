@@ -1,5 +1,7 @@
 #include "WifiCredentials.h"
-#define button                // Enter the type of your client here.
+String type = "sensor";                  // Enter the type of your client here.
+String subtype = "button";
+#define clienttype button                // Enter the subtype of your client here.
 
 
 void setup() {
@@ -7,24 +9,25 @@ void setup() {
   Serial.begin(115200);
   
   wifisetup();
+  pair();
 
-#ifdef button
+#if clienttype == button
   buttonsetup();
-#elif defined finger
+#elif clienttype == finger
   fingersetup();
-#elif defined temp
+#elif clienttype == temp
   tempsetup();
-#elif defined rotation
+#elif clienttype == rotation
   rotationsetup();
-#elif defined rgb
+#elif clienttype == rgb
   rgbsetup();
-#elif defined rgbledstrip
+#elif clienttype == rgbledstrip
   rgbledstripsetup();
-#elif defined epaper
+#elif clienttype == epaper
   epapersetup();
-#elif defined lock
+#elif clienttype == lock
   locksetup();
-#elif defined motor
+#elif clienttype == motor
   motorsetup();
 #endif
 
@@ -32,25 +35,25 @@ void setup() {
 
 void loop() {
 
-  phprequest();
+//  phprequest();
 
-#ifdef button
+#ifdef clienttype == button
   buttonloop();
-#elif defined finger
+#elif clienttype == finger
   fingerloop();
-#elif defined temp
+#elif clienttype == temp
   temploop();
-#elif defined rotation
+#elif clienttype == rotation
   rotationloop();
-#elif defined rgb
+#elif clienttype == rgb
   rgbloop();
-#elif defined rgbledstrip
+#elif clienttype == rgbledstrip
   rgbledstriploop();
-#elif defined epaper
+#elif clienttype == epaper
   epaperloop();
-#elif defined lock
+#elif clienttype == lock
   lockloop();
-#elif defined motor
+#elif clienttype == motor
   motorloop();
 #endif
   

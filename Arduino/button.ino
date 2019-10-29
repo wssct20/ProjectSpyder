@@ -20,7 +20,7 @@ void buttonloop() {
     Serial.println("button HIGH");
     digitalWrite(LED_BUILTIN, HIGH);
   }
-  delay(1000);
+  delay(50);
 */
   delay(10000);
 }
