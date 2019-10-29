@@ -102,7 +102,7 @@ function checktables() {
 			);
 		")
 	) {
-		die("Table creation failed: (" . $mysqli->errno . ") " . $mysqli->error);
+		die("Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
 	global $types;
 	foreach ($types as $type) {
@@ -113,7 +113,7 @@ function checktables() {
 			);
 		")
 		) {
-			die("Table creation failed: (" . $mysqli->errno . ") " . $mysqli->error);
+			die("Table creation failed: (" . $db->errno . ") " . $db->error);
 		}
 	}
 }
