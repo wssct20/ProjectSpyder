@@ -7,7 +7,7 @@ $subtype = $_REQUEST["subtype"];
 $now = time();
 
 //return array
-returnstack = array();
+$returnstack = array();
 
 //check if type is valid and supported by the system
 $typesvalid = checktypes($type, $subtype);
@@ -22,7 +22,7 @@ $authcode = calculateauthcode($type,$subtype,$ip,$pairtime);
 adddevice($type, $subtype, $ip, $pairtime, $now, $authcode);
 
 
-returnstack["authcode"] = $authcode;
+$returnstack["authcode"] = $authcode;
 
 die(formatreturnvalues($returnstack));
 

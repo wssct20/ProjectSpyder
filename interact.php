@@ -11,7 +11,7 @@ global $updatetime;
 $debugstring = "";
 
 //return array
-returnstack = array();
+$returnstack = array();
 
 //var_dump($result);
 
