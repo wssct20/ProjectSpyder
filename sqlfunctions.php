@@ -19,20 +19,23 @@ function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 	return;
 	//untested code, skipping for now
 	
+	$statement->close();
+	$statement = null;
+	
 	$device = getdevice($authcode);
 	
 	// Create type specific entry
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("INSERT INTO ?(id) VALUES (?)"))) {
-		die("adddevice insert sensor/actuator Prepare failed: (" . $db->errno . ") " . $db->error);
+	if (!($statement = $db->prepare("INSERT INTO "+$device["type"]+"(id) VALUES (?)"))) {
+		die("adddevice insert "+$device["type"]+" Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
-	if (!$statement->bind_param("si", $device["type"], $device["id"])) {
-		die("adddevice insert sensor/actuator Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	if (!$statement->bind_param("i", $device["id"])) {
+		die("adddevice insert "+$device["type"]+" Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		die("adddevice insert sensor/actuator Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("adddevice insert "+$device["type"]+" Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 }
 
@@ -77,11 +80,11 @@ function updatedevice($id, $now, $ipaddress) {
 function updatedata($id, $type, $state) {
 	global $db;
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("UPDATE ? SET state=? WHERE id=?"))) {
+	if (!($statement = $db->prepare("UPDATE "+$type+" SET state=? WHERE id=?"))) {
 		die("updatedevice Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
-	if (!$statement->bind_param("ssi", $type, $state, $id)) {
+	if (!$statement->bind_param("si", $state, $id)) {
 		die("updatedevice Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
@@ -92,30 +95,17 @@ function updatedata($id, $type, $state) {
 
 function checktables() {
 	return;
+	//untested code, temporarily disabled
 	global $db;
-	if (!$db->query("create table if not exists devices(
-			id INT NOT NULL AUTO_INCREMENT, 
-			name TEXT, 
-			type TEXT NOT NULL, 
-			ipaddress TEXT NOT NULL, 
-			lastact BIGINT NOT NULL, 
-			pairtime BIGINT NOT NULL, 
-			subtype TEXT NOT NULL, 
-			authcode TEXT NOT NULL, 
-			PRIMARY KEY (id)
-			);
-		")
+	//unprepared query: create table devices
+	if (!$db->query("create table if not exists devices(id INT NOT NULL AUTO_INCREMENT, name TEXT, type TEXT NOT NULL, ipaddress TEXT NOT NULL, lastact BIGINT NOT NULL, pairtime BIGINT NOT NULL, subtype TEXT NOT NULL, authcode TEXT NOT NULL, PRIMARY KEY (id));")
 	) {
 		die("checktables table Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
 	global $types;
 	foreach ($types as $type) {
-		if (!$db->query("create table if not exists " + $type + "(
-			id INT NOT NULL,
-			state TEXT,
-			PRIMARY KEY(id)
-			);
-		")
+		//unprepared query: create table $type
+		if (!$db->query("create table if not exists " + $type + "(id INT NOT NULL, state TEXT, PRIMARY KEY(id));")
 		) {
 			die("checktables " + $type + " Table creation failed: (" . $db->errno . ") " . $db->error);
 		}
