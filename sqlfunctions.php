@@ -88,6 +88,7 @@ function updatedata($id, $type, $state) {
 }
 
 function checktables() {
+	return;
 	global $db;
 	if (!$db->query("create table if not exists devices(
 			id INT NOT NULL AUTO_INCREMENT, 
