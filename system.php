@@ -7,7 +7,7 @@ $hashalgo = "sha256"; //32 bytes
 //$hashalgo = "crc32"; //4 bytes
 //hash prefix for individualization
 $hashprefix = "WSS";
-//updatetime defines how long a client should wait until next update push/request
+//updatetime defines how long a client should wait until next update push/request in seconds
 $updatetime = 10;
 //following two arrays define which client types this system is compatible with
 //general types of clients
@@ -21,7 +21,7 @@ $subtypes = array(
 		//"motor",
 		//"lock",
 		//"sps",
-		//"rgbledstrip",
+		//"addressablergbledstrip",
 		//"epaper",
 	),
 	"sensor" => array(

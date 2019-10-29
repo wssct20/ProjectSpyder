@@ -3,7 +3,7 @@ require_once("system.php");
 
 $authcode = $_REQUEST["authcode"] ?? "";
 $state = $_REQUEST["state"] ?? "";
-$requesttype = $_REQUEST["requesttype"] ?? "GET";
+$requesttype = $_REQUEST["requesttype"] ?? "";
 
 $now = time();
 $ip = getipaddress();
