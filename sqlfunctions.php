@@ -5,31 +5,34 @@ function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 	// Create device entry
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("INSERT INTO devices(type, subtype, ipaddress, pairtime, lastact, authcode) VALUES (?, ?, ?, ?, ?, ?)"))) {
-		die("Prepare failed: (" . $db->errno . ") " . $db->error);
+		die("adddevice insert devices Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
 	if (!$statement->bind_param("sssiis", $type, $subtype, $ip, $pairtime, $now, $authcode)) {
-		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+		die("adddevice insert devices Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("adddevice insert devices Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
+	
+	return;
+	//untested code, skipping for now
 	
 	$device = getdevice($authcode);
 	
 	// Create type specific entry
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("INSERT INTO ?(id) VALUES (?)"))) {
-		die("Prepare failed: (" . $db->errno . ") " . $db->error);
+		die("adddevice insert sensor/actuator Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
 	if (!$statement->bind_param("si", $device["type"], $device["id"])) {
-		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+		die("adddevice insert sensor/actuator Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("adddevice insert sensor/actuator Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 }
 
@@ -37,19 +40,19 @@ function getdevice($authcode) {
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM devices WHERE authcode=?"))) {
-		echo "Prepare failed: (" . $db->errno . ") " . $db->error;
+		echo "getdevice Prepare failed: (" . $db->errno . ") " . $db->error;
 	}
 	// Stage 2: bind parameters
 	if (!$statement->bind_param("s", $authcode)) {
-		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+		die("getdevice Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("getdevice Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 4: get results
 	if (!($result = $statement->get_result())) {
-		die("Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+		die("getdevice Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 5: fetch row
 	return $result->fetch_array();
@@ -59,15 +62,15 @@ function updatedevice($id, $now, $ipaddress) {
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("UPDATE devices SET ipaddress=?, lastact=? WHERE id=?"))) {
-		die("Prepare failed: (" . $db->errno . ") " . $db->error);
+		die("updatedevice Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
 	if (!$statement->bind_param("sii", $ipaddress, $now, $id)) {
-		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+		die("updatedevice Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("updatedevice Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 }
 
@@ -75,15 +78,15 @@ function updatedata($id, $type, $state) {
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("UPDATE ? SET state=? WHERE id=?"))) {
-		die("Prepare failed: (" . $db->errno . ") " . $db->error);
+		die("updatedevice Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
 	if (!$statement->bind_param("ssi", $type, $state, $id)) {
-		die("Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+		die("updatedevice Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		die("Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("updatedevice Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 }
 
@@ -103,7 +106,7 @@ function checktables() {
 			);
 		")
 	) {
-		die("Table creation failed: (" . $db->errno . ") " . $db->error);
+		die("checktables table Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
 	global $types;
 	foreach ($types as $type) {
@@ -114,7 +117,7 @@ function checktables() {
 			);
 		")
 		) {
-			die("Table creation failed: (" . $db->errno . ") " . $db->error);
+			die("checktables " + $type + " Table creation failed: (" . $db->errno . ") " . $db->error);
 		}
 	}
 }
