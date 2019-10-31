@@ -1,0 +1,3 @@
+<Files system.php>
+	deny from all
+</Files>

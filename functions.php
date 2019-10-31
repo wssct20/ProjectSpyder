@@ -1,9 +1,16 @@
 <?php
 
 function calculateauthcode($type, $subtype, $ipaddress, $pairtime) {
-	global $hashprefix, $hashalgo;
+	global $hashprefix, $devicehashalgo;
 	$data = $hashprefix . $type . $subtype . $ipaddress . $pairtime;
-	return hash($hashalgo, $data, false);
+	return hash($devicehashalgo, $data, false);
+}
+
+function calculateuserhash($username, $password) {
+	//TODO untested, but believed to be working
+	global $hashprefix, $userhashalgo;
+	$data = $hashprefix.$username.$password;
+	return hash($userhashalgo, $data, false);
 }
 
 function formatreturnvalues($data, $debug) {
@@ -23,6 +30,7 @@ function formatreturnvalues($data, $debug) {
 }
 
 function getipaddress() {
+	//TODO untested code from stackoverflow, hope it works
 	$ipaddress = '';
 	if (isset($_SERVER['HTTP_CLIENT_IP']))
 		$ipaddress = $_SERVER['HTTP_CLIENT_IP'];
@@ -68,6 +76,18 @@ function checktypes($inputtype, $inputsubtype) {
 	}
 	if (! $subtypevalid) return false;
 	return true;
+}
+
+function updateconditions() {
+	return;
+	//TODO untested code, skipping for now
+	$conditions = getconditions();
+	foreach($conditions as $condition) {
+		$ifdevice = getdevicebyid($condition["ifid"]);
+		if ($condition["ifstate"] != getdata($ifdevice["id"], $ifdevice["type"]) continue;
+		$thendevice = getdevicebyid($condition["thenid"];
+		updatedata($thendevice["id"], $thendevice["type"], $condition["thenstate"]);
+	}
 }
 
 ?>

@@ -17,7 +17,7 @@ function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 	}
 	
 	return;
-	//untested code, skipping for now
+	//TODO untested code, skipping for now
 	
 	$statement->close();
 	$statement = null;
@@ -39,23 +39,47 @@ function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 	}
 }
 
-function getdevice($authcode) {
+function getdevicebyauthcode($authcode) {
+	//TODO function rename, check for occurencies
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM devices WHERE authcode=?"))) {
-		echo "getdevice Prepare failed: (" . $db->errno . ") " . $db->error;
+		echo "getdevicebyauthcode Prepare failed: (" . $db->errno . ") " . $db->error;
 	}
 	// Stage 2: bind parameters
 	if (!$statement->bind_param("s", $authcode)) {
-		die("getdevice Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+		die("getdevicebyauthcode Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		die("getdevice Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("getdevicebyauthcode Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 4: get results
 	if (!($result = $statement->get_result())) {
-		die("getdevice Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+		die("getdevicebyauthcode Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 5: fetch row
+	return $result->fetch_array();
+}
+
+function getdevicebyid($id) {
+	//TODO untested code, but believed to be working
+	global $db;
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("SELECT * FROM devices WHERE id=?"))) {
+		echo "getdevicebyid Prepare failed: (" . $db->errno . ") " . $db->error;
+	}
+	// Stage 2: bind parameters
+	if (!$statement->bind_param("i", $id)) {
+		die("getdevicebyid Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		die("getdevicebyid Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 4: get results
+	if (!($result = $statement->get_result())) {
+		die("getdevicebyid Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 5: fetch row
 	return $result->fetch_array();
@@ -77,6 +101,29 @@ function updatedevice($id, $now, $ipaddress) {
 	}
 }
 
+function getdata($id, $type) {
+	//TODO untested code
+	global $db;
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("SELECT * FROM "+$type+" WHERE id=?"))) {
+		echo "getdevicebyid Prepare failed: (" . $db->errno . ") " . $db->error;
+	}
+	// Stage 2: bind parameters
+	if (!$statement->bind_param("i", $id)) {
+		die("getdevicebyid Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		die("getdevicebyid Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 4: get results
+	if (!($result = $statement->get_result())) {
+		die("getdevicebyid Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 5: fetch state from row
+	return $result->fetch_array()[state];
+}
+
 function updatedata($id, $type, $state) {
 	global $db;
 	// Stage 1: prepare
@@ -95,12 +142,12 @@ function updatedata($id, $type, $state) {
 
 function checktables() {
 	return;
-	//untested code, temporarily disabled
+	//TODO untested code, temporarily disabled
 	global $db;
 	//unprepared query: create table devices
 	if (!$db->query("create table if not exists devices(id INT NOT NULL AUTO_INCREMENT, name TEXT, type TEXT NOT NULL, ipaddress TEXT NOT NULL, lastact BIGINT NOT NULL, pairtime BIGINT NOT NULL, subtype TEXT NOT NULL, authcode TEXT NOT NULL, PRIMARY KEY (id));")
 	) {
-		die("checktables table Table creation failed: (" . $db->errno . ") " . $db->error);
+		die("checktables devices Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
 	global $types;
 	foreach ($types as $type) {
@@ -110,6 +157,30 @@ function checktables() {
 			die("checktables " + $type + " Table creation failed: (" . $db->errno . ") " . $db->error);
 		}
 	}
+	if (!$db->query("create table if not exists conditions(ifid INT NOT NULL, ifstate TEXT NOT NULL, thenid INT NOT NULL, thenstate TEXT NOT NULL);")
+	) {
+		die("checktables conditions Table creation failed: (" . $db->errno . ") " . $db->error);
+	}
+}
+
+function getconditions() {
+	return;
+	//TODO untested code
+	global $db;
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("SELECT * FROM conditions"))) {
+		echo "getconditions Prepare failed: (" . $db->errno . ") " . $db->error;
+	}
+	// Stage 2: execute
+	if (!$statement->execute()) {
+		die("getconditions Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 4: get results
+	if (!($result = $statement->get_result())) {
+		die("getconditions Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 5: fetch row
+	return $result->fetch_array();
 }
 
 ?>

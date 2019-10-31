@@ -16,7 +16,7 @@ $returnstack = array();
 //var_dump($result);
 
 
-$device = getdevice($authcode);
+$device = getdevicebyauthcode($authcode);
 if (sizeof($device) == 0) die("AUTHFAILED");
 if ($device["authcode"] != $authcode) die ("AUTHSQLFAIL"); //should never happen
 
@@ -24,7 +24,8 @@ updatedevice($device["id"], $now, $ip);
 
 switch ($requesttype) {
 	case "GET":
-		$returnstack["state"] = $device["state"];
+		$returnstack["state"] = getdata($device["id"], $device["type"]);
+		//updateconditions
 		break;
 	case "PUT":
 		updatedata($device["id"], $device["type"], $state);
