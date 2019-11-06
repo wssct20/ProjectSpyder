@@ -45,7 +45,7 @@ function getdevicebyauthcode($authcode) {
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM devices WHERE authcode=?"))) {
-		echo "getdevicebyauthcode Prepare failed: (" . $db->errno . ") " . $db->error;
+		die("getdevicebyauthcode Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind parameters
 	if (!$statement->bind_param("s", $authcode)) {
@@ -68,7 +68,7 @@ function getdevicebyid($id) {
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM devices WHERE id=?"))) {
-		echo "getdevicebyid Prepare failed: (" . $db->errno . ") " . $db->error;
+		die("getdevicebyid Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind parameters
 	if (!$statement->bind_param("i", $id)) {
@@ -107,7 +107,7 @@ function getdata($id, $type) {
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM ".$type." WHERE id=?"))) {
-		echo "getdata Prepare failed: (" . $db->errno . ") " . $db->error;
+		die("getdata Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind parameters
 	if (!$statement->bind_param("i", $id)) {
@@ -171,7 +171,7 @@ function getconditions() {
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM conditions"))) {
-		echo "getconditions Prepare failed: (" . $db->errno . ") " . $db->error;
+		die("getconditions Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: execute
 	if (!$statement->execute()) {
@@ -182,7 +182,7 @@ function getconditions() {
 		die("getconditions Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 5: fetch all as array
-	return $result->fetch_all();
+	return $result->fetch_all(MYSQLI_BOTH);
 }
 
 ?>
