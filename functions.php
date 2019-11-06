@@ -29,8 +29,24 @@ function formatreturnvalues($data, $debug) {
 	return $returntext;
 }
 
+function formaterrorreturn($errorstring) {
+	//prepare error feedback
+	//TODO: needs refactoring for simple and advanced error feedback
+	global $updatetime;
+	$returnstack = array(
+		"error" => $errorstring,
+		"requesttimeout" => $updatetime, //needs to be moved
+	);
+	return formatreturnvalues($returnstack, $errorstring);
+}
+
+function dieerror($errorstring) {
+	//dieerror: die() but with proper error feedback
+	//TODO: needs refactoring
+	die(formaterrorreturn($errorstring));
+}
+
 function getipaddress() {
-	//TODO untested code from stackoverflow, hope it works
 	$ipaddress = '';
 	if (isset($_SERVER['HTTP_CLIENT_IP']))
 		$ipaddress = $_SERVER['HTTP_CLIENT_IP'];
@@ -80,7 +96,6 @@ function checktypes($inputtype, $inputsubtype) {
 
 function updateconditions() {
 	//updateconditions: update devices if conditions match
-	//TODO untested code
 	$conditions = getconditions();
 	foreach($conditions as $condition) {
 		$ifdevice = getdevicebyid($condition["ifid"]);

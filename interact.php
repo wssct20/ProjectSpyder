@@ -17,8 +17,8 @@ $returnstack = array();
 
 
 $device = getdevicebyauthcode($authcode);
-if (sizeof($device) == 0) die("AUTHFAILED");
-if ($device["authcode"] != $authcode) die ("AUTHSQLFAIL"); //should never happen
+if (sizeof($device) == 0) dieerror("AUTHFAILED");
+if ($device["authcode"] != $authcode) die("AUTHCODESQLFATALERROR"); //should never happen
 
 updatedevice($device["id"], $now, $ip);
 
@@ -32,12 +32,14 @@ switch ($requesttype) {
 		updateconditions();
 		break;
 	default:
-		die("REQUESTTYPEINVALID");
+		dieerror("REQUESTTYPEINVALID");
 		break;
 }
 
+updatedevice($device["id"], $now, $ip);
+
 $returnstack["requesttimeout"] = $updatetime;
 
-die(formatreturnvalues($returnstack, $debugstring));
+echo formatreturnvalues($returnstack, $debugstring);
 
 ?>

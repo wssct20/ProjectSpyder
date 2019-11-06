@@ -24,6 +24,6 @@ adddevice($type, $subtype, $ip, $pairtime, $now, $authcode);
 
 $returnstack["authcode"] = $authcode;
 
-die(formatreturnvalues($returnstack));
+echo formatreturnvalues($returnstack);
 
 ?>

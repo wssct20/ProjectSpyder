@@ -167,7 +167,6 @@ function checktables() {
 
 function getconditions() {
 	//getconditions: get all conditions
-	//TODO untested code
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM conditions"))) {
@@ -181,7 +180,7 @@ function getconditions() {
 	if (!($result = $statement->get_result())) {
 		die("getconditions Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
-	// Stage 5: fetch all as array
+	// Stage 5: fetch all as array with associative names
 	return $result->fetch_all(MYSQLI_BOTH);
 }
 
