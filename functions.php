@@ -84,8 +84,8 @@ function updateconditions() {
 	$conditions = getconditions();
 	foreach($conditions as $condition) {
 		$ifdevice = getdevicebyid($condition["ifid"]);
-		if ($condition["ifstate"] != getdata($ifdevice["id"], $ifdevice["type"]) continue;
-		$thendevice = getdevicebyid($condition["thenid"];
+		if ($condition["ifstate"] != getdata($ifdevice["id"], $ifdevice["type"])) continue;
+		$thendevice = getdevicebyid($condition["thenid"]);
 		updatedata($thendevice["id"], $thendevice["type"], $condition["thenstate"]);
 	}
 }
