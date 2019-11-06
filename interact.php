@@ -29,6 +29,7 @@ switch ($requesttype) {
 		break;
 	case "PUT":
 		updatedata($device["id"], $device["type"], $state);
+		updateconditions();
 		break;
 	default:
 		die("REQUESTTYPEINVALID");

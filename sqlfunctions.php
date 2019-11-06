@@ -1,6 +1,7 @@
 <?php
 
 function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
+	//adddevice: add a device to the system
 	global $db;
 	// Create device entry
 	// Stage 1: prepare
@@ -40,6 +41,7 @@ function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 }
 
 function getdevicebyauthcode($authcode) {
+	//getdevicebyauthcode: get a device using its authcode
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM devices WHERE authcode=?"))) {
@@ -62,6 +64,7 @@ function getdevicebyauthcode($authcode) {
 }
 
 function getdevicebyid($id) {
+	//getdevicebyid: get a device using its unique id
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM devices WHERE id=?"))) {
@@ -100,7 +103,7 @@ function updatedevice($id, $now, $ipaddress) {
 }
 
 function getdata($id, $type) {
-	//TODO untested code
+	//getdata: get data of a device from the according type table
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("SELECT * FROM ".$type." WHERE id=?"))) {
@@ -123,6 +126,7 @@ function getdata($id, $type) {
 }
 
 function updatedata($id, $type, $state) {
+	//updatedata: set data of a device in the according type table
 	global $db;
 	// Stage 1: prepare
 	if (!($statement = $db->prepare("UPDATE ".$type." SET state=? WHERE id=?"))) {
@@ -139,7 +143,7 @@ function updatedata($id, $type, $state) {
 }
 
 function checktables() {
-	//TODO untested code
+	//checktables: check if all needed tables are available by querying a create if not exist
 	global $db;
 	//unprepared query: create table devices
 	if (!$db->query("create table if not exists devices(id INT NOT NULL AUTO_INCREMENT, name TEXT, type TEXT NOT NULL, ipaddress TEXT NOT NULL, lastact BIGINT NOT NULL, pairtime BIGINT NOT NULL, subtype TEXT NOT NULL, authcode TEXT NOT NULL, PRIMARY KEY (id));")
@@ -162,7 +166,7 @@ function checktables() {
 }
 
 function getconditions() {
-	return;
+	//getconditions: get all conditions
 	//TODO untested code
 	global $db;
 	// Stage 1: prepare
@@ -177,8 +181,8 @@ function getconditions() {
 	if (!($result = $statement->get_result())) {
 		die("getconditions Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
-	// Stage 5: fetch row
-	return $result->fetch_array();
+	// Stage 5: fetch all as array
+	return $result->fetch_all();
 }
 
 ?>

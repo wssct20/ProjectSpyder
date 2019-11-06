@@ -79,8 +79,8 @@ function checktypes($inputtype, $inputsubtype) {
 }
 
 function updateconditions() {
-	return;
-	//TODO untested code, skipping for now
+	//updateconditions: update devices if conditions match
+	//TODO untested code
 	$conditions = getconditions();
 	foreach($conditions as $condition) {
 		$ifdevice = getdevicebyid($condition["ifid"]);
