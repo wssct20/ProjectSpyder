@@ -26,16 +26,16 @@ function adddevice($type, $subtype, $ip, $pairtime, $now, $authcode) {
 	
 	// Create type specific entry
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("INSERT INTO "+$device["type"]+"(id) VALUES (?)"))) {
-		die("adddevice insert "+$device["type"]+" Prepare failed: (" . $db->errno . ") " . $db->error);
+	if (!($statement = $db->prepare("INSERT INTO ".$device["type"]."(id) VALUES (?)"))) {
+		die("adddevice insert ".$device["type"]." Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
 	if (!$statement->bind_param("i", $device["id"])) {
-		die("adddevice insert "+$device["type"]+" Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+		die("adddevice insert ".$device["type"]." Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		die("adddevice insert "+$device["type"]+" Execute failed: (" . $statement->errno . ") " . $statement->error);
+		die("adddevice insert ".$device["type"]." Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 }
 
@@ -103,7 +103,7 @@ function getdata($id, $type) {
 	//TODO untested code
 	global $db;
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("SELECT * FROM "+$type+" WHERE id=?"))) {
+	if (!($statement = $db->prepare("SELECT * FROM ".$type." WHERE id=?"))) {
 		echo "getdata Prepare failed: (" . $db->errno . ") " . $db->error;
 	}
 	// Stage 2: bind parameters
@@ -125,7 +125,7 @@ function getdata($id, $type) {
 function updatedata($id, $type, $state) {
 	global $db;
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("UPDATE "+$type+" SET state=? WHERE id=?"))) {
+	if (!($statement = $db->prepare("UPDATE ".$type." SET state=? WHERE id=?"))) {
 		die("updatedevice Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
@@ -149,9 +149,9 @@ function checktables() {
 	global $types;
 	foreach ($types as $type) {
 		//unprepared query: create table $type
-		if (!$db->query("create table if not exists " + $type + "(id INT NOT NULL, state TEXT, PRIMARY KEY(id));")
+		if (!$db->query("create table if not exists " . $type . "(id INT NOT NULL, state TEXT, PRIMARY KEY(id));")
 		) {
-			die("checktables " + $type + " Table creation failed: (" . $db->errno . ") " . $db->error);
+			die("checktables " . $type . " Table creation failed: (" . $db->errno . ") " . $db->error);
 		}
 	}
 	//unprepared query: create table conditions
