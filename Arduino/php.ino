@@ -1,5 +1,8 @@
 #include "WiFi.h"
 
+#define authcodeindex "authcode"
+#define authcodelength 64
+
 int value0 = 123;
 String value1 = "testvalue";
 String value2 = "hallo";
@@ -85,6 +88,16 @@ void pair()
   Serial.print("Sizeof: ");
   Serial.println(sizeof(answerdata));
   Serial.println("---");
+  
+  for (int i = 0; i < count; i++)
+  {
+    if (answerdata[i][0] == authcodeindex)
+    {
+      writeEEPROM(0, authcodelength, answerdata[i][1]);
+      break;
+    }
+  }
+  
   
   for (int i = 0; i < count; i++)
   {
