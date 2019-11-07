@@ -1,5 +1,6 @@
 #include "WiFi.h"
 
+//#define clienthostname "SpyderClient"
 const char * clienthostname = "SpyderClient";
 
 void wifisetup()
@@ -39,5 +40,6 @@ void wifisetup()
     Serial.println(mac[5],HEX);
     Serial.print("Hostname: ");               // Hostname
     Serial.println(WiFi.getHostname());
+    Serial.println(clienthostname);
     Serial.println("_________________________________");
 }

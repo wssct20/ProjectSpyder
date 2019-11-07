@@ -1,6 +1,6 @@
 
-const int buttonPin = 5;
-const int LED_BUILTIN = 2;
+#define buttonPin 5
+#define LED_BUILTIN 2
 
 void buttonsetup() {
   

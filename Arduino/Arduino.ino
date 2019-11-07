@@ -1,14 +1,23 @@
+#include "esp_bt.h"
+#include "esp_wifi.h"
+#include "esp_sleep.h"
 #include "WifiCredentials.h"
 String type = "sensor";                  // Enter the type of your client here.
 String subtype = "button";
 #define clienttype button                // Enter the subtype of your client here.
 
+#define debugmode true                   // true: some more debug information
+
 
 void setup() {
 
   Serial.begin(115200);
+  esp_bt_controller_disable();
   
   wifisetup();
+  lightsleep(5);
+  delay(10000);
+  hibernate(10);
   pair();
 
 #if clienttype == button
