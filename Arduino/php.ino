@@ -1,7 +1,7 @@
 #include "WiFi.h"
 
 #define authcodeindex "authcode"
-#define authcodelength 64
+#define authcodelength 128
 
 int value0 = 123;
 String value1 = "testvalue";

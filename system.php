@@ -1,12 +1,12 @@
 <?php
 global $devicehashalgo, $userhashalgo, $hashprefix, $updatetime, $types, $subtypes, $db;
 //devicehashalgo: algoryhthm used for computing hash for device authentication purposes
-//$devicehashalgo = "sha512"; //64 bytes
-$devicehashalgo = "sha256"; //32 bytes
-//$devicehashalgo = "haval128,3"; //16 bytes
-//$devicehashalgo = "crc32"; //4 bytes
+$devicehashalgo = "sha512"; //64 bytes, 128 chars
+//$devicehashalgo = "sha256"; //32 bytes, 64 chars
+//$devicehashalgo = "haval128,3"; //16 bytes, 32 chars
+//$devicehashalgo = "crc32"; //4 bytes, 8 chars
 //userhashalgo: algoryhthm used for computing hash for user authentication purposes
-$userhashalgo = "sha512"; //64 bytes
+$userhashalgo = "sha512"; //64 bytes, 128 chars
 //hash prefix for individualization
 $hashprefix = "WSS";
 //updatetime defines how long a client should wait until next update push/request in seconds
