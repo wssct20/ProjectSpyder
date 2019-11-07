@@ -2,6 +2,7 @@
 
 #define authcodeindex "authcode"
 #define authcodelength 128
+#define defaulterrordelay 60
 
 int value0 = 123;
 String value1 = "testvalue";
@@ -48,6 +49,20 @@ void pair()
   Serial.println();
   Serial.println("_____________________________");
 
+////////////////////////////////////////
+// search for #START
+  Serial.println("Search for #START");
+
+  if (answer.indexOf("#START") == -1)
+  {
+    Serial.println("#START not found");
+
+    while(1);     //todo: go to deepsleep
+  }
+  else
+  {
+    Serial.println("#START found");
+  }
 
 ////////////////////////////////////////
   Serial.println("split:");
@@ -88,7 +103,41 @@ void pair()
   Serial.print("Sizeof: ");
   Serial.println(sizeof(answerdata));
   Serial.println("---");
-  
+
+// search for error
+  for (int i = 0; i < count; i++)
+  {
+    if (answerdata[i][0] == "error")
+    {
+      Serial.print("ERROR: ");
+      Serial.println(answerdata[i][1]);
+
+      int errorsint[] = {1};
+      String errorsstring = "TYPEINVALID        ";    // jeder ERROR 20 Zeichen
+      int e = errorsstring.indexOf(answerdata[i][1]);
+      if (e == -1)
+      {
+        delay(defaulterrordelay * 1000);
+        return pair();
+      }
+      switch (errorsint[e / 20])
+      {
+        case 1:
+          Serial.println("Current type is not supported by server, halting program.");
+          while(1);     //todo: go to deepsleep
+          break;
+        default:
+          delay(defaulterrordelay * 1000);      //todo: go to deepleep
+          return pair();
+      }
+    }
+    else
+    {
+      Serial.println("No ERROR");
+    }
+  }
+
+// search the authcode
   for (int i = 0; i < count; i++)
   {
     if (answerdata[i][0] == authcodeindex)

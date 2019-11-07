@@ -11,8 +11,6 @@ void setup() {
   wifisetup();
   pair();
 
-  Serial.println(readEEPROM(0, 64));
-
 #if clienttype == button
   buttonsetup();
 #elif clienttype == finger
