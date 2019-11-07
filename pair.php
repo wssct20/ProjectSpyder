@@ -12,7 +12,7 @@ $returnstack = array();
 //check if type is valid and supported by the system
 $typesvalid = checktypes($type, $subtype);
 if (!$typesvalid) {
-	die("TYPEINVALID");
+	dieerror("TYPEINVALID");
 }
 
 $ip = getipaddress();
