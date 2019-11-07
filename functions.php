@@ -29,21 +29,18 @@ function formatreturnvalues($data, $debug) {
 	return $returntext;
 }
 
-function formaterrorreturn($errorstring) {
+function formaterrorreturn($simpleerrorstring, $debugerrorstring) {
 	//prepare error feedback
-	//TODO: needs refactoring for simple and advanced error feedback
-	global $updatetime;
 	$returnstack = array(
-		"error" => $errorstring,
-		"requesttimeout" => $updatetime, //needs to be moved
+		"error" => $simpleerrorstring,
+		"requesttimeout" => gettimeout(), // maybe move?
 	);
-	return formatreturnvalues($returnstack, $errorstring);
+	return formatreturnvalues($returnstack, $debugerrorstring);
 }
 
-function dieerror($errorstring) {
+function dieerror($simpleerrorstring, $debugerrorstring) {
 	//dieerror: die() but with proper error feedback
-	//TODO: needs refactoring
-	die(formaterrorreturn($errorstring));
+	die(formaterrorreturn($simpleerrorstring, $debugerrorstring));
 }
 
 function getipaddress() {
@@ -103,6 +100,13 @@ function updateconditions() {
 		$thendevice = getdevicebyid($condition["thenid"]);
 		updatedata($thendevice["id"], $thendevice["type"], $condition["thenstate"]);
 	}
+}
+
+function gettimeout() {
+	// gettimeout: get the client request timeout in seconds
+	//TODO: calculate dynamic timeout
+	global $updatetime;
+	return $updatetime;
 }
 
 ?>

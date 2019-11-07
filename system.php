@@ -43,8 +43,7 @@ require("credentials.php");
 
 $db = new mysqli($sqlhost, $sqluser, $sqlpass, $sqldbname);
 if ($db->connect_errno) {
-	die("Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error);
-	die("ERRSQLDB");
+	dieerror("ERRSQLDB", "Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error);
 }
 checktables();
 

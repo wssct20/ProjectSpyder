@@ -1,44 +1,51 @@
 <?php
+
+$now = time();
+
 require_once("system.php");
 
 $authcode = $_REQUEST["authcode"] ?? "";
 $state = $_REQUEST["state"] ?? "";
 $requesttype = $_REQUEST["requesttype"] ?? "";
 
-$now = time();
+
 $ip = getipaddress();
-global $updatetime;
 $debugstring = "";
 
 //return array
 $returnstack = array();
 
-//var_dump($result);
 
-
+//get device and check for valid authcode
 $device = getdevicebyauthcode($authcode);
-if (sizeof($device) == 0) dieerror("AUTHFAILED");
+if (sizeof($device) == 0) dieerror("AUTHFAILED", "Authentication failed, client should request a new one using pair.");
 if ($device["authcode"] != $authcode) die("AUTHCODESQLFATALERROR"); //should never happen
 
+//update device ip and lastact timestamp
 updatedevice($device["id"], $now, $ip);
 
+// check for requesttype
 switch ($requesttype) {
 	case "GET":
+		// requesttype GET: get data and return it to client
 		$returnstack["state"] = getdata($device["id"], $device["type"]);
-		//updateconditions
 		break;
 	case "PUT":
-		updatedata($device["id"], $device["type"], $state);
-		updateconditions();
+		// requesttype PUT: place new state into table
+		//check for previos state and only update table and conditions if state changed
+		$stateprevious = getdata($device["id"], $device["type"])["state"];
+		if ($stateprevious != $state) {
+			updatedata($device["id"], $device["type"], $state);
+			updateconditions();
+		}
 		break;
 	default:
+		// requesttype not recognized: return error to client
 		dieerror("REQUESTTYPEINVALID");
 		break;
 }
 
-updatedevice($device["id"], $now, $ip);
-
-$returnstack["requesttimeout"] = $updatetime;
+$returnstack["requesttimeout"] = gettimeout();
 
 echo formatreturnvalues($returnstack, $debugstring);
 
