@@ -1,9 +1,35 @@
-<Files *.php>
-	allow from all
+<Files *>
+	deny from all
 </Files>
 <Files credentials.php>
 	deny from all
 </Files>
 <Files system.php>
 	deny from all
+</Files>
+<Files functions.php>
+	deny from all
+</Files>
+<Files sqlfunctions.php>
+	deny from all
+</Files>
+
+<Files README.md>
+	allow from all
+</Files>
+
+<Files interact.php>
+	allow from all
+</Files>
+<Files pair.php>
+	allow from all
+</Files>
+<Files gui.php>
+	allow from all
+</Files>
+<Files arduinotest.php>
+	allow from all
+</Files>
+<Files mysqlinfo.php>
+	allow from all
 </Files>

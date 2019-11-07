@@ -1,6 +1,6 @@
 <Files *>
-	allow from all
+	deny from all
 </Files>
-<Files system.php>
+<Files WifiCredentials.h>
 	deny from all
 </Files>
