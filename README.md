@@ -4,9 +4,15 @@ SmartHome by WSSCT20
 ProjectSpyder is an smart home system build up to be easy, capable and have a wide compatibility.
 
 __WARNING: _We are currently developing ProjectSpyder, so don't expect it to work.___
+Also the install procedure will change, as we try to make it as simple as possible before the first release.
 
 ## How to set up server
 The software uses the Apache2 webserver with PHP enabled and a MySQL Server.
+This software is intended to be run on a dedicated server, 
+for example a raspberry pi, 
+which should only run this software on its webserver.
+If you want to run several applications through that webserver, 
+please ensure yourself that all of them work alongside each other.
 
 First of, install the required programs:
 ```
@@ -31,6 +37,24 @@ chmod +x updatefromgit.sh
 ./updatefromgit.sh
 ```
 
+To set up apache2 run these commands as root:
+```
+echo '<VirtualHost *:80>' > /etc/apache2/sites-available/ProjectSpyder.conf
+echo ' ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/ProjectSpyder.conf
+echo ' DocumentRoot /var/www/html' >> /etc/apache2/sites-available/ProjectSpyder.conf #will be changed soon
+echo ' <Directory /var/www/>' >> /etc/apache2/sites-available/ProjectSpyder.conf
+echo '  Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/ProjectSpyder.conf
+echo '  AllowOverride All' >> /etc/apache2/sites-available/ProjectSpyder.conf
+echo '  Require all granted' >> /etc/apache2/sites-available/ProjectSpyder.conf
+echo ' </Directory>' >> /etc/apache2/sites-available/ProjectSpyder.conf
+echo ' #ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/ProjectSpyder.conf
+echo ' #CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/ProjectSpyder.conf
+echo '</VirtualHost>' >> /etc/apache2/sites-available/ProjectSpyder.conf
+a2dissite * # only if needed, ensure to disable default, will change soon to be working alongside other systems
+a2ensite ProjectSpyder
+systemctl reload apache2
+```
+
 crontab makes it easy to keep up to date:
 ```
 @reboot sleep 15 && sh /var/www/updatefromgit.sh
@@ -39,6 +63,7 @@ crontab makes it easy to keep up to date:
 
 Apache2 is logging all accesses and errors by default. This will fill up your disk quickly.
 Please consider [disabling apache2 logging](https://www.mydigitallife.net/how-to-disable-and-turn-off-apache-httpd-access-and-error-log/).
+The install skript will do this for you, this is left here if needed until a final install skript has been developed.
 
 To ensure the Server is reachable, we use NETBIOS and/or DNS of the router.
 For this you will need to configure your router and set the machines hostname to the correct one.
@@ -61,6 +86,11 @@ $sqlhost = "localhost";
 You need to replace `sqluser` with the username of the MySQL Server. Then do the same for the password.
 The `sqldbname` parameter defines the name of the Database in the MySQL Server.
 Please ensure its possible for the user to log in and modify everything within the database.
+
+For your security we recommend to enable `.htaccess` files. 
+An instruction on how to do that can be found 
+[here](https://askubuntu.com/questions/429869/is-this-a-correct-way-to-enable-htaccess-in-apache-2-4-7).
+The install skript will do this for you, this is left here if needed until a final install skript has been developed.
 
 ## How to set up and install clients
 
