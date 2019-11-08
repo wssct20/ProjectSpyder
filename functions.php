@@ -33,7 +33,7 @@ function formaterrorreturn($simpleerrorstring, $debugerrorstring) {
 	//prepare error feedback
 	$returnstack = array(
 		"error" => $simpleerrorstring,
-		"requesttimeout" => gettimeout(), // maybe move?
+		"requesttimeout" => 60*60, // default to 1h, maybe move? //TODO: implement gettimeout(subtype)
 	);
 	return formatreturnvalues($returnstack, $debugerrorstring);
 }
@@ -102,11 +102,18 @@ function updateconditions() {
 	}
 }
 
-function gettimeout() {
+function gettimeout($subtype) {
 	// gettimeout: get the client request timeout in seconds
 	//TODO: calculate dynamic timeout
 	global $updatetime;
-	return $updatetime;
+	//updatetimes: time in seconds to add to default updatetime depending on device subtype
+	$updatetimes = array(
+		"button" => 120,
+		"" => 0, //default
+	);
+	$thisupdatetime = $updatetime + ($updatetimes[$subtype] ?? $updatetimes[""]);
+	if ($thisupdatetime < 0) $thisupdatetime = 0;
+	return $thisupdatetime;
 }
 
 ?>
