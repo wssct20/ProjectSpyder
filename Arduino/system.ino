@@ -5,7 +5,7 @@
 //////////////EEPROM//////////////
 void writeEEPROM(int address, int length, String data)
 {
-  Serial.println("writeEEPROM start");
+  Serial.println("writeEEPROM() start");
   EEPROM.begin(address + length);
 
   Serial.print("address: ");
@@ -27,7 +27,7 @@ void writeEEPROM(int address, int length, String data)
 
 String readEEPROM(int address, int length)
 {
-  Serial.println("readEEPROM start");
+  Serial.println("readEEPROM() start");
   EEPROM.begin(address + length);
 
   Serial.print("address: ");
@@ -54,6 +54,7 @@ void lightsleep(int seconds)
   Serial.print("Starting lightsleep for ");
   Serial.print(seconds);
   Serial.println(" seconds.");
+  Serial.println("------sleep------");
   #if debugmode == true
   delay(1000);
   #endif
@@ -61,6 +62,7 @@ void lightsleep(int seconds)
   esp_wifi_stop();
   esp_light_sleep_start();
   Serial.println("lightsleep ended");
+  Serial.println("----continue-----");
   esp_wifi_start();
   wifisetup();
 }
@@ -76,7 +78,9 @@ bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
   Serial.print("Added interrupt for Pin ");
   Serial.print(pin);
   Serial.print(" for state ");
-  Serial.println(triggerlevel);
+  Serial.print(triggerlevel);
+  Serial.println(".");
+  Serial.println("------sleep------");
   #if debugmode == true
   delay(1000);
   #endif
@@ -85,6 +89,7 @@ bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
   esp_light_sleep_start();
   bool pinstate = digitalRead(pin) == HIGH ? true : false;
   Serial.println("lightsleep ended");
+  Serial.println("----continue-----");
   esp_wifi_start();
   wifisetup();
   return pinstate;
@@ -105,7 +110,9 @@ void lightsleeptouch(int seconds, int touchpin, int threshold)
   Serial.print(seconds);
   Serial.println(" seconds.");
   Serial.print("Added touch interrupt for Pin ");
-  Serial.println(touchpin);
+  Serial.print(touchpin);
+  Serial.println(".");
+  Serial.println("------sleep------");
   #if debugmode == true
   delay(1000);
   #endif
@@ -113,6 +120,7 @@ void lightsleeptouch(int seconds, int touchpin, int threshold)
   esp_wifi_stop();
   esp_light_sleep_start();
   Serial.println("lightsleep ended");
+  Serial.println("----continue-----");
   esp_wifi_start();
   wifisetup();
 }
