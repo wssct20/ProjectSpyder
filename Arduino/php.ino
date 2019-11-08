@@ -2,7 +2,8 @@
 
 #define authcodeindex "authcode"
 #define authcodelength 128
-#define defaulterrordelay 60
+#define defaulterrordelay 60      //in seconds
+#define fatalerrordelay 60*30     //in seconds
 
 int value0 = 123;
 String value1 = "testvalue";
@@ -57,7 +58,7 @@ void pair()
   {
     Serial.println("#START not found");
 
-    while(1);     //todo: go to deepsleep
+    hibernate(fatalerrordelay);
   }
   else
   {
@@ -124,11 +125,9 @@ void pair()
       {
         case 1:
           Serial.println("Current type is not supported by server, halting program.");
-          while(1);     //todo: go to deepsleep
-          break;
+          hibernate(fatalerrordelay);
         default:
-          delay(defaulterrordelay * 1000);      //todo: go to deepleep
-          return pair();
+          hibernate(fatalerrordelay);
       }
     }
     else
@@ -137,14 +136,21 @@ void pair()
     }
   }
 
-// search the authcode
+// search for the authcode
+  bool authcodefound = false;
   for (int i = 0; i < count; i++)
   {
     if (answerdata[i][0] == authcodeindex)
     {
       writeEEPROM(0, authcodelength, answerdata[i][1]);
+      authcodefound = true;
       break;
     }
+  }
+  if (!authcodefound)
+  {
+    Serial.println("ERROR: authcode not found");
+    hibernate(fatalerrordelay);
   }
   
   
