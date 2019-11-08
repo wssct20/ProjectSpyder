@@ -1,4 +1,6 @@
 <?php
+require_once("specific.php"); //sensor/actuator specifc stuff
+require_once ("sqlfunctions.php"); //sql specific stuff
 
 function calculateauthcode($type, $subtype, $ipaddress, $pairtime) {
 	global $hashprefix, $devicehashalgo;
@@ -71,6 +73,7 @@ function getipaddress() {
 }
 
 function checktypes($inputtype, $inputsubtype) {
+	//checktypes: checks upon type and subtype if they are valid and supported by the system
 	global $types, $subtypes;
 	$typevalid = false;
 	$subtypevalid = false;

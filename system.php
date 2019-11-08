@@ -16,7 +16,7 @@ $updatetime = 10;
 //following two arrays define which client types this system is compatible with
 //general types of clients
 $types = array(
-	//"actuator",
+	"actuator",
 	"sensor",
 );
 //more specific types of clients, all general types need to be found here
@@ -25,7 +25,8 @@ $subtypes = array(
 		//"motor",
 		//"lock",
 		//"sps",
-		//"addressablergbledstrip",
+		"addressablergbledstrip",
+		//"rgbledstrip",
 		//"epaper",
 	),
 	"sensor" => array(
@@ -38,14 +39,15 @@ $subtypes = array(
 );
 
 require_once ("functions.php");
-require_once ("sqlfunctions.php");
-require("credentials.php");
+require_once("credentials.php");
 
+//connect to mysql database
 $db = new mysqli($sqlhost, $sqluser, $sqlpass, $sqldbname);
 if ($db->connect_errno) {
 	dieerror("ERRSQLDB", "Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error);
 }
-checktables();
+
+checktables(); //check for sql tables
 
 
 
