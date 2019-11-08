@@ -1,4 +1,6 @@
 #include "EEPROM.h"
+#include "esp_sleep.h"
+//#include "rtc_io.h"
 
 //////////////EEPROM//////////////
 void writeEEPROM(int address, int length, String data)
@@ -62,6 +64,59 @@ void lightsleep(int seconds)
   esp_wifi_start();
   wifisetup();
 }
+
+bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
+{
+  esp_sleep_enable_timer_wakeup(seconds * 1000000);
+  gpio_wakeup_enable((gpio_num_t)pin, triggerlevel?GPIO_INTR_HIGH_LEVEL:GPIO_INTR_LOW_LEVEL);
+  esp_sleep_enable_gpio_wakeup();
+  Serial.print("Starting lightsleep for ");
+  Serial.print(seconds);
+  Serial.println(" seconds.");
+  Serial.print("Added interrupt for Pin ");
+  Serial.print(pin);
+  Serial.print(" for state ");
+  Serial.println(triggerlevel);
+  #if debugmode == true
+  delay(1000);
+  #endif
+  esp_wifi_disconnect();
+  esp_wifi_stop();
+  esp_light_sleep_start();
+  bool pinstate = digitalRead(pin) == HIGH ? true : false;
+  Serial.println("lightsleep ended");
+  esp_wifi_start();
+  wifisetup();
+  return pinstate;
+}
+
+//TODO: implement lightsleep touch wakeup
+/*
+void touchcallback(){
+  Serial.println("touchcallback");
+}
+
+void lightsleeptouch(int seconds, int touchpin, int threshold)
+{
+  esp_sleep_enable_timer_wakeup(seconds * 1000000);
+  touchAttachInterrupt(T2, touchcallback, threshold);
+  esp_sleep_enable_touchpad_wakeup();
+  Serial.print("Starting lightsleep for ");
+  Serial.print(seconds);
+  Serial.println(" seconds.");
+  Serial.print("Added touch interrupt for Pin ");
+  Serial.println(touchpin);
+  #if debugmode == true
+  delay(1000);
+  #endif
+  esp_wifi_disconnect();
+  esp_wifi_stop();
+  esp_light_sleep_start();
+  Serial.println("lightsleep ended");
+  esp_wifi_start();
+  wifisetup();
+}
+*/
 
 
 void hibernate(int seconds)

@@ -1,6 +1,5 @@
-#include "esp_bt.h"
+//#include "esp_bt.h"
 #include "esp_wifi.h"
-#include "esp_sleep.h"
 #include "WifiCredentials.h"
 String type = "sensor";                  // Enter the type of your client here.
 String subtype = "button";
@@ -14,7 +13,7 @@ int requesttimeout;
 void setup() {
 
   Serial.begin(115200);
-  esp_bt_controller_disable();
+  //esp_bt_controller_disable();
 
 #if reset_authcode == true
   resetauthcode();

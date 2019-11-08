@@ -1,6 +1,7 @@
 
-#define buttonPin 5
+#define buttonPin 4
 #define LED_BUILTIN 2
+//#define touchthreshold 40
 
 void buttonsetup() {
   
@@ -10,13 +11,13 @@ void buttonsetup() {
 }
 
 void buttonloop() {
-
-  bool buttonstate = digitalRead(buttonPin) == HIGH ? true : false;
+  
+  bool buttonstate = lightsleepgpio(requesttimeout, buttonPin, 0);
   digitalWrite(LED_BUILTIN, buttonstate ? HIGH : LOW);
   Serial.print("Button state: ");
   Serial.println(buttonstate);
   
   //delay(5000);
-  putstate(String(buttonstate));
-  lightsleep(requesttimeout);
+  putstate(String(!buttonstate));
+  
 }
