@@ -45,7 +45,7 @@ switch ($requesttype) {
 		break;
 }
 
-$returnstack["requesttimeout"] = gettimeout();
+$returnstack["requesttimeout"] = gettimeout($device["subtype"]);
 
 echo formatreturnvalues($returnstack, $debugstring);
 

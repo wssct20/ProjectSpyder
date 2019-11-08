@@ -24,7 +24,7 @@ $authcode = calculateauthcode($type,$subtype,$ip,$pairtime);
 adddevice($type, $subtype, $ip, $pairtime, $now, $authcode);
 
 
-$returnstack["requesttimeout"] = gettimeout();
+$returnstack["requesttimeout"] = 5;
 $returnstack["authcode"] = $authcode;
 
 echo formatreturnvalues($returnstack);
