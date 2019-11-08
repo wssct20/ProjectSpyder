@@ -33,7 +33,7 @@ switch ($requesttype) {
 	case "PUT":
 		// requesttype PUT: place new state into table
 		//check for previos state and only update table and conditions if state changed
-		$stateprevious = getdata($device["id"], $device["type"])
+		$stateprevious = getdata($device["id"], $device["type"]);
 		if ($stateprevious != $state) {
 			updatedata($device["id"], $device["type"], $state);
 			updateconditions();
