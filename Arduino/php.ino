@@ -251,7 +251,7 @@ String interact(int requesttype, String state)
   Serial.println("_____________________________");
 
 ////////////////////////////////////////
-// search for #START
+//search for #START
   Serial.println("Search for #START");
 
   if (answer.indexOf("#START") == -1)
@@ -266,6 +266,7 @@ String interact(int requesttype, String state)
   }
 
 ////////////////////////////////////////
+//processing answer
   Serial.println("split:");
   
   String answerdatasubstring = answer.substring(answer.indexOf("#DATA") + 6, answer.indexOf("#END") - 1);
@@ -305,6 +306,7 @@ String interact(int requesttype, String state)
   Serial.println(sizeof(answerdata));
   Serial.println("---");
 
+////////////////////////////////////////
 // search for error
   for (int i = 0; i < count; i++)
   {
@@ -340,6 +342,7 @@ String interact(int requesttype, String state)
     }
   }
 
+////////////////////////////////////////
 // search for state
   if (requesttype == 0)
   {
@@ -361,6 +364,7 @@ String interact(int requesttype, String state)
     }
   }
 
+////////////////////////////////////////
 // search for requesttimeout
   bool requesttimeoutfound = false;
   for (int i = 0; i < count; i++)

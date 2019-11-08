@@ -1,9 +1,9 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-String type = "sensor";                  // Enter the type of your client here.
-String subtype = "button";
-#define clienttype button                // Enter the subtype of your client here.
+String type = "actuator";                  // Enter the type of your client here.
+String subtype = "rgbledstrip";
+#define clienttype rgbledstrip                // Enter the subtype of your client here.
 
 #define debugmode true                   // true: some more debug information
 //#define reset_authcode true              // true: resets authcode
@@ -17,6 +17,7 @@ void setup() {
 
   #if reset_authcode == true
     resetauthcode();
+    Serial.println("authcode has been reset!");
     while(1);
   #endif
   
