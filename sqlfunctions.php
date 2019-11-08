@@ -119,7 +119,7 @@ function getdata($id, $type) {
 		dieerror("ERRSQLTABLE", "getdata Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 5: fetch state from row
-	return $result->fetch_array()[state];
+	return $result->fetch_array()["state"];
 }
 
 function updatedata($id, $type, $state) {
