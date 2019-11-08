@@ -9,16 +9,14 @@ String subtype = "button";
 #define debugmode true                   // true: some more debug information
 
 
+int requesttimeout;
+
 void setup() {
 
   Serial.begin(115200);
   esp_bt_controller_disable();
   
   wifisetup();
-  lightsleep(5);
-  delay(10000);
-  hibernate(10);
-  pair();
 
 #if clienttype == button
   buttonsetup();
@@ -43,8 +41,6 @@ void setup() {
 }
 
 void loop() {
-
-//  phprequest();
 
 #ifdef clienttype == button
   buttonloop();

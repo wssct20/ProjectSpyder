@@ -1,14 +1,15 @@
 #include "WiFi.h"
 
 #define authcodeindex "authcode"
+#define stateindex "state"
+#define requesttimeoutindex "requesttimeout"
+#define errorindex "error"
+
 #define authcodelength 128
+
 #define defaulterrordelay 60      //in seconds
 #define fatalerrordelay 60*30     //in seconds
-
-int value0 = 123;
-String value1 = "testvalue";
-String value2 = "hallo";
-int value3 = 151;
+#define defaultdelay 60           //in seconds
 
 
 void pair()
@@ -136,7 +137,7 @@ void pair()
     }
   }
 
-// search for the authcode
+// search for authcode
   bool authcodefound = false;
   for (int i = 0; i < count; i++)
   {
@@ -151,6 +152,25 @@ void pair()
   {
     Serial.println("ERROR: authcode not found");
     hibernate(fatalerrordelay);
+  }
+  
+
+// search for requesttimeout
+  bool requesttimeoutfound = false;
+  for (int i = 0; i < count; i++)
+  {
+    if (answerdata[i][0] == requesttimeoutindex)
+    {
+      requesttimeout = answerdata[i][1].toInt();
+      if (requesttimeout == 0) requesttimeout = defaultdelay;
+      requesttimeoutfound = true;
+      break;
+    }
+  }
+  if (!requesttimeoutfound)
+  {
+    Serial.println("ERROR: requesttimeout not found");
+    requesttimeout = defaultdelay;
   }
   
   
@@ -169,14 +189,23 @@ void pair()
 
 
 
+String getstate()
+{
+  return interact(0, "");
+}
+
+void putstate(String state)
+{
+  interact(1, state);
+}
 
 
-void phprequest()
-{  
-  
+String interact(int requesttype, String state)
+{
+
   String answer;
   
-  Serial.println("php start");
+  Serial.println("php interact() start");
   Serial.print("php connecting to ");
   Serial.println(serverhostname);
   
@@ -186,18 +215,24 @@ void phprequest()
   {
     Serial.println("php connection failed");
     Serial.println("_________________________________");
-    return;
+    return "";
   }
   
-  String url = "/arduinotest.php";
-  url += "?A0=";
-  url += value0;
-  url += "&A1=";
-  url += value1;
-  url += "&A2=";
-  url += value2;
-  url += "&A3=";
-  url += value3;
+  String url = "/interact.php";
+  url += "?authcode=";
+  String authtoken = readEEPROM(0, authcodelength);
+  url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM for proper String feedback
+  if (requesttype == 1)
+  {
+    url += "&state=";
+    url += state;
+  }
+  String requesttypes[] = {
+    "GET",
+    "PUT",
+  };
+  url += "&requesttype=";
+  url += requesttypes[requesttype];
   
   Serial.print("Requesting URL: ");
   Serial.println(url);
@@ -213,7 +248,22 @@ void phprequest()
   }
   Serial.println();
   Serial.println("_____________________________");
-  
+
+////////////////////////////////////////
+// search for #START
+  Serial.println("Search for #START");
+
+  if (answer.indexOf("#START") == -1)
+  {
+    Serial.println("#START not found");
+
+    hibernate(defaulterrordelay);
+  }
+  else
+  {
+    Serial.println("#START found");
+  }
+
 ////////////////////////////////////////
   Serial.println("split:");
   
@@ -253,6 +303,81 @@ void phprequest()
   Serial.print("Sizeof: ");
   Serial.println(sizeof(answerdata));
   Serial.println("---");
+
+// search for error
+  for (int i = 0; i < count; i++)
+  {
+    if (answerdata[i][0] == errorindex)
+    {
+      Serial.print("ERROR: ");
+      Serial.println(answerdata[i][1]);
+
+      int errorsint[] = {0, 1, 2};
+      String errorsstring = "default             AUTHFAILED          REQUESTTYPEINVALID  ";    // jeder ERROR 20 Zeichen
+      int e = errorsstring.indexOf(answerdata[i][1]);
+      if (e == -1) {
+        //unrecognized error
+        e = 0;
+      }
+      switch (errorsint[e / 20])
+      {
+        case 1:
+          Serial.println("Auth failed, requesting new code.");
+          pair();
+          lightsleep(requesttimeout);
+          return interact(requesttype, state);
+        case 2:
+          Serial.println("FATALERROR: requesttype invalid");
+        case 0:
+        default:
+          hibernate(fatalerrordelay);
+      }
+    }
+    else
+    {
+      Serial.println("No ERROR");
+    }
+  }
+
+// search for state
+  if (requesttype == 0)
+  {
+    bool statefound = false;
+    String state;
+    for (int i = 0; i < count; i++)
+    {
+      if (answerdata[i][0] == stateindex)
+      {
+        state = answerdata[i][1];
+        statefound = true;
+        break;
+      }
+    }
+    if (!statefound)
+    {
+      Serial.println("ERROR: state not found");
+      hibernate(fatalerrordelay);
+    }
+  }
+
+// search for requesttimeout
+  bool requesttimeoutfound = false;
+  for (int i = 0; i < count; i++)
+  {
+    if (answerdata[i][0] == requesttimeoutindex)
+    {
+      requesttimeout = answerdata[i][1].toInt();
+      if (requesttimeout == 0) requesttimeout = defaultdelay;
+      requesttimeoutfound = true;
+      break;
+    }
+  }
+  if (!requesttimeoutfound)
+  {
+    Serial.println("ERROR: requesttimeout not found");
+    requesttimeout = defaultdelay;
+  }
+
   
   for (int i = 0; i < count; i++)
   {
@@ -263,6 +388,7 @@ void phprequest()
 
   Serial.println("---");
 ////////////////////////////////////////
-  Serial.println("closing connection");
+  Serial.println("closing interact() connection");
   Serial.println("_________________________________");
+  return "";
 }
