@@ -5,14 +5,14 @@
 
 Adafruit_NeoPixel ledstrip(lednumber, datapin, NEO_GRB + NEO_KHZ800);
 
-void rgbledstripsetup() {
+void addressablergbledstripsetup() {
 
   ledstrip.begin();
   ledstrip.clear();
   
 }
 
-void rgbledstriploop() {
+void addressablergbledstriploop() {
 
   for (int i = 0; i < lednumber; i++)
   {
