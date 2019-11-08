@@ -26,6 +26,7 @@ void writeEEPROM(int address, int length, String data)
 String readEEPROM(int address, int length)
 {
   Serial.println("readEEPROM start");
+  EEPROM.begin(address + length);
 
   Serial.print("address: ");
   Serial.println(address);

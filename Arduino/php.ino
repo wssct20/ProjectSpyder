@@ -5,6 +5,7 @@
 #define requesttimeoutindex "requesttimeout"
 #define errorindex "error"
 
+#define authcodeaddress 0
 #define authcodelength 128
 
 #define defaulterrordelay 60      //in seconds
@@ -143,7 +144,7 @@ void pair()
   {
     if (answerdata[i][0] == authcodeindex)
     {
-      writeEEPROM(0, authcodelength, answerdata[i][1]);
+      writeEEPROM(authcodeaddress, authcodelength, answerdata[i][1]);
       authcodefound = true;
       break;
     }
@@ -220,7 +221,7 @@ String interact(int requesttype, String state)
   
   String url = "/interact.php";
   url += "?authcode=";
-  String authtoken = readEEPROM(0, authcodelength);
+  String authtoken = readEEPROM(authcodeaddress, authcodelength);
   url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM for proper String feedback
   if (requesttype == 1)
   {
@@ -391,4 +392,15 @@ String interact(int requesttype, String state)
   Serial.println("closing interact() connection");
   Serial.println("_________________________________");
   return "";
+}
+
+void resetauthcode()
+{
+  String empty = "";
+  for (int i = 0; i < authcodelength; i++) 
+  {
+    empty += '\0';
+  }
+  writeEEPROM(authcodeaddress, authcodelength, empty);
+
 }

@@ -7,7 +7,7 @@ String subtype = "button";
 #define clienttype button                // Enter the subtype of your client here.
 
 #define debugmode true                   // true: some more debug information
-
+//#define reset_authcode true               // true: resets authcode
 
 int requesttimeout;
 
@@ -15,6 +15,11 @@ void setup() {
 
   Serial.begin(115200);
   esp_bt_controller_disable();
+
+#if reset_authcode == true
+  resetauthcode();
+  while(1);
+#endif
   
   wifisetup();
 

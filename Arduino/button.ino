@@ -11,19 +11,12 @@ void buttonsetup() {
 
 void buttonloop() {
 
-  bool buttonstate;
-  if (digitalRead(buttonPin) == HIGH)
-  {
-    Serial.println("button LOW");
-    digitalWrite(LED_BUILTIN, LOW);
-    buttonstate = false;
-  }
-  else {
-    Serial.println("button HIGH");
-    digitalWrite(LED_BUILTIN, HIGH);
-    buttonstate = true;
-  }
-  //delay(50);
+  bool buttonstate = digitalRead(buttonPin) == HIGH ? true : false;
+  digitalWrite(LED_BUILTIN, buttonstate ? HIGH : LOW);
+  Serial.print("Button state: ");
+  Serial.println(buttonstate);
+  
+  //delay(5000);
   putstate(String(buttonstate));
   lightsleep(requesttimeout);
 }
