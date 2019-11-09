@@ -1,7 +1,7 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-const String type = "rgbled";                  // Enter the type of your client here.
+const String type = "rgbled";            // Enter the type of your client here.
 
 #define debugmode true                   // true: some more debug information
 //#define reset_authcode true              // true: resets authcode
@@ -10,18 +10,10 @@ int requesttimeout;
 
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()
 #define typesstringtypelength 25
-const String typesstring = "button                  finger                  temp                    rotation                rgb                     addressablergbledstrips rgbled                  epaper                  lock                    motor                   ";    // type every 25 chars
+const String typesstring = "button                   finger                   temp                     rotation                 rgb                      addressablergbledstrip   rgbled                   epaper                   lock                     motor                    ";    // type every 25 chars
 String switchtype = type;
 
 void setup() {
-  {
-    //fill up switchtype with spaces up to typesstringtypelength chars for switch to work properly
-    int length = switchtype.length();
-    if (length > typesstringtypelength) switchtype = switchtype.substring(0, typesstringtypelength);
-    for (int i = length; i <= typesstringtypelength; i++) {
-      switchtype.concat(" ");
-    }
-  }
 
   Serial.begin(115200);
   //esp_bt_controller_disable(); //disable bluetooth controller for power savings, but currently commented out, because I believe its not started if library isnt included
@@ -32,9 +24,20 @@ void setup() {
     while(1);
   #endif
   
+  {
+    //fill up switchtype with spaces up to typesstringtypelength chars for switch to work properly
+    int length = switchtype.length();
+    if (length > typesstringtypelength) switchtype = switchtype.substring(0, typesstringtypelength);
+    for (int i = length; i < typesstringtypelength; i++) {
+      switchtype.concat(" ");
+    }
+  }
+
+  Serial.print("switchtype: ");
+  Serial.print(switchtype);
+  Serial.println(".");
+  
   wifisetup();
-  
-  
   
   int e = typesstring.indexOf(switchtype);
   if (e == -1)
@@ -78,6 +81,8 @@ void setup() {
       Serial.println("Current type invalid.");
       hibernate(60*60*24);
   }
+
+  Serial.println("setup finished");
 
 }
 
