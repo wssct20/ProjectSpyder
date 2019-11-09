@@ -7,6 +7,8 @@ void buttonsetup() {
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
 
+  requesttimeout = 1;
+
 }
 
 void buttonloop() {

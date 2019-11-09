@@ -4,7 +4,7 @@
 
 
 
-void rgbledstripsetup() {
+void rgbledsetup() {
 
   pinMode(redpin, OUTPUT);
   pinMode(greenpin, OUTPUT);
@@ -12,7 +12,7 @@ void rgbledstripsetup() {
   
 }
 
-void rgbledstriploop() {
+void rgbledloop() {
 
 /*  wert = getstate();
   

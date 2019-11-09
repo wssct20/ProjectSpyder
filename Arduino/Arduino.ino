@@ -2,7 +2,7 @@
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
 #define clienttype rgbled                // Enter the type of your client here.
-String type = clienttype;
+String type = "rgbled";                  // Enter the type of your client here.
 
 #define debugmode true                   // true: some more debug information
 //#define reset_authcode true              // true: resets authcode
@@ -22,25 +22,25 @@ void setup() {
   
   wifisetup();
 
-  #if clienttype == button
+  #if (clienttype == button)
     buttonsetup();
-  #elif clienttype == finger
+  #elif (clienttype == finger)
     fingersetup();
-  #elif clienttype == temp
+  #elif (clienttype == temp)
     tempsetup();
-  #elif clienttype == rotation
+  #elif (clienttype == rotation)
     rotationsetup();
-  #elif clienttype == rgb
+  #elif (clienttype == rgb)
     rgbsetup();
-  #elif clienttype == addressablergbledstrip
+  #elif (clienttype == addressablergbledstrip)
     addressablergbledstripsetup();
-  #elif clienttype == rgbled
+  #elif (clienttype == rgbled)
     rgbledsetup();
-  #elif clienttype == epaper
+  #elif (clienttype == epaper)
     epapersetup();
-  #elif clienttype == lock
+  #elif (clienttype == lock)
     locksetup();
-  #elif clienttype == motor
+  #elif (clienttype == motor)
     motorsetup();
   #endif
 
@@ -48,25 +48,25 @@ void setup() {
 
 void loop() {
 
-  #ifdef clienttype == button
+  #if (clienttype == button)
     buttonloop();
-  #elif clienttype == finger
+  #elif clienttype == finger)
     fingerloop();
   #elif clienttype == temp
     temploop();
-  #elif clienttype == rotation
+  #elif (clienttype == rotation)
     rotationloop();
-  #elif clienttype == rgb
+  #elif (clienttype == rgb)
     rgbloop();
-  #elif clienttype == addressablergbledstrip
+  #elif (clienttype == addressablergbledstrip)
     addressablergbledstripsetup();
-  #elif clienttype == rgbledstrip
+  #elif (clienttype == rgbled)
     rgbledloop();
-  #elif clienttype == epaper
+  #elif (clienttype == epaper)
     epaperloop();
-  #elif clienttype == lock
+  #elif (clienttype == lock)
     lockloop();
-  #elif clienttype == motor
+  #elif (clienttype == motor)
     motorloop();
   #endif
   
