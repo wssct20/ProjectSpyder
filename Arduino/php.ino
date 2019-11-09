@@ -113,17 +113,16 @@ void pair()
       Serial.print("ERROR: ");
       Serial.println(answerdata[i][1]);
 
-      int errorsint[] = {1};
-      String errorsstring = "TYPEINVALID        ";    // jeder ERROR 20 Zeichen
+      String errorsstring = "TYPEINVALID        ";    // error every 20 chars
       int e = errorsstring.indexOf(answerdata[i][1]);
       if (e == -1)
       {
         delay(defaulterrordelay * 1000);
         return pair();
       }
-      switch (errorsint[e / 20])
+      switch (e / 20)
       {
-        case 1:
+        case 0:
           Serial.println("Current type is not supported by server, halting program.");
           hibernate(fatalerrordelay);
         default:
