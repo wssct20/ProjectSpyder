@@ -341,7 +341,7 @@ String interact(int requesttype, String state)
 
 ////////////////////////////////////////
 // search for state
-  String state = "";
+  String returnstate = "";
   if (requesttype == 0)
   {
     bool statefound = false;
@@ -349,7 +349,7 @@ String interact(int requesttype, String state)
     {
       if (answerdata[i][0] == stateindex)
       {
-        state = answerdata[i][1];
+        returnstate = answerdata[i][1];
         statefound = true;
         break;
       }
@@ -392,7 +392,7 @@ String interact(int requesttype, String state)
 ////////////////////////////////////////
   Serial.println("closing interact() connection");
   Serial.println("_________________________________");
-  return state;
+  return returnstate;
 }
 
 void resetauthcode()
