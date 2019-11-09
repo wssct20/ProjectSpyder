@@ -1,16 +1,16 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-const String type = "rgbled";            // Enter the type of your client here.
+const String type = "led";      //Enter the type of your client here.
 
-#define debugmode true                   // true: some more debug information
-//#define reset_authcode true              // true: resets authcode
+#define debugmode               //some more debug information
+//#define reset_authcode          //resets authcode
 
 int requesttimeout;
 
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()
 #define typesstringtypelength 25
-const String typesstring = "button                   finger                   temp                     rotation                 rgb                      addressablergbledstrip   rgbled                   epaper                   lock                     motor                    ";    // type every 25 chars
+const String typesstring = "button                   finger                   temp                     rotation                 rgb                      addressablergbledstrip   rgbled                   epaper                   lock                     motor                    led                      ";    // type every 25 chars
 String switchtype = type;
 
 void setup() {
@@ -18,7 +18,7 @@ void setup() {
   Serial.begin(115200);
   //esp_bt_controller_disable(); //disable bluetooth controller for power savings, but currently commented out, because I believe its not started if library isnt included
 
-  #if reset_authcode == true
+  #ifdef reset_authcode
     resetauthcode();
     Serial.println("authcode has been reset!");
     while(1);
@@ -32,10 +32,6 @@ void setup() {
       switchtype.concat(" ");
     }
   }
-
-  Serial.print("switchtype: ");
-  Serial.print(switchtype);
-  Serial.println(".");
   
   wifisetup();
   
@@ -76,6 +72,9 @@ void setup() {
       break;
     case 9:
       //motorsetup();
+      break;
+    case 10:
+      ledsetup();
       break;
     default:
       Serial.println("Current type invalid.");
@@ -126,6 +125,9 @@ void loop() {
     case 9:
         //motorloop();
         break;
+    case 10:
+      ledsetup();
+      break;
     default:
       Serial.println("Current type invalid.");
       hibernate(60*60*24);
