@@ -1,8 +1,8 @@
 <?php 
 
 function specificactions($device, $requesttype, $returnstack) {
-	//specificactions: actions specific to certain subtypes
-	switch ($device["subtype"]) {
+	//specificactions: actions specific to certain types
+	switch ($device["type"]) {
 		case "button":
 			
 		case "addressablergbledstrip":

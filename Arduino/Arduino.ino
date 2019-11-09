@@ -1,9 +1,8 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-String type = "actuator";                  // Enter the type of your client here.
-#define clienttype rgbled                // Enter the subtype of your client here.
-String subtype = clienttype;
+#define clienttype rgbled                // Enter the type of your client here.
+String type = clienttype;
 
 #define debugmode true                   // true: some more debug information
 //#define reset_authcode true              // true: resets authcode
@@ -13,7 +12,7 @@ int requesttimeout;
 void setup() {
 
   Serial.begin(115200);
-  //esp_bt_controller_disable();
+  //esp_bt_controller_disable(); //disable bluetooth controller for power savings, but currently commented out, because I believe its not started if library isnt included
 
   #if reset_authcode == true
     resetauthcode();

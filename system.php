@@ -1,5 +1,5 @@
 <?php
-global $devicehashalgo, $userhashalgo, $hashprefix, $updatetime, $types, $subtypes, $db;
+global $devicehashalgo, $userhashalgo, $hashprefix, $updatetime, $types, $db;
 //devicehashalgo: algoryhthm used for computing hash for device authentication purposes
 //		can be changed, because only generated when device is paired
 $devicehashalgo = "sha512"; //64 bytes, 128 chars
@@ -13,15 +13,9 @@ $userhashalgo = "sha512"; //64 bytes, 128 chars
 $hashprefix = "WSS";
 //updatetime defines how long a client should wait until next update push/request in seconds
 $updatetime = 10;
-//following two arrays define which client types this system is compatible with
-//general types of clients
+//types: defines which client types this system is compatible with
 $types = array(
-	"actuator",
-	"sensor",
-);
-//more specific types of clients, all general types need to be found here
-$subtypes = array(
-	"actuator" => array(
+	//actuators:
 		//"motor",
 		//"lock",
 		//"sps",
@@ -29,14 +23,14 @@ $subtypes = array(
 		"rgbled",
 		"led",
 		//"epaper",
-	),
-	"sensor" => array(
+	//sensors:
 		"button",
 		//"finger",
 		//"temp",
 		//"rotation",
 		//"rgb",
-	),
+	//sps:
+		//"sps",
 );
 
 require_once ("functions.php");

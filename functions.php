@@ -2,9 +2,9 @@
 require_once("specific.php"); //sensor/actuator specifc stuff
 require_once ("sqlfunctions.php"); //sql specific stuff
 
-function calculateauthcode($type, $subtype, $ipaddress, $pairtime) {
+function calculateauthcode($type, $ipaddress, $pairtime) {
 	global $hashprefix, $devicehashalgo;
-	$data = $hashprefix . $type . $subtype . $ipaddress . $pairtime;
+	$data = $hashprefix . $type . $ipaddress . $pairtime;
 	return hash($devicehashalgo, $data, false);
 }
 
@@ -35,7 +35,7 @@ function formaterrorreturn($simpleerrorstring, $debugerrorstring) {
 	//prepare error feedback
 	$returnstack = array(
 		"error" => $simpleerrorstring,
-		"requesttimeout" => 60*60, // default to 1h, maybe move? //TODO: implement gettimeout(subtype)
+		"requesttimeout" => 60*60, // default to 1h, maybe move? //TODO: implement gettimeout(type)
 	);
 	return formatreturnvalues($returnstack, $debugerrorstring);
 }
@@ -72,26 +72,15 @@ function getipaddress() {
 	return $ipaddress;
 }
 
-function checktypes($inputtype, $inputsubtype) {
-	//checktypes: checks upon type and subtype if they are valid and supported by the system
-	global $types, $subtypes;
-	$typevalid = false;
-	$subtypevalid = false;
+function checktype($inputtype) {
+	//checktype: checks if type is valid and supported by the system
+	global $types;
 	foreach ($types as $type) {
 		if ($type == $inputtype) {
-			$typevalid = true;
-			breaK;
+			return true;
 		}
 	}
-	if (! $typevalid) return false;
-	foreach ($subtypes[$inputtype] as $subtype) {
-		if ($subtype == $inputsubtype) {
-			$subtypevalid = true;
-			break;
-		}
-	}
-	if (! $subtypevalid) return false;
-	return true;
+	return false;
 }
 
 function updateconditions() {
@@ -99,22 +88,22 @@ function updateconditions() {
 	$conditions = getconditions();
 	foreach($conditions as $condition) {
 		$ifdevice = getdevicebyid($condition["ifid"]);
-		if ($condition["ifstate"] != getdata($ifdevice["id"], $ifdevice["type"])) continue;
+		if ($condition["ifstate"] != getdata($ifdevice["id"])) continue;
 		$thendevice = getdevicebyid($condition["thenid"]);
-		updatedata($thendevice["id"], $thendevice["type"], $condition["thenstate"]);
+		updatedata($thendevice["id"], $condition["thenstate"]);
 	}
 }
 
-function gettimeout($subtype) {
+function gettimeout($type) {
 	// gettimeout: get the client request timeout in seconds
 	//TODO: calculate dynamic timeout
 	global $updatetime;
-	//updatetimes: time in seconds to add to default updatetime depending on device subtype
+	//updatetimes: time in seconds to add to default updatetime depending on device type
 	$updatetimes = array(
 		"button" => 120,
 		"" => 0, //default
 	);
-	$thisupdatetime = $updatetime + ($updatetimes[$subtype] ?? $updatetimes[""]);
+	$thisupdatetime = $updatetime + ($updatetimes[$type] ?? $updatetimes[""]);
 	if ($thisupdatetime < 0) $thisupdatetime = 0;
 	return $thisupdatetime;
 }

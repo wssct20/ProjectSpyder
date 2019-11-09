@@ -28,14 +28,14 @@ updatedevice($device["id"], $now, $ip);
 switch ($requesttype) {
 	case "GET":
 		// requesttype GET: get data and return it to client
-		$returnstack["state"] = getdata($device["id"], $device["type"]);
+		$returnstack["state"] = getdata($device["id"]);
 		break;
 	case "PUT":
 		// requesttype PUT: place new state into table
 		//check for previos state and only update table and conditions if state changed
-		$stateprevious = getdata($device["id"], $device["type"]);
+		$stateprevious = getdata($device["id"]);
 		if ($stateprevious != $state) {
-			updatedata($device["id"], $device["type"], $state);
+			updatedata($device["id"], $state);
 			updateconditions();
 		}
 		break;
@@ -45,9 +45,10 @@ switch ($requesttype) {
 		break;
 }
 
+// run type specific actions
 specificactions($device, $requesttype, $returnstack);
 
-$returnstack["requesttimeout"] = gettimeout($device["subtype"]);
+$returnstack["requesttimeout"] = gettimeout($device["type"]);
 
 echo formatreturnvalues($returnstack, $debugstring);
 

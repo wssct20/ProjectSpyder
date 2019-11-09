@@ -34,8 +34,6 @@ void pair()
   String url = "/pair.php";
   url += "?type=";
   url += type;
-  url += "&subtype=";
-  url += subtype;
   
   Serial.print("Requesting URL: ");
   Serial.println(url);
@@ -222,7 +220,7 @@ String interact(int requesttype, String state)
   String url = "/interact.php";
   url += "?authcode=";
   String authtoken = readEEPROM(authcodeaddress, authcodelength);
-  url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM for proper String feedback
+  url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM why we get 3 unknown chars at the end of the read string
   if (requesttype == 1)
   {
     url += "&state=";
