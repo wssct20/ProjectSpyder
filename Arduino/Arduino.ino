@@ -1,7 +1,7 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-String type = "rgbled";                  // Enter the type of your client here.
+String type = "rgbled ";                  // Enter the type of your client here.
 
 #define debugmode true                   // true: some more debug information
 //#define reset_authcode true              // true: resets authcode
@@ -9,7 +9,7 @@ String type = "rgbled";                  // Enter the type of your client here.
 int requesttimeout;
 
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()
-String typesstring = "button                  finger                  temp                    rotation                rgb                     addressablergbledstrips rgbled                  epaper                  lock                    motor                   ";    // type every 25 chars
+String typesstring = "button                   finger                   temp                     rotation                 rgb                      addressablergbledstrip   rgbled                   epaper                   lock                     motor                    ";    // type every 25 chars
 
 void setup() {
 
