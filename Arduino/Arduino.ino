@@ -1,4 +1,3 @@
-
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"

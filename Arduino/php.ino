@@ -1,4 +1,3 @@
-
 #include "WiFi.h"
 
 #define authcodeindex "authcode"
