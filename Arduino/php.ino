@@ -341,10 +341,10 @@ String interact(int requesttype, String state)
 
 ////////////////////////////////////////
 // search for state
+  String state = "";
   if (requesttype == 0)
   {
     bool statefound = false;
-    String state;
     for (int i = 0; i < count; i++)
     {
       if (answerdata[i][0] == stateindex)
@@ -392,7 +392,7 @@ String interact(int requesttype, String state)
 ////////////////////////////////////////
   Serial.println("closing interact() connection");
   Serial.println("_________________________________");
-  return "";
+  return state;
 }
 
 void resetauthcode()
