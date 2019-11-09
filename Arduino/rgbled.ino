@@ -1,17 +1,24 @@
-#define redpin 1        //Enter the pin of your red led here
-#define greenpin 2      //Enter the pin of your green led here
-#define bluepin 3       //Enter the pin of your blue led here
+
+#define pincount 3                    //number of pins you use
+const int pins[] = {19, 18, 5};       //Enter the pin of your led here
+
+const int frequenz = 5000;            //pwm frequenz
+#define pwmchannelcount 3             //number of pwm channels you use
+const int pwmchannel[] = {0, 1, 2};   //pwm channels
+const int resolution = 8;             //8-bit resolution
 
 
 
 void rgbledsetup() {
 
   Serial.println("rgbledsetup");
-  
-  //Set pins to output
-  pinMode(redpin, OUTPUT);
-  pinMode(greenpin, OUTPUT);
-  pinMode(bluepin, OUTPUT);
+
+  //setup channels and link pins
+  for (int i = 0; i < pwmchannelcount; i++)
+  {
+    ledcSetup(pwmchannel[i], frequenz, resolution);
+    ledcAttachPin(pins[i], pwmchannel[i]);
+  }
 
   putstate("0-150-0");    //only a test state. red-green-blue
   
@@ -44,17 +51,10 @@ void rgbledloop() {
     rawstate.substring(seperator2 + 1).toInt(),
   };
 
-  //array of oins
-  int pins[] = {
-    redpin,
-    greenpin,
-    bluepin,
-  };
-
   //set pins
-  for (int i = 0; i < sizeof(pins); i++)
+  for (int i = 0; i < pincount; i++)
   {
-    digitalWrite(pins[i], state[i]);
+    ledcWrite(pins[i], state[i]);
   }
 
   Serial.print("redstate: ");

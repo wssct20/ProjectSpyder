@@ -1,3 +1,4 @@
+
 /*#include <Adafruit_NeoPixel.h>
 
 #define datapin 5         //Pin to which the data pin of the strip is connected
