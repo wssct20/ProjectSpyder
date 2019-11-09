@@ -1,7 +1,7 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-String type = "rgbled";                  // Enter the type of your client here.
+const String type = "rgbled";                  // Enter the type of your client here.
 
 #define debugmode true                   // true: some more debug information
 //#define reset_authcode true              // true: resets authcode
@@ -9,9 +9,19 @@ String type = "rgbled";                  // Enter the type of your client here.
 int requesttimeout;
 
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()
-String typesstring = "button                  finger                  temp                    rotation                rgb                     addressablergbledstrips rgbled                  epaper                  lock                    motor                   ";    // type every 25 chars
+#define typesstringtypelength 25
+const String typesstring = "button                  finger                  temp                    rotation                rgb                     addressablergbledstrips rgbled                  epaper                  lock                    motor                   ";    // type every 25 chars
+String switchtype = type;
 
 void setup() {
+  {
+    //fill up switchtype with spaces up to typesstringtypelength chars for switch to work properly
+    int length = switchtype.length();
+    if (length > typesstringtypelength) switchtype = switchtype.substring(0, typesstringtypelength);
+    for (int i = length; i <= typesstringtypelength; i++) {
+      switchtype.concat(" ");
+    }
+  }
 
   Serial.begin(115200);
   //esp_bt_controller_disable(); //disable bluetooth controller for power savings, but currently commented out, because I believe its not started if library isnt included
@@ -26,13 +36,13 @@ void setup() {
   
   
   
-  int e = typesstring.indexOf(type);
+  int e = typesstring.indexOf(switchtype);
   if (e == -1)
   {
     Serial.println("Current type invalid.");
     hibernate(60*60*24);
   }
-  switch (e / 25)
+  switch (e / typesstringtypelength)
   {
     case 0:
       buttonsetup();
@@ -73,13 +83,13 @@ void setup() {
 
 void loop() {
 
-  int e = typesstring.indexOf(type);
+  int e = typesstring.indexOf(switchtype);
   if (e == -1)
   {
     Serial.println("Current type invalid.");
     hibernate(60*60*24);
   }
-  switch (e / 25)
+  switch (e / typesstringtypelength)
   {
     case 0:
         buttonloop();
