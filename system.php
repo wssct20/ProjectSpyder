@@ -26,7 +26,8 @@ $subtypes = array(
 		//"lock",
 		//"sps",
 		"addressablergbledstrip",
-		//"rgbledstrip",
+		"rgbled",
+		"led",
 		//"epaper",
 	),
 	"sensor" => array(

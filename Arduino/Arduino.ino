@@ -2,8 +2,8 @@
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
 String type = "actuator";                  // Enter the type of your client here.
-String subtype = "rgbledstrip";
-#define clienttype rgbledstrip                // Enter the subtype of your client here.
+#define clienttype rgbled                // Enter the subtype of your client here.
+String subtype = clienttype;
 
 #define debugmode true                   // true: some more debug information
 //#define reset_authcode true              // true: resets authcode
@@ -35,8 +35,8 @@ void setup() {
     rgbsetup();
   #elif clienttype == addressablergbledstrip
     addressablergbledstripsetup();
-  #elif clienttype == rgbledstrip
-    rgbledstripsetup();
+  #elif clienttype == rgbled
+    rgbledsetup();
   #elif clienttype == epaper
     epapersetup();
   #elif clienttype == lock
@@ -62,7 +62,7 @@ void loop() {
   #elif clienttype == addressablergbledstrip
     addressablergbledstripsetup();
   #elif clienttype == rgbledstrip
-    rgbledstriploop();
+    rgbledloop();
   #elif clienttype == epaper
     epaperloop();
   #elif clienttype == lock
