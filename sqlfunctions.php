@@ -9,7 +9,7 @@ function adddevice($type, $ip, $pairtime, $now, $authcode) {
 		dieerror("ERRSQLTABLE", "adddevice insert devices Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
-	if (!$statement->bind_param("sssiis", $type, $ip, $pairtime, $now, $authcode)) {
+	if (!$statement->bind_param("ssiis", $type, $ip, $pairtime, $now, $authcode)) {
 		dieerror("ERRSQLTABLE", "adddevice insert devices Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
