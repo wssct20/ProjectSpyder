@@ -50,6 +50,12 @@ String readEEPROM(int address, int length)
 //////////////sleep//////////////
 void lightsleep(int seconds)
 {
+  if (seconds < 10) {
+    Serial.println("Lightsleep not needed for less than 10s, staying awake.");
+    delay(seconds * 1000);
+    Serial.println("Delay ended.")
+    return;
+  }
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
   Serial.print("Starting lightsleep for ");
   Serial.print(seconds);
