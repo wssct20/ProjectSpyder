@@ -10,11 +10,19 @@ function specificactions($device, $requesttype, $returnstack) {
 	}
 }
 
-function checkstatesyntax($state, $type) {
+function checkstate($state, $type) {
 	switch ($type) {
 		case "button":
-			if (!sizeof(explode("", $state)) == 1) return false;
-			if (!($state == 1 || $state == 0)) return false;
+			if (sizeof(explode("", $state)) != 1) return false;
+			if (!($state == 1 | $state == 0)) return false;
+			return true;
+		case "rgbled":
+			$colors = explode("-", $state);
+			if (sizeof($colors) != 3) return false;
+			foreach ($colors as $color) {
+				$color = intval($color);
+				if ($color < 0 | $color > 255) return false;
+			}
 			return true;
 		default:
 			//no check needed
