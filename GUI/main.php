@@ -28,7 +28,13 @@ checksession();
 		</script>
 	</head>
 	<body>
-		<h1>ProjectSpyder</h1>
+		<nav>
+			<h1>ProjectSpyder</h1>
+			<ul>
+				<li><a href="main.php">Home</a></li>
+				<li><a href="devices.php">Devices</a></li>
+			</ul>
+		</nav>
 		<form action="login.php" method=post>
 			<input type=text name=action value=logout style="display: none;">
 			<input type=submit name=submit value=Logout>

@@ -12,7 +12,7 @@ function sessionvalid() {
 function checksession() {
 	//checksession: checks wether session is valid, if not redirects to login
 	if (!sessionvalid()) {
-		header("Location: login.php");
+		header("Location: login.php",true,307);
 		die();
 	}
 }

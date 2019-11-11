@@ -8,14 +8,14 @@ switch ($action) {
 		//Login
 		//TODO: check username and password
 		$_SESSION["login"] = true;
-		header("Location: main.php");
+		header("Location: main.php",true,307);
 		die();
 		//break;
 	case "logout":
 		//Logout
 		$_SESSION["login"] = false;
 		if (!session_destroy()) die("SESSIONDESTROYFAILED");
-		header("Location: login.php");
+		header("Location: login.php",true,307);
 		die();
 		//break;
 	default:
@@ -26,7 +26,7 @@ switch ($action) {
 }
 
 if (sessionvalid()) {
-	header("Location: main.php");
+	header("Location: main.php",true,307);
 	die();
 }
 

@@ -4,6 +4,7 @@
 
 $_SESSION["login"] = false;
 if (!session_destroy()) die("SESSIONDESTROYFAILED");
-die("LOGOUT SUCCESSFUL!");
+header("Location: login.php",true,307);
+die();
 
 ?>

@@ -23,8 +23,13 @@ checksession();
 		</style>
 	</head>
 	<body>
-		<h1>ProjectSpyder Devices</h1>
-		
+		<nav>
+			<h1>ProjectSpyder</h1>
+			<ul>
+				<li><a href="main.php">Home</a></li>
+				<li><a href="devices.php">Devices</a></li>
+			</ul>
+		</nav>
 		<table>
 			<?php 
 			//devices array: columns of the devices table to show. format: Visible text => column name of table devices.

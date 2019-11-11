@@ -8,9 +8,9 @@ require_once("GUI/system.php");
 
 //check if session is valid and redirect
 if (sessionvalid()) {
-	header("Location: GUI/main.php");
+	header("Location: GUI/main.php",true,307);
 } else {
-	header("Location: GUI/login.php");
+	header("Location: GUI/login.php",true,307);
 }
 //die();
 
