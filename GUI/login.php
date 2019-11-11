@@ -15,7 +15,7 @@ switch ($action) {
 		//Logout
 		$_SESSION["login"] = false;
 		if (!session_destroy()) die("SESSIONDESTROYFAILED");
-		header("Location: login.php",true,307);
+		header("Location: login.php",true,302);
 		die();
 		//break;
 	default:
