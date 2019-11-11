@@ -2,15 +2,23 @@
 require_once("system.php");
 
 if (!session_start()) die("SESSIONINITFAILED");
-checksession();
+
+if (sessionvalid()) {
+	header("Location: main.php");
+	die();
+}
 
 if ($_POST["action"] ?? "" == "logout") {
-	if (!session_destroy()) die("LOGOUT FAILED!");
-	die("LOGOUT SUCCESSFUL");
+	$_SESSION["login"] = false;
+	if (!session_destroy()) die("SESSIONDESTROYFAILED");
+	die("LOGOUT SUCCESSFUL!");
 }
 
 if ($_POST["action"] ?? "" == "login") {
-	//check username and password
+	//TODO: check username and password
+	$_SESSION["login"] = true;
+	header("Location: main.php");
+	die();
 }
 
 ?>
@@ -24,17 +32,20 @@ if ($_POST["action"] ?? "" == "login") {
 			}
 		</style>
 		<script>
+			/*
+			//add post login routine if needed
 			async function login() {
-				//add post login routine
 			}
+			*/
 		</script>
 	</head>
 	<body>
 		<div id=logindiv>
-			<form action="javascript:void(0)" onsubmit="login();">
-				<input type=text id=username placeholder="Username">
-				<input type=password id=password placeholder="Password">
-				<input type=submit>
+			<form action="login.php" method="post" onsubmit="">
+				<input type=text name=username placeholder="Username">
+				<input type=password name=password placeholder="Password">
+				<input type=text name=action value=login style="display: none;" > 
+				<input type=submit name=login value=login>
 			</form>
 		</div>
 	</body>
