@@ -28,6 +28,15 @@ function checkstate($state, $type) {
 			$color = intval($state);
 			if ($color < 0 | $color > 255) return false;
 			return true;
+		case "rgbdetect":
+			$colors = explode("-", $state);
+			if (!(sizeof($colors) >= 3 & sizeof($colors) <= 4)) return false;
+			foreach ($colors as $key =>$color) {
+				$color = intval($color);
+				if ($key == 3 & $color > 3) return false;
+				if ($color < 0 | $color > 255) return false;
+			}
+			return true;
 		default:
 			//no check needed
 			return true;	

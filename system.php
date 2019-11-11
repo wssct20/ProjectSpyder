@@ -28,7 +28,7 @@ $types = array(
 		//"finger",
 		//"temp",
 		//"rotation",
-		//"rgb",
+		"rgbdetect",
 	//sps:
 		//"sps",
 );
