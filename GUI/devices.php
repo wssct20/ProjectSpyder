@@ -14,6 +14,12 @@ checksession();
 			h1 {
 				color: white;
 			}
+			td {
+				color: white;
+			}
+			th {
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
