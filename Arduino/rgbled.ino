@@ -2,7 +2,7 @@
 #define pincount 3                    //number of pins you use
 const int pins[] = {19, 18, 5};       //Enter the pin of your led here
 
-const int rgbled_frequenz = 5000;            //pwm frequenz
+const int rgbled_frequency = 5000;            //pwm frequency
 #define pwmchannelcount 3             //number of pwm channels you use
 const int rgbled_pwmchannel[] = {0, 1, 2};   //pwm channels
 const int rgbled_resolution = 8;             //8-bit resolution
@@ -14,7 +14,7 @@ void rgbledsetup() {
   //setup channels and link pins
   for (int i = 0; i < pwmchannelcount; i++)
   {
-    ledcSetup(rgbled_pwmchannel[i], rgbled_frequenz, rgbled_resolution);
+    ledcSetup(rgbled_pwmchannel[i], rgbled_frequency, rgbled_resolution);
     ledcAttachPin(pins[i], rgbled_pwmchannel[i]);
   }
 

@@ -126,7 +126,7 @@ void loop() {
         //motorloop();
         break;
     case 10:
-      ledsetup();
+      ledloop();
       break;
     default:
       Serial.println("Current type invalid.");
