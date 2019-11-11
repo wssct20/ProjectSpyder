@@ -22,7 +22,11 @@ if (!sessionvalid()) {
 				background-color: black;
 			}
 			h1 {
-				text-color: white;
+				color: white;
+			}
+			input {
+			    color: white;
+			    background-color: black;
 			}
 		</style>
 		<script>
@@ -31,6 +35,10 @@ if (!sessionvalid()) {
 	</head>
 	<body>
 		<h1>ProjectSpyder</h1>
-		<iframe id=mainframe />
+		<form action="login.php" method=post>
+			<input type=text name=action value=logout style="display: none;">
+			<input type=submit name=submit value=Logout>
+		</form>
+		<iframe id=mainframe style="display: none;" />
 	</body>
 <html>

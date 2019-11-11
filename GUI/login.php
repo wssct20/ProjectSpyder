@@ -3,11 +3,6 @@ require_once("system.php");
 
 if (!session_start()) die("SESSIONINITFAILED");
 
-if (sessionvalid()) {
-	header("Location: main.php");
-	die();
-}
-
 if (($_POST["action"] ?? "") == "logout") {
 	$_SESSION["login"] = false;
 	if (!session_destroy()) die("SESSIONDESTROYFAILED");
@@ -17,6 +12,11 @@ if (($_POST["action"] ?? "") == "logout") {
 if (($_POST["action"] ?? "") == "login") {
 	//TODO: check username and password
 	$_SESSION["login"] = true;
+	header("Location: main.php");
+	die();
+}
+
+if (sessionvalid()) {
 	header("Location: main.php");
 	die();
 }
