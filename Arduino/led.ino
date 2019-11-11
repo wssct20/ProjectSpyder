@@ -35,7 +35,7 @@ void ledloop() {
   Serial.println(state);
   
   //set pin
-  ledcWrite(pin, state);
+  ledcWrite(led_pwmchannel, state);
 
     
   //go to lightsleep
