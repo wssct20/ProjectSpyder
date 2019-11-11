@@ -1,0 +1,1 @@
+There currently is [no license](https://choosealicense.com/no-permission/), we are deciding upon one soon though.
