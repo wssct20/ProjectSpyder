@@ -170,11 +170,29 @@ function getconditions() {
 	if (!$statement->execute()) {
 		dieerror("ERRSQLTABLE", "getconditions Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
-	// Stage 4: get results
+	// Stage 3: get results
 	if (!($result = $statement->get_result())) {
 		dieerror("ERRSQLTABLE", "getconditions Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
-	// Stage 5: fetch all as array with associative names
+	// Stage 4: fetch all as array with associative names
+	return $result->fetch_all(MYSQLI_BOTH);
+}
+
+function getdevices() {
+	//getdevices: get all devices
+	global $db;
+	if (!($statement = $db->prepare("SELECT * FROM devices"))) {
+		dieerror("ERRSQLTABLE", "getdevices Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "getdevices Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: get results
+	if (!($result = $statement->get_result())) {
+		dieerror("ERRSQLTABLE", "getdevices Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 4: fetch all as array with associative names
 	return $result->fetch_all(MYSQLI_BOTH);
 }
 
