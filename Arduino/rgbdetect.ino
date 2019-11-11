@@ -1,0 +1,8 @@
+
+void rgbdetectsetup() {
+  
+}
+
+void rgbdetectloop() {
+  
+}
