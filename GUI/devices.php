@@ -20,11 +20,18 @@ checksession();
 			th {
 				color: white;
 			}
+			
+			nav {
+				color: white;
+			}
+			a {
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
 		<nav>
-			<h1>ProjectSpyder</h1>
+			<h1>ProjectSpyder Devices</h1>
 			<ul>
 				<li><a href="main.php">Home</a></li>
 				<li><a href="devices.php">Devices</a></li>

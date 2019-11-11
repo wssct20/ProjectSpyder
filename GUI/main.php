@@ -22,6 +22,13 @@ checksession();
 			    color: white;
 			    background-color: black;
 			}
+			
+			nav {
+				color: white;
+			}
+			a {
+				color: white;
+			}
 		</style>
 		<script>
 			//to be added
