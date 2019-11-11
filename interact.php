@@ -33,7 +33,7 @@ switch ($requesttype) {
 	case "PUT":
 		// requesttype PUT: place new state into table
 		//check for previos state and only update table and conditions if state changed
-		if (!checkstate($state, $type)) dieerror("STATEINVALID", "State is invalid, wrong type or old authcode?");
+		if (!checkstate($state, $device["type"])) dieerror("STATEINVALID", "State is invalid, wrong type or old authcode?");
 		$stateprevious = getdata($device["id"]);
 		if ($stateprevious != $state) {
 			updatedata($device["id"], $state);
