@@ -1,7 +1,5 @@
 <?php
 require_once("system.php");
-
-if (!session_start()) die("SESSIONINITFAILED");
 checksession();
 
 ?>
@@ -11,11 +9,16 @@ checksession();
 		<title>ProjectSpyder Devices</title>
 		<style>
 			body {
-				background-color: #00000000;
+				background-color: black;
+			}
+			h1 {
+				color: white;
 			}
 		</style>
 	</head>
 	<body>
-		
+	<h1>ProjectSpyder Devices</h1>
+	
+	<table></table>
 	</body>
 </html>

@@ -3,13 +3,7 @@
 
 require_once("system.php");
 
-if (!session_start()) die("SESSIONINITFAILED");
-
-//switch to login page if session is invalid
-if (!sessionvalid()) {
-	header("Location: login.php");
-	die();
-}
+checksession();
 
 ?>
 

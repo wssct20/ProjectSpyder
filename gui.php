@@ -4,11 +4,9 @@
 
 require_once("GUI/system.php");
 
-if (!session_start()) die("SESSIONINITFAILED");
-
 //this should only redirect to subpages
 
-// switch to login page if session is invalid
+//check if session is valid and redirect
 if (sessionvalid()) {
 	header("Location: GUI/main.php");
 } else {
