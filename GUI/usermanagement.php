@@ -1,4 +1,5 @@
 <?php
+die("unfinished");
 require_once("system.php");
 
 if (!session_start()) die("SESSIONINITFAILED");
