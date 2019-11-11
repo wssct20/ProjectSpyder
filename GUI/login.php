@@ -8,13 +8,13 @@ if (sessionvalid()) {
 	die();
 }
 
-if ($_POST["action"] ?? "" == "logout") {
+if (($_POST["action"] ?? "") == "logout") {
 	$_SESSION["login"] = false;
 	if (!session_destroy()) die("SESSIONDESTROYFAILED");
 	die("LOGOUT SUCCESSFUL!");
 }
 
-if ($_POST["action"] ?? "" == "login") {
+if (($_POST["action"] ?? "") == "login") {
 	//TODO: check username and password
 	$_SESSION["login"] = true;
 	header("Location: main.php");
@@ -45,7 +45,7 @@ if ($_POST["action"] ?? "" == "login") {
 				<input type=text name=username placeholder="Username">
 				<input type=password name=password placeholder="Password">
 				<input type=text name=action value=login style="display: none;" > 
-				<input type=submit name=login value=login>
+				<input type=submit name=login value=LOGIN>
 			</form>
 		</div>
 	</body>
