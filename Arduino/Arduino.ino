@@ -1,7 +1,7 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-const String type = "rgbled";      //Enter the type of your client here.
+const String type = "rgbdetect";      //Enter the type of your client here.
 
 #define debugmode               //some more debug information
 //#define reset_authcode          //resets authcode
