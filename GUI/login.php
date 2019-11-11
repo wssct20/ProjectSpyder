@@ -1,19 +1,27 @@
 <?php
 require_once("system.php");
 
-if (!session_start()) die("SESSIONINITFAILED");
+$action = $_POST["action"] ?? "";
 
-if (($_POST["action"] ?? "") == "logout") {
-	$_SESSION["login"] = false;
-	if (!session_destroy()) die("SESSIONDESTROYFAILED");
-	die("LOGOUT SUCCESSFUL!");
-}
-
-if (($_POST["action"] ?? "") == "login") {
-	//TODO: check username and password
-	$_SESSION["login"] = true;
-	header("Location: main.php");
-	die();
+switch ($action) {
+	case "login":
+		//Login
+		//TODO: check username and password
+		$_SESSION["login"] = true;
+		header("Location: main.php");
+		die();
+		//break;
+	case "logout":
+		//Logout
+		$_SESSION["login"] = false;
+		if (!session_destroy()) die("SESSIONDESTROYFAILED");
+		die("LOGOUT SUCCESSFUL!");
+		//break;
+	default:
+		//unrecognized action
+	case "":
+		//no action specified
+		//break;
 }
 
 if (sessionvalid()) {
@@ -28,7 +36,11 @@ if (sessionvalid()) {
 		<title>ProjectSpyder Login</title>
 		<style>
 			body {
-				background-color: #00000000;
+				background-color: black;
+			}
+			input {
+			    color: white;
+			    background-color: black;
 			}
 		</style>
 		<script>

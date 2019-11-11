@@ -36,3 +36,6 @@
 <Files mysqlinfo.php>
 	allow from all
 </Files>
+<Files favicon.ico>
+	allow from all
+</Files>

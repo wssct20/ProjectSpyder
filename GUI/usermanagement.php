@@ -1,8 +1,6 @@
 <?php
 die("unfinished");
 require_once("system.php");
-
-if (!session_start()) die("SESSIONINITFAILED");
 checksession();
 
 if ($_POST["action"] ?? "" == "create") {
@@ -10,7 +8,7 @@ if ($_POST["action"] ?? "" == "create") {
 	$password = $_POST["password"] ?? "";
 	if ($username == "" || $password == "") die("CREDENTIALSINCOMPLETE");
 	$password = calculateuserhash($username, $password);
-	//sql query into database
+	//TODO: sql query into database
 }
 
 ?>
