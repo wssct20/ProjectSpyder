@@ -24,6 +24,10 @@ function checkstate($state, $type) {
 				if ($color < 0 | $color > 255) return false;
 			}
 			return true;
+		case "led":
+			$color = intval($state);
+			if ($color < 0 | $color > 255) return false;
+			return true;
 		default:
 			//no check needed
 			return true;	

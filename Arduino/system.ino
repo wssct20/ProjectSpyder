@@ -61,7 +61,7 @@ void lightsleep(int seconds)
   Serial.print(seconds);
   Serial.println(" seconds.");
   Serial.println("------sleep------");
-  #if debugmode == true
+  #ifdef debugmode
   delay(1000);
   #endif
   esp_wifi_disconnect();
@@ -87,7 +87,7 @@ bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
   Serial.print(triggerlevel);
   Serial.println(".");
   Serial.println("------sleep------");
-  #if debugmode == true
+  #ifdef debugmode
   delay(1000);
   #endif
   esp_wifi_disconnect();
@@ -119,7 +119,7 @@ void lightsleeptouch(int seconds, int touchpin, int threshold)
   Serial.print(touchpin);
   Serial.println(".");
   Serial.println("------sleep------");
-  #if debugmode == true
+  #ifdef debugmode
   delay(1000);
   #endif
   esp_wifi_disconnect();
@@ -145,7 +145,7 @@ void hibernate(int seconds)
   esp_wifi_disconnect();
   esp_wifi_stop();
   delay(1000);
-  #if debugmode == true
+  #ifdef debugmode
   delay(5000);
   #endif
   esp_deep_sleep_start();
