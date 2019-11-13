@@ -28,9 +28,9 @@ $types = array(
 		//"finger",
 		//"temp",
 		//"rotation",
-		//"rgb",
-	//sps:
-		//"sps",
+		"rgbdetect",
+	//raw data:
+		//"raw",
 );
 
 require_once ("functions.php");
