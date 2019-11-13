@@ -1,4 +1,4 @@
-/*#include "Wire.h"
+//#include "Wire.h"
 #include "Adafruit_TCS34725.h"
 
 /*
@@ -8,7 +8,7 @@
  * SCL  to the I²C SCL (at the ESP32 GPIO 22)
  * SDA  to the I²C SDA (at the ESP32 GPIO 21)
  */
-/*
+
 //Initialise the sensor
 Adafruit_TXS34725 rgbdetect = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
 
@@ -28,7 +28,7 @@ void rgbdetectsetup() {
 
 void rgbdetectloop() {
 
-  int rgbstates = {r, g, b, c, colorTemp, lux};
+  uint16_t r, g, b, c, colorTemp, lux;
 
   rgbdetect.getRawData(&r, &g, &b, &c);
   colorTemp = tcs.calculateColorTemperature_dn40(r, g, b, c);
@@ -41,5 +41,17 @@ void rgbdetectloop() {
   Serial.print("B: "); Serial.print(b, DEC); Serial.print(" ");
   Serial.print("C: "); Serial.print(c, DEC); Serial.print(" ");
   Serial.println(" ");
+
+  String state = r.concat(":")
+    .concat(g).concat(":")
+    .concat(b).concat(":")
+    .concat(c).concat(":")
+    .concat(colorTemp).concat(":")
+    .concat(lux);
+
+  Serial.println(state);
+  putstate(state);
+
+  lightsleep(requesttimeout);
   
-}*/
+}
