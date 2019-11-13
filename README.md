@@ -42,6 +42,7 @@ To set up apache2 run these commands as root:
 echo '<VirtualHost *:80>' > /etc/apache2/sites-available/ProjectSpyder.conf
 echo ' ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/ProjectSpyder.conf
 echo ' DocumentRoot /var/www/html' >> /etc/apache2/sites-available/ProjectSpyder.conf #will be changed soon
+echo ' DirectoryIndex index.php index.html' >> /etc/apache2/sites-available/ProjectSpyder.conf
 echo ' <Directory /var/www/>' >> /etc/apache2/sites-available/ProjectSpyder.conf
 echo '  Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/ProjectSpyder.conf
 echo '  AllowOverride All' >> /etc/apache2/sites-available/ProjectSpyder.conf
