@@ -2,7 +2,7 @@
 #define pincount 3                    //number of pins you use
 const int pins[] = {19, 18, 5};       //Enter the pin of your led here
 
-const int rgbled_frequenz = 5000;            //pwm frequenz
+const int rgbled_frequency = 5000;            //pwm frequency
 #define pwmchannelcount 3             //number of pwm channels you use
 const int rgbled_pwmchannel[] = {0, 1, 2};   //pwm channels
 const int rgbled_resolution = 8;             //8-bit resolution
@@ -14,11 +14,11 @@ void rgbledsetup() {
   //setup channels and link pins
   for (int i = 0; i < pwmchannelcount; i++)
   {
-    ledcSetup(rgbled_pwmchannel[i], rgbled_frequenz, rgbled_resolution);
+    ledcSetup(rgbled_pwmchannel[i], rgbled_frequency, rgbled_resolution);
     ledcAttachPin(pins[i], rgbled_pwmchannel[i]);
   }
 
-  putstate("0#150#0");    //only a test state. red#green#blue
+  putstate("255:255:255");    //only a test state. red:green:blue
   
 }
 
@@ -31,14 +31,14 @@ void rgbledloop() {
   Serial.println(rawstate);
 
   //catch wrong format
-  if (rawstate.indexOf("#") == -1) rawstate = "0#0#0";
+  if (rawstate.indexOf(":") == -1) rawstate = "0:0:0";
   
   //search for seperators
-  int seperator1 = rawstate.indexOf("#");
+  int seperator1 = rawstate.indexOf(":");
   Serial.print("seperator1: ");
   Serial.println(seperator1);
   
-  int seperator2 = rawstate.indexOf("#", seperator1 + 1);
+  int seperator2 = rawstate.indexOf(":", seperator1 + 1);
   Serial.print("seperator2: ");
   Serial.println(seperator2);
   
@@ -58,7 +58,7 @@ void rgbledloop() {
   //set pins
   for (int i = 0; i < pincount; i++)
   {
-    ledcWrite(pins[i], state[i]);
+    ledcWrite(rgbled_pwmchannel[i], state[i]);
   }
 
   Serial.print("redstate: ");

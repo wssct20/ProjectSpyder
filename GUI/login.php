@@ -1,16 +1,33 @@
 <?php
 require_once("system.php");
 
-if (!session_start()) die("SESSIONINITFAILED");
-checksession();
+$action = $_POST["action"] ?? "";
 
-if ($_POST["action"] ?? "" == "logout") {
-	if (!session_destroy()) die("LOGOUT FAILED!");
-	die("LOGOUT SUCCESSFUL");
+switch ($action) {
+	case "login":
+		//Login
+		//TODO: check username and password
+		$_SESSION["login"] = true;
+		header("Location: main.php",true,307);
+		die();
+		//break;
+	case "logout":
+		//Logout
+		$_SESSION["login"] = false;
+		if (!session_destroy()) die("SESSIONDESTROYFAILED");
+		header("Location: login.php",true,302);
+		die();
+		//break;
+	default:
+		//unrecognized action
+	case "":
+		//no action specified
+		//break;
 }
 
-if ($_POST["action"] ?? "" == "login") {
-	//check username and password
+if (sessionvalid()) {
+	header("Location: main.php",true,307);
+	die();
 }
 
 ?>
@@ -20,21 +37,28 @@ if ($_POST["action"] ?? "" == "login") {
 		<title>ProjectSpyder Login</title>
 		<style>
 			body {
-				background-color: #00000000;
+				background-color: black;
+			}
+			input {
+			    color: white;
+			    background-color: black;
 			}
 		</style>
 		<script>
+			/*
+			//add post login routine if needed
 			async function login() {
-				//add post login routine
 			}
+			*/
 		</script>
 	</head>
 	<body>
 		<div id=logindiv>
-			<form action="javascript:void(0)" onsubmit="login();">
-				<input type=text id=username placeholder="Username">
-				<input type=password id=password placeholder="Password">
-				<input type=submit>
+			<form action="login.php" method="post" onsubmit="">
+				<input type=text name=username placeholder="Username">
+				<input type=password name=password placeholder="Password">
+				<input type=text name=action value=login style="display: none;" > 
+				<input type=submit name=login value=LOGIN>
 			</form>
 		</div>
 	</body>

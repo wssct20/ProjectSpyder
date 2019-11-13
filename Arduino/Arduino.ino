@@ -1,7 +1,7 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-const String type = "led";      //Enter the type of your client here.
+const String type = "rgbdetect";      //Enter the type of your client here.
 
 #define debugmode               //some more debug information
 //#define reset_authcode          //resets authcode
@@ -10,7 +10,7 @@ int requesttimeout;
 
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()
 #define typesstringtypelength 25
-const String typesstring = "button                   finger                   temp                     rotation                 rgb                      addressablergbledstrip   rgbled                   epaper                   lock                     motor                    led                      ";    // type every 25 chars
+const String typesstring = "button                   finger                   temp                     rotation                 rgbdetect                addressablergbledstrip   rgbled                   epaper                   lock                     motor                    led                      ";    // type every 25 chars
 String switchtype = type;
 
 void setup() {
@@ -56,7 +56,7 @@ void setup() {
       //rotationsetup();
       break;
     case 4:
-      rgbsetup();
+      rgbdetectsetup();
       break;
     case 5:
       //addressablergbledstripsetup();
@@ -108,7 +108,7 @@ void loop() {
         //rotationloop();
         break;
     case 4:
-        rgbloop();
+        rgbdetectloop();
         break;
     case 5:
         //addressablergbledstripsetup();
@@ -126,7 +126,7 @@ void loop() {
         //motorloop();
         break;
     case 10:
-      ledsetup();
+      ledloop();
       break;
     default:
       Serial.println("Current type invalid.");

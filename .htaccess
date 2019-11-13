@@ -43,6 +43,9 @@ DirectoryIndex index.php index.html
 <Files index.php>
 	allow from all
 </Files>
-<Files ""> 
+<Files "">
+	allow from all
+</Files>
+<Files favicon.ico>
 	allow from all
 </Files>

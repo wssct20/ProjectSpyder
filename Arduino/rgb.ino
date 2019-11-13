@@ -1,8 +1,0 @@
-
-void rgbsetup() {
-  
-}
-
-void rgbloop() {
-  
-}

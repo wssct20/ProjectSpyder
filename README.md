@@ -93,6 +93,8 @@ An instruction on how to do that can be found
 [here](https://askubuntu.com/questions/429869/is-this-a-correct-way-to-enable-htaccess-in-apache-2-4-7).
 The install skript will do this for you, this is left here if needed until a final install skript has been developed.
 
+__IMPORTANT:__ Remember to change your machines default password!
+
 ## How to set up and install clients
 
 Add a file named `WifiCredentials.h` inside the folder `Arduino`. Put these contents inside it:

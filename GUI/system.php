@@ -1,14 +1,20 @@
 <?php
-//require_once("../system.php"); //check if parent folder access is possible this way
+require_once(__DIR__."/../system.php"); //does this really reference to parent folder?
 
-function checksession() {
-	if (!sessionvalid()) die("SESSIONINVALID");
-}
+if (!session_start()) die("SESSIONINITFAILED");
+
 function sessionvalid() {
-	//check if login session is valid
+	//TODO: check if login session is valid
 	//return false;
-	return true;
+	//return true;
+	return $_SESSION["login"] ?? false;
 }
-
+function checksession() {
+	//checksession: checks wether session is valid, if not redirects to login
+	if (!sessionvalid()) {
+		header("Location: login.php",true,307);
+		die();
+	}
+}
 
 ?>

@@ -1,27 +1,17 @@
 <?php
-die("GUIUNFINISHED");
+//die("GUIUNFINISHED");
 //TODO whole gui stuff is untested
 
 require_once("GUI/system.php");
 
-if (!session_start()) die("SESSIONINITFAILED");
-//sessionvalid(); //somehow switch to login page if session is invalid
+//this should only redirect to subpages
+
+//check if session is valid and redirect
+if (sessionvalid()) {
+	header("Location: GUI/main.php",true,307);
+} else {
+	header("Location: GUI/login.php",true,307);
+}
+//die();
 
 ?>
-
-<html>
-	<head>
-		<title>ProjectSpyder GUI</title>
-		<style>
-			body {
-				background-color: black;
-			}
-		</style>
-		<script>
-			//to be added
-		</script>
-	</head>
-	<body>
-		<iframe id=mainframe />
-	</body>
-<html>

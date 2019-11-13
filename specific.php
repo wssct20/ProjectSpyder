@@ -17,7 +17,7 @@ function checkstate($state, $type) {
 			if (!($state == 1 | $state == 0)) return false;
 			return true;
 		case "rgbled":
-			$colors = explode("-", $state);
+			$colors = explode(":", $state);
 			if (sizeof($colors) != 3) return false;
 			foreach ($colors as $color) {
 				$color = intval($color);
