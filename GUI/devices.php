@@ -1,12 +1,13 @@
 <?php
 require_once("system.php");
+global $systemname;
 checksession();
 
 ?>
 
 <html>
 	<head>
-		<title>ProjectSpyder Devices</title>
+		<title><?php echo $systemname;?> Devices</title>
 		<style>
 			body {
 				background-color: black;
@@ -31,7 +32,7 @@ checksession();
 	</head>
 	<body>
 		<nav>
-			<h1>ProjectSpyder Devices</h1>
+			<h1><?php echo $systemname;?> Devices</h1>
 			<ul>
 				<li><a href="main.php">Home</a></li>
 				<li><a href="devices.php">Devices</a></li>

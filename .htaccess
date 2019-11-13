@@ -1,3 +1,4 @@
+DirectoryIndex index.php index.html
 <Files *>
 	deny from all
 </Files>
@@ -34,6 +35,15 @@
 	allow from all
 </Files>
 <Files mysqlinfo.php>
+	allow from all
+</Files>
+<Files index.html>
+	allow from all
+</Files>
+<Files index.php>
+	allow from all
+</Files>
+<Files "">
 	allow from all
 </Files>
 <Files favicon.ico>
