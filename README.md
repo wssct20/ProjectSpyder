@@ -62,10 +62,6 @@ crontab makes it easy to keep up to date:
 # sleeping 15s to ensure network is up
 ```
 
-Apache2 is logging all accesses and errors by default. This will fill up your disk quickly.
-Please consider [disabling apache2 logging](https://www.mydigitallife.net/how-to-disable-and-turn-off-apache-httpd-access-and-error-log/).
-The install skript will do this for you, this is left here if needed until a final install skript has been developed.
-
 To ensure the Server is reachable, we use NETBIOS and/or DNS of the router.
 For this you will need to configure your router and set the machines hostname to the correct one.
 ```
@@ -87,11 +83,6 @@ $sqlhost = "localhost";
 You need to replace `sqluser` with the username of the MySQL Server. Then do the same for the password.
 The `sqldbname` parameter defines the name of the Database in the MySQL Server.
 Please ensure its possible for the user to log in and modify everything within the database.
-
-For your security we recommend to enable `.htaccess` files. 
-An instruction on how to do that can be found 
-[here](https://askubuntu.com/questions/429869/is-this-a-correct-way-to-enable-htaccess-in-apache-2-4-7).
-The install skript will do this for you, this is left here if needed until a final install skript has been developed.
 
 __IMPORTANT:__ Remember to change your machines default password!
 
