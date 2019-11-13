@@ -1,8 +1,8 @@
 <?php
 require_once("system.php");
+global $systemname;
 
 $action = $_POST["action"] ?? "";
-
 switch ($action) {
 	case "login":
 		//Login
@@ -34,7 +34,7 @@ if (sessionvalid()) {
 
 <html>
 	<head>
-		<title>ProjectSpyder Login</title>
+		<title><?php echo $systemname;?> Login</title>
 		<style>
 			body {
 				background-color: black;
@@ -46,7 +46,7 @@ if (sessionvalid()) {
 		</style>
 		<script>
 			/*
-			//add post login routine if needed
+			//TODO: add post login routine if needed
 			async function login() {
 			}
 			*/
@@ -54,6 +54,7 @@ if (sessionvalid()) {
 	</head>
 	<body>
 		<div id=logindiv>
+			<h1><?php echo $systemname;?> Login</h1>
 			<form action="login.php" method="post" onsubmit="">
 				<input type=text name=username placeholder="Username">
 				<input type=password name=password placeholder="Password">

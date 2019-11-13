@@ -1,5 +1,7 @@
 <?php
-global $devicehashalgo, $userhashalgo, $hashprefix, $updatetime, $types, $db;
+global $devicehashalgo, $userhashalgo, $hashprefix, $updatetime, $types, $db, $systemname;
+//systemname: The Name of this system, displayed in GUI, default is ProjectSpyder
+$systemname = "ProjectSpyder";
 //devicehashalgo: algoryhthm used for computing hash for device authentication purposes
 //		can be changed, because only generated when device is paired
 $devicehashalgo = "sha512"; //64 bytes, 128 chars

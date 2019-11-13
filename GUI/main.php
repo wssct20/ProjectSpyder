@@ -2,6 +2,7 @@
 //this is the main screen of the gui
 
 require_once("system.php");
+global $systemname;
 
 checksession();
 
@@ -10,7 +11,7 @@ checksession();
 
 <html>
 	<head>
-		<title>ProjectSpyder GUI</title>
+		<title><?php echo $systemname;?> GUI</title>
 		<style>
 			body {
 				background-color: black;
