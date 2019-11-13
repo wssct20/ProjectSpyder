@@ -10,7 +10,7 @@
  */
 
 //Initialise the sensor
-Adafruit_TXS34725 rgbdetect = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
+Adafruit_TCS34725 rgbdetect = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
 
 void rgbdetectsetup() {
 
@@ -31,7 +31,7 @@ void rgbdetectloop() {
   uint16_t r, g, b, c, colorTemp, lux;
 
   rgbdetect.getRawData(&r, &g, &b, &c);
-  colorTemp = tcs.calculateColorTemperature_dn40(r, g, b, c);
+  colorTemp = rgbdetect.calculateColorTemperature_dn40(r, g, b, c);
   lux = rgbdetect.calculateLux(r, g, b);
 
   Serial.print("Color Temp: "); Serial.print(colorTemp, DEC); Serial.print(" K - ");
