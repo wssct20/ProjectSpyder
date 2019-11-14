@@ -7,6 +7,7 @@ require_once("system.php");
 $authcode = $_REQUEST["authcode"] ?? "";
 $state = $_REQUEST["state"] ?? "";
 $requesttype = $_REQUEST["requesttype"] ?? "";
+$type = $_REQUEST["type"] ?? "";
 
 
 $ip = getipaddress();
@@ -20,6 +21,9 @@ $returnstack = array();
 $device = getdevicebyauthcode($authcode);
 if (sizeof($device) == 0) dieerror("AUTHFAILED", "Authentication failed, client should request a new one using pair.");
 if ($device["authcode"] != $authcode) die("AUTHCODESQLFATALERROR"); //should never happen
+
+//check if device type matches
+if ($device["type"] != $type) dieerror("TYPEMISMATCH","Type doesn't match.");
 
 //update device ip and lastact timestamp
 updatedevice($device["id"], $now, $ip);
