@@ -7,6 +7,7 @@ switch ($action) {
 	case "login":
 		//Login
 		if (sizeof(getusers()) == 0) {
+			header("DEBUG: login.php login because of no users successful");
 			$_SESSION["login"] = true;
 			header("Location: main.php",true,303);
 			die();
@@ -17,11 +18,13 @@ switch ($action) {
 		if (sizeof($user) == 0) loginfailed();
 		if (calculateuserhash($username, $password) != $user["pass"]) loginfailed();
 		$_SESSION["login"] = true;
+		header("DEBUG: login.php userlogin successful");
 		header("Location: main.php",true,303);
 		die();
 		//break;
 	case "logout":
 		//Logout
+		header("DEBUG: login.php logout");
 		$_SESSION["login"] = false;
 		if (!session_destroy()) die("SESSIONDESTROYFAILED");
 		header("Location: login.php",true,303);
@@ -35,11 +38,13 @@ switch ($action) {
 }
 
 if (sessionvalid()) {
+	header("DEBUG: login.php session valid, redirect to main");
 	header("Location: main.php",true,307);
 	die();
 }
 
 function loginfailed() {
+	header("DEBUG: login.php login failed");
 	header("Location: login.php",true,303);
 	die();
 }
