@@ -189,7 +189,7 @@ void pair()
 
 String getstate()
 {
-  return interact(0, "");
+  return interact(0, ""); //returns "" on failure
 }
 
 void putstate(String state)
@@ -231,6 +231,8 @@ String interact(int requesttype, String state)
   };
   url += "&requesttype=";
   url += requesttypes[requesttype];
+  url += "&type=";
+  url += type;
   
   Serial.print("Requesting URL: ");
   Serial.println(url);
@@ -312,17 +314,21 @@ String interact(int requesttype, String state)
       Serial.print("ERROR: ");
       Serial.println(answerdata[i][1]);
 
-      int errorsint[] = {0, 1, 2};
-      String errorsstring = "default             AUTHFAILED          REQUESTTYPEINVALID  ";    // jeder ERROR 20 Zeichen
+      String errorsstring = "default             AUTHFAILED          REQUESTTYPEINVALID  TYPEMISMATCH        ";    // error every 20 chars
       int e = errorsstring.indexOf(answerdata[i][1]);
       if (e == -1) {
         //unrecognized error
         e = 0;
       }
-      switch (errorsint[e / 20])
+      switch (e / 20)
       {
         case 1:
-          Serial.println("Auth failed, requesting new code.");
+          Serial.println("Authentication failed, requesting new authcode.");
+          pair();
+          lightsleep(requesttimeout);
+          return interact(requesttype, state);
+        case 3:
+          Serial.println("Type mismatch, requesting new authcode.");
           pair();
           lightsleep(requesttimeout);
           return interact(requesttype, state);

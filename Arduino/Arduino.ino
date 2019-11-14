@@ -13,6 +13,9 @@ int requesttimeout;
 const String typesstring = "button                   finger                   temp                     rotation                 rgbdetect                addressablergbledstrip   rgbled                   epaper                   lock                     motor                    led                      ";    // type every 25 chars
 String switchtype = type;
 
+// Notes:
+// Currently EEPROM address 0-128 are used by the php script. Please stick to addresses after 128.
+
 void setup() {
 
   Serial.begin(115200);
