@@ -30,9 +30,14 @@ void rgbdetectloop() {
 
   uint16_t r, g, b, c, colorTemp, lux;
 
+  //TODO: LED einschalten
+  //TODO: delay250ms
+
   rgbdetect.getRawData(&r, &g, &b, &c);
   colorTemp = rgbdetect.calculateColorTemperature_dn40(r, g, b, c);
   lux = rgbdetect.calculateLux(r, g, b);
+
+  //TODO: LED ausschalten
 
   Serial.print("Color Temp: "); Serial.print(colorTemp, DEC); Serial.print(" K - ");
   Serial.print("Lux: "); Serial.print(lux, DEC); Serial.print(" - ");
@@ -42,12 +47,17 @@ void rgbdetectloop() {
   Serial.print("C: "); Serial.print(c, DEC); Serial.print(" ");
   Serial.println(" ");
 
-  String state = r.concat(":")
-    .concat(g).concat(":")
-    .concat(b).concat(":")
-    .concat(c).concat(":")
-    .concat(colorTemp).concat(":")
-    .concat(lux);
+  String state = String(r);
+  state.concat(":");
+  state.concat(g);
+  state.concat(":");
+  state.concat(b);
+  state.concat(":");
+  state.concat(c);
+  state.concat(":");
+  state.concat(colorTemp);
+  state.concat(":");
+  state.concat(lux);
 
   Serial.println(state);
   putstate(state);
