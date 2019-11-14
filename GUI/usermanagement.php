@@ -94,11 +94,13 @@ if ($action == "delete") {
 				echo "<td>" . $user["id"] . "</td>";
 				echo "<td>" . $user["name"] . "</td>";
 				?>
-				<form method=post>
-					<input type=text name=username value="<?php echo $user["name"];?>" style="display: none;">
-					<input type=text name=action value=delete style="display: none;">
-					<input type=submit name=submit value="Delete">
-				</form>
+				<td>
+					<form method=post>
+						<input type=text name=username value="<?php echo $user["name"]; ?>" style="display: none;">
+						<input type=text name=action value=delete style="display: none;">
+						<input type=submit name=submit value="Delete">
+					</form>
+				</td>
 				<?php
 				echo "</tr>";
 			}
