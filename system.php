@@ -20,7 +20,6 @@ $types = array(
 	//actuators:
 		//"motor",
 		//"lock",
-		//"sps",
 		"addressablergbledstrip",
 		"rgbled",
 		"led",

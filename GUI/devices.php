@@ -3,6 +3,23 @@ require_once("system.php");
 global $systemname;
 checksession();
 
+$friendlytypenames = array(
+	//"motor" => "Motor",
+	//"lock" => "Lock",
+	"addressablergbledstrip" => "LED-Strip",
+	"rgbled" => "RGB-LED",
+	"led" => "LED",
+	//"epaper" => "E-Paper Screen",
+	"button" => "Button",
+	//"finger" => "Fingerprint sensor",
+	//"temp" => "temperature sensor",
+	//"rotation" => "rotational sensor",
+	"rgbdetect" => "RGB sensor",
+	"raw" => "unknown",
+	"" => null,
+);
+
+
 ?>
 
 <html>
@@ -64,7 +81,7 @@ checksession();
 				echo "<tr>";
 				foreach ($columns as $column) {
 					echo "<td>";
-					echo $device[$column];
+					echo ($friendlytypenames[$device[$column]] ?? $device[$column]);
 					echo "</td>";
 				}
 				echo "</tr>";

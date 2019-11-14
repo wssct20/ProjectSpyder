@@ -20,7 +20,7 @@ if ($action == "create") {
 	$password = calculateuserhash($username, $password);
 	adduser($username, $password, $role);
 	header("DEBUG: usermanagement.php create user successful");
-	header("Location: usermanagement.php",true,302);
+	header("Location: usermanagement.php",true,303);
 	die();
 }
 
@@ -31,7 +31,7 @@ if ($action == "delete") {
 	$user = getuserbyusername($username);
 	deleteuser($user["id"], $user["name"]);
 	header("DEBUG: usermanagement.php delete user successful");
-	header("Location: usermanagement.php",true,302);
+	header("Location: usermanagement.php",true,303);
 	die();
 }
 
@@ -52,11 +52,10 @@ if ($action == "delete") {
 			}
 			td {
 				color: white;
-				border: white solid 1px;
 			}
 			th {
 				color: white;
-				border: white solid 1px;
+				border-bottom: white solid 1px;
 			}
 			input {
 			    color: white;
