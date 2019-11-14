@@ -1,4 +1,7 @@
 <?php
+//SQLFUNCTIONS.PHP: functions which interact with the mysql server
+
+// DEVICE MANAGEMENT
 
 function adddevice($type, $ip, $pairtime, $now, $authcode) {
 	//adddevice: add a device to the system
@@ -99,6 +102,24 @@ function updatedevice($id, $now, $ipaddress) {
 	}
 }
 
+function getdevices() {
+	//getdevices: get all devices
+	global $db;
+	if (!($statement = $db->prepare("SELECT * FROM devices"))) {
+		dieerror("ERRSQLTABLE", "getdevices Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "getdevices Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: get results
+	if (!($result = $statement->get_result())) {
+		dieerror("ERRSQLTABLE", "getdevices Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 4: fetch all as array with associative names
+	return $result->fetch_all(MYSQLI_BOTH);
+}
+
 function getdata($id) {
 	//getdata: get data of a device from the according type table
 	global $db;
@@ -139,6 +160,8 @@ function updatedata($id, $state) {
 	}
 }
 
+// SANITY CHECK
+
 function checktables() {
 	//checktables: check if all needed tables are available by querying a create if not exist
 	global $db;
@@ -157,7 +180,14 @@ function checktables() {
 	) {
 		dieerror("ERRSQLTABLE", "checktables conditions Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
+	//unprepared query: create table guiusers
+	if (!$db->query("create table if not exists guiusers(id INT NOT NULL AUTO_INCREMENT, name TEXT NOT NULL, pass TEXT NOT NULL, role TEXT NOT NULL, color TEXT, PRIMARY KEY (id));")
+	) {
+		dieerror("ERRSQLTABLE", "checktables guiusers Table creation failed: (" . $db->errno . ") " . $db->error);
+	}
 }
+
+// CONDITION MANAGEMENT
 
 function getconditions() {
 	//getconditions: get all conditions
@@ -178,22 +208,85 @@ function getconditions() {
 	return $result->fetch_all(MYSQLI_BOTH);
 }
 
-function getdevices() {
-	//getdevices: get all devices
+// USER MANAGEMENT
+
+function getuserbyusername($username) {
+	//getuserbyusername: get a user using his username
 	global $db;
-	if (!($statement = $db->prepare("SELECT * FROM devices"))) {
-		dieerror("ERRSQLTABLE", "getdevices Prepare failed: (" . $db->errno . ") " . $db->error);
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("SELECT * FROM guiusers WHERE name=?"))) {
+		dieerror("ERRSQLTABLE", "getuserbyusername Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind parameters
+	if (!$statement->bind_param("s", $username)) {
+		dieerror("ERRSQLTABLE", "getuserbyusername Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "getuserbyusername Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 4: get results
+	if (!($result = $statement->get_result())) {
+		dieerror("ERRSQLTABLE", "getuserbyusername Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 5: fetch row
+	return $result->fetch_array();
+}
+
+function getusers() {
+	//getusers: get all users
+	global $db;
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("SELECT * FROM guiusers"))) {
+		dieerror("ERRSQLTABLE", "getusers Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: execute
 	if (!$statement->execute()) {
-		dieerror("ERRSQLTABLE", "getdevices Execute failed: (" . $statement->errno . ") " . $statement->error);
+		dieerror("ERRSQLTABLE", "getusers Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: get results
 	if (!($result = $statement->get_result())) {
-		dieerror("ERRSQLTABLE", "getdevices Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+		dieerror("ERRSQLTABLE", "getusers Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 4: fetch all as array with associative names
 	return $result->fetch_all(MYSQLI_BOTH);
 }
 
+function adduser($username, $password, $role) {
+	//adduser: add a user to the gui
+	global $db;
+	// Create user entry
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("INSERT INTO guiusers(name, pass, role) VALUES (?, ?, ?)"))) {
+		dieerror("ERRSQLTABLE", "adduser insert guiusers Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("sss", $username, $password, $role)) {
+		dieerror("ERRSQLTABLE", "adduser insert guiusers Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "adduser insert guiusers Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+}
+
+function deleteuser($id, $username) {
+	//deleteuser: delete a user
+	global $db;
+	// delete user entry
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("DELETE FROM guiusers WHERE id=? AND name=?"))) {
+		dieerror("ERRSQLTABLE", "deleteuser delete from guiusers Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("is", $id, $username)) {
+		dieerror("ERRSQLTABLE", "deleteuser delete from guiusers Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "deleteuser delete from guiusers Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+}
+
+//EOF
 ?>

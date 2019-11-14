@@ -17,9 +17,11 @@ checksession();
 			}
 			td {
 				color: white;
+				border: white solid 1px;
 			}
 			th {
 				color: white;
+				border: white solid 1px;
 			}
 			
 			nav {
@@ -35,7 +37,7 @@ checksession();
 			<h1><?php echo $systemname;?> Devices</h1>
 			<ul>
 				<li><a href="main.php">Home</a></li>
-				<li><a href="devices.php">Devices</a></li>
+				<!--<li><a href="devices.php">Devices</a></li>-->
 			</ul>
 		</nav>
 		<table>
