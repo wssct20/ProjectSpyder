@@ -39,8 +39,9 @@ checksession();
 		<nav>
 			<h1>ProjectSpyder</h1>
 			<ul>
-				<li><a href="main.php">Home</a></li>
+				<!--<li><a href="main.php">Home</a></li>-->
 				<li><a href="devices.php">Devices</a></li>
+				<li><a href="usermanagement.php">Usermanagement</a></li>
 			</ul>
 		</nav>
 		<form action="login.php" method=post>

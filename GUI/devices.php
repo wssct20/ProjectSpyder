@@ -35,7 +35,7 @@ checksession();
 			<h1><?php echo $systemname;?> Devices</h1>
 			<ul>
 				<li><a href="main.php">Home</a></li>
-				<li><a href="devices.php">Devices</a></li>
+				<!--<li><a href="devices.php">Devices</a></li>-->
 			</ul>
 		</nav>
 		<table>
