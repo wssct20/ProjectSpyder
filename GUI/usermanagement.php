@@ -65,6 +65,9 @@ if ($action == "delete") {
 			a {
 				color: white;
 			}
+			label {
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
@@ -105,14 +108,12 @@ if ($action == "delete") {
 		<form method="post">
 			<input type=text name=username placeholder="Username"><br>
 			<input type=password name=password placeholder="Password"><br>
-			<fieldset>
-				<input type="radio" id="admin" name="role" value="admin">
-			    <label for="admin"> Admin</label> 
-			    <input type="radio" id="user" name="role" value="user">
-			    <label for="user"> User</label>
-			    <input type="radio" id="guest" name="role" value="guest">
-			    <label for="guest"> Guest</label> 
-			</fieldset>
+			<input type="radio" id="admin" name="role" value="admin">
+		    <label for="admin"> Admin</label><br>
+		    <input type="radio" id="user" name="role" value="user">
+		    <label for="user"> User</label><br>
+		    <input type="radio" id="guest" name="role" value="guest">
+		    <label for="guest"> Guest</label><br>
 			<input type=text name=action value=create style="display: none;">
 			<input type=submit value="Create User">
 		</form>
