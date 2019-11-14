@@ -1,5 +1,4 @@
 <?php
-die("unfinished");
 require_once("system.php");
 checksession();
 
