@@ -14,9 +14,9 @@ switch ($action) {
 		}
 		$inputusername = $_POST["username"];
 		$inputpassword = $_POST["password"];
-		$user = getuserbyusername($username);
+		$user = getuserbyusername($inputusername);
 		if (sizeof($user) == 0) loginfailed();
-		if (calculateuserhash($username, $password) != $user["pass"]) loginfailed();
+		if (calculateuserhash($inputusername, $inputpassword) != $user["pass"]) loginfailed();
 		$_SESSION["login"] = true;
 		header("DEBUG: login.php userlogin successful");
 		header("Location: main.php",true,303);
