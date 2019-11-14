@@ -36,6 +36,7 @@ function checkstate($state, $type) {
 				if ($value < 0 | $value > (2**16)) return false;
 			}
 			return true;
+		case "raw":
 		default:
 			//no check needed
 			return true;	
