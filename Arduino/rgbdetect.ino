@@ -59,6 +59,7 @@ void rgbdetectloop() {
   state.concat(":");
   state.concat(lux);
 
+  Serial.print("state: ");
   Serial.println(state);
   putstate(state);
 

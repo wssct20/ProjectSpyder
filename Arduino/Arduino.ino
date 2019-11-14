@@ -4,7 +4,7 @@
 const String type = "rgbdetect";      //Enter the type of your client here.
 
 #define debugmode               //some more debug information
-#define reset_authcode          //resets authcode
+//#define reset_authcode          //resets authcode
 
 int requesttimeout;
 
@@ -80,8 +80,6 @@ void setup() {
       Serial.println("Current type invalid.");
       hibernate(60*60*24);
   }
-
-  Serial.println("setup finished");
 
 }
 
