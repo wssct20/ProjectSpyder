@@ -46,13 +46,19 @@ if ($action == "delete") {
 			h1 {
 				color: white;
 			}
+			h3 {
+				color: white;
+			}
 			td {
 				color: white;
 			}
 			th {
 				color: white;
 			}
-			
+			input {
+			    color: white;
+			    background-color: black;
+			}
 			nav {
 				color: white;
 			}
@@ -73,7 +79,7 @@ if ($action == "delete") {
 			<?php 
 			$users = getusers();
 			if (sizeof($users) == 0) {
-				die("Error: No users found.");
+				echo "Error: No users found.";
 			}
 			echo "<tr>";
 			echo "<th>" . "ID" . "</th>";
