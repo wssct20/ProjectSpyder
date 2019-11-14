@@ -102,7 +102,7 @@ if ($action == "delete") {
 			?>
 		</table>
 		<h3>Create User</h3>
-		<form action="post">
+		<form method="post">
 			<input type=text name=username placeholder="Username"><br>
 			<input type=password name=password placeholder="Password"><br>
 			<input type=text name=action value=create style="display: none;">
