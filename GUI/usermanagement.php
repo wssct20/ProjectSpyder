@@ -9,6 +9,7 @@ if ($action == "create") {
 	$username = $_POST["username"] ?? "";
 	$password = $_POST["password"] ?? "";
 	$role = $_POST["role"] ?? "";
+	$role = "admin";
 	if ($username == "" || $password == "" || $role == "") die("CREDENTIALSINCOMPLETE");
 	$allusers = getusers();
 	foreach ($allusers as $user) {
@@ -89,12 +90,14 @@ if ($action == "delete") {
 			echo "<tr>";
 			echo "<th>" . "ID" . "</th>";
 			echo "<th>" . "Username" . "</th>";
+			echo "<th>" . "Role" . "</th>";
 			echo "<th>" . "" . "</th>"; //line with delete button
 			echo "</tr>";
 			foreach ($users as $user) {
 				echo "<tr>";
 				echo "<td>" . $user["id"] . "</td>";
 				echo "<td>" . $user["name"] . "</td>";
+				echo "<td>" . $user["role"] . "</td>";
 				?>
 				<td>
 					<form method=post style="margin: 0;">
@@ -112,12 +115,14 @@ if ($action == "delete") {
 		<form method="post">
 			<input type=text name=username placeholder="Username"><br>
 			<input type=password name=password placeholder="Password"><br>
+			<div style="display: none;">
 			<input type="radio" id="admin" name="role" value="admin">
 		    <label for="admin"> Admin</label><br>
 		    <input type="radio" id="user" name="role" value="user">
 		    <label for="user"> User</label><br>
 		    <input type="radio" id="guest" name="role" value="guest">
 		    <label for="guest"> Guest</label><br>
+		    </div>
 			<input type=text name=action value=create style="display: none;">
 			<input type=submit value="Create User">
 		</form>
