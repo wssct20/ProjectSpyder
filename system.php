@@ -32,7 +32,7 @@ $types = array(
 		//"rotation",
 		"rgbdetect",
 	//raw data:
-		//"raw",
+		"raw",
 );
 
 require_once ("functions.php");
