@@ -214,7 +214,7 @@ function getuserbyusername($username) {
 	//getuserbyusername: get a user using his username
 	global $db;
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("SELECT * FROM guiusers WHERE username=?"))) {
+	if (!($statement = $db->prepare("SELECT * FROM guiusers WHERE name=?"))) {
 		dieerror("ERRSQLTABLE", "getuserbyusername Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind parameters

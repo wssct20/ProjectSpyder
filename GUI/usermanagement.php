@@ -95,7 +95,7 @@ if ($action == "delete") {
 				echo "<td>" . $user["name"] . "</td>";
 				?>
 				<td>
-					<form method=post>
+					<form method=post style="margin: 0;">
 						<input type=text name=username value="<?php echo $user["name"]; ?>" style="display: none;">
 						<input type=text name=action value=delete style="display: none;">
 						<input type=submit name=submit value="Delete">
