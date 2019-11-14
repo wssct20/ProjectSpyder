@@ -181,7 +181,7 @@ function checktables() {
 		dieerror("ERRSQLTABLE", "checktables conditions Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
 	//unprepared query: create table guiusers
-	if (!$db->query("create table if not exists guiusers(id INT NOT NULL AUTO_INCREMENT, name TEXT NOT NULL, pass TEXT NOT NULL, role TEXT NOT NULL, PRIMARY KEY (id));")
+	if (!$db->query("create table if not exists guiusers(id INT NOT NULL AUTO_INCREMENT, name TEXT NOT NULL, pass TEXT NOT NULL, role TEXT NOT NULL, color TEXT, PRIMARY KEY (id));")
 	) {
 		dieerror("ERRSQLTABLE", "checktables guiusers Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
@@ -257,7 +257,7 @@ function adduser($username, $password, $role) {
 	global $db;
 	// Create user entry
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("INSERT INTO guiusers(name, password, role) VALUES (?, ?, ?)"))) {
+	if (!($statement = $db->prepare("INSERT INTO guiusers(name, pass, role) VALUES (?, ?, ?)"))) {
 		dieerror("ERRSQLTABLE", "adduser insert guiusers Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
