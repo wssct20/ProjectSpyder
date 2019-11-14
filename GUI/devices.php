@@ -17,9 +17,11 @@ checksession();
 			}
 			td {
 				color: white;
+				border: white solid 1px;
 			}
 			th {
 				color: white;
+				border: white solid 1px;
 			}
 			
 			nav {

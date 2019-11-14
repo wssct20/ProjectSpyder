@@ -51,9 +51,11 @@ if ($action == "delete") {
 			}
 			td {
 				color: white;
+				border: white solid 1px;
 			}
 			th {
 				color: white;
+				border: white solid 1px;
 			}
 			input {
 			    color: white;
