@@ -33,7 +33,7 @@ function checkstate($state, $type) {
 			if (sizeof($values) != 6) return false;
 			foreach ($values as $value) {
 				$value = intval($value);
-				if ($value < 0 | $value > 255) return false;
+				if ($value < 0 | $value > (2**16)) return false;
 			}
 			return true;
 		default:
