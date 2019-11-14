@@ -7,6 +7,7 @@ switch ($action) {
 	case "login":
 		//Login
 		if (sizeof(getusers()) == 0) {
+			$_SESSION["login"] = true;
 			header("Location: main.php",true,303);
 			die();
 		}
