@@ -22,16 +22,15 @@ $friendlytypenames = array(
 
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="de">
 	<head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet"> 
 		<title><?php echo $systemname;?> Devices</title>
 		<style>
-			body {
-				background-color: black;
-			}
-			h1 {
-				color: white;
-			}
 			td {
 				color: white;
 				border: white solid 1px;
@@ -40,53 +39,55 @@ $friendlytypenames = array(
 				color: white;
 				border: white solid 1px;
 			}
-			
-			nav {
-				color: white;
-			}
-			a {
-				color: white;
-			}
 		</style>
 	</head>
 	<body>
 		<nav>
-			<h1><?php echo $systemname;?> Devices</h1>
+			<h1><a href="main.php"><?php echo $systemname;?></a> Devices</h1>
 			<ul>
+				<div class="seperator"></div>
 				<li><a href="main.php">Home</a></li>
 				<!--<li><a href="devices.php">Devices</a></li>-->
 			</ul>
 		</nav>
-		<table>
-			<?php 
-			//devices array: columns of the devices table to show. format: Visible text => column name of table devices.
-			$columns = array(
-				"ID" => "id",
-				"Name" => "name",
-				"Type" => "type",
-				"IP-Address" => "ipaddress",
-			);
-			$devices = getdevices();
-			if (sizeof($devices) == 0) {
-				die("Error: No devices found.");
-			}
-			echo "<tr>";
-			foreach ($columns as $key => $column) {
-				echo "<th>";
-				echo $key;
-				echo "</th>";
-			}
-			echo "</tr>";
-			foreach ($devices as $device) {
+		
+		<h3>Paired Devices</h3>
+		<?php 
+		//this will generate a table of devices paired with the system
+		//devices array: columns of the devices table to show. format: Visible text => column name of table devices.
+		$columns = array(
+			"ID" => "id",
+			"Name" => "name",
+			"Type" => "type",
+			"IP-Address" => "ipaddress",
+		);
+		$devices = getdevices();
+		if (sizeof($devices) == 0) {
+			echo("Error: No devices found.");
+		} else {
+			?>
+			<table>
+				<?php
 				echo "<tr>";
-				foreach ($columns as $column) {
-					echo "<td>";
-					echo ($friendlytypenames[$device[$column]] ?? $device[$column]);
-					echo "</td>";
+				foreach ($columns as $key => $column) {
+					echo "<th>";
+					echo $key;
+					echo "</th>";
 				}
 				echo "</tr>";
-			}
-			?>
-		</table>
+				foreach ($devices as $device) {
+					echo "<tr>";
+					foreach ($columns as $column) {
+						echo "<td>";
+						echo ($friendlytypenames[$device[$column]] ?? $device[$column]);
+						echo "</td>";
+					}
+					echo "</tr>";
+				}
+				?>
+			</table>
+			<?php
+		}
+		?>
 	</body>
 </html>

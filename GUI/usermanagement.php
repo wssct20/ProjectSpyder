@@ -37,19 +37,15 @@ if ($action == "delete") {
 
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="de">
 	<head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet"> 
 		<title><?php echo $systemname;?> Usermanagement</title>
 		<style>
-			body {
-				background-color: black;
-			}
-			h1 {
-				color: white;
-			}
-			h3 {
-				color: white;
-			}
 			td {
 				color: white;
 			}
@@ -61,12 +57,6 @@ if ($action == "delete") {
 			    color: white;
 			    background-color: black;
 			}
-			nav {
-				color: white;
-			}
-			a {
-				color: white;
-			}
 			label {
 				color: white;
 			}
@@ -74,42 +64,50 @@ if ($action == "delete") {
 	</head>
 	<body>
 		<nav>
-			<h1><?php echo $systemname;?> Usermanagement</h1>
+			<h1><a href="main.php"><?php echo $systemname;?></a> Usermanagement</h1>
 			<ul>
+				<div class="seperator"></div>
 				<li><a href="main.php">Home</a></li>
 			</ul>
 		</nav>
+		
 		<h3>User List</h3>
-		<table>
-			<?php 
-			$users = getusers();
-			if (sizeof($users) == 0) {
-				echo "Error: No users found.";
-			}
-			echo "<tr>";
-			echo "<th>" . "ID" . "</th>";
-			echo "<th>" . "Username" . "</th>";
-			echo "<th>" . "Role" . "</th>";
-			echo "<th>" . "" . "</th>"; //line with delete button
-			echo "</tr>";
-			foreach ($users as $user) {
-				echo "<tr>";
-				echo "<td>" . $user["id"] . "</td>";
-				echo "<td>" . $user["name"] . "</td>";
-				echo "<td>" . $user["role"] . "</td>";
-				?>
-				<td>
-					<form method=post style="margin: 0;">
-						<input type=text name=username value="<?php echo $user["name"]; ?>" style="display: none;">
-						<input type=text name=action value=delete style="display: none;">
-						<input type=submit name=submit value="Delete">
-					</form>
-				</td>
-				<?php
-				echo "</tr>";
-			}
+		<?php 
+		$users = getusers();
+		if (sizeof($users) == 0) {
+			echo "Error: No users found.";
+		} else {
 			?>
-		</table>
+			<table>
+				<?php 
+				echo "<tr>";
+				echo "<th>" . "ID" . "</th>";
+				echo "<th>" . "Username" . "</th>";
+				echo "<th>" . "Role" . "</th>";
+				echo "<th>" . "" . "</th>"; //line with delete button
+				echo "</tr>";
+				foreach ($users as $user) {
+					echo "<tr>";
+					echo "<td>" . $user["id"] . "</td>";
+					echo "<td>" . $user["name"] . "</td>";
+					echo "<td>" . $user["role"] . "</td>";
+					?>
+					<td>
+						<form method=post style="margin: 0;">
+							<input type=text name=username value="<?php echo $user["name"]; ?>" style="display: none;">
+							<input type=text name=action value=delete style="display: none;">
+							<input type=submit name=submit value="Delete">
+						</form>
+					</td>
+					<?php
+					echo "</tr>";
+				}
+				?>
+			</table>
+			<?php 
+		}
+		?>
+		
 		<h3>Create User</h3>
 		<form method="post">
 			<input type=text name=username placeholder="Username"><br>

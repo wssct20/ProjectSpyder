@@ -12,7 +12,7 @@ checksession();
 <html lang="de">
 	<head>
         <meta charset="utf-8">
-		<title><?php echo $systemname;?> GUI</title>
+		<title><?php echo $systemname;?></title>
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> 
         <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet"> 
@@ -28,10 +28,11 @@ checksession();
 	</head>
 	<body>
 		<nav>
-			<h1>ProjectSpyder</h1>
+			<h1><a href="main.php">ProjectSpyder</a></h1>
 			<ul>
-				<!--<li><a href="main.php">Home</a></li>-->
+                <div class="separator"></div>
 				<li><a href="devices.php">Devices</a></li>
+                <div class="separator"></div>
 				<li><a href="usermanagement.php">Usermanagement</a></li>
 			</ul>
 			<ul>

@@ -57,6 +57,10 @@ nav li {
     margin-left: 10px;
 }
 
+nav a {
+	color: white;
+}
+
 nav .separator {
     width: 1px;
     height: 30px;
