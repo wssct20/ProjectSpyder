@@ -51,9 +51,14 @@ function loginfailed() {
 
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="de">
 	<head>
+        <meta charset="utf-8">
 		<title><?php echo $systemname;?> Login</title>
+        <!-- <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">  -->
 		<style type="text/css">
 			body {
 				background-color: black;

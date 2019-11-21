@@ -8,27 +8,18 @@ checksession();
 
 ?>
 
-
-<html>
+<!DOCTYPE html>
+<html lang="de">
 	<head>
+        <meta charset="utf-8">
 		<title><?php echo $systemname;?> GUI</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet"> 
 		<style>
-			body {
-				background-color: black;
-			}
-			h1 {
-				color: white;
-			}
 			input {
 			    color: white;
 			    background-color: black;
-			}
-			
-			nav {
-				color: white;
-			}
-			a {
-				color: white;
 			}
 		</style>
 		<script>
@@ -43,11 +34,16 @@ checksession();
 				<li><a href="devices.php">Devices</a></li>
 				<li><a href="usermanagement.php">Usermanagement</a></li>
 			</ul>
+			<ul>
+				<li class="bordered">
+					<form action="login.php" method=post>
+						<input type=text name=action value=logout style="display: none;">
+						<input type=submit name=submit value=Logout>
+					</form>
+				</li>
+			</ul>
 		</nav>
-		<form action="login.php" method=post>
-			<input type=text name=action value=logout style="display: none;">
-			<input type=submit name=submit value=Logout>
-		</form>
+		
 		<iframe id=mainframe style="display: none;" />
 	</body>
 <html>

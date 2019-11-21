@@ -1,0 +1,353 @@
+* {
+    --maincolor: #7e277e;
+    --background-color: #1f253d;
+    --tilecolor: #394264;
+
+    --fade1: #107981;
+    --fade2: #298080;
+}
+
+body {
+    margin: 0;
+    margin-top: 100px;
+
+    background-color: var(--background-color);
+
+    color: white;
+    font-family: 'Open Sans';
+}
+
+nav {
+    position: fixed;
+
+    z-index: 10;
+
+    top: 0;
+
+    width: 100%;
+    height: 80px;
+
+    background: var(--fade1);
+
+    display: grid;
+    grid-template-columns: 250px auto max-content;
+}
+
+nav ul {
+    display: flex;
+
+    width: 100%;
+    height: max-content;
+
+    margin: auto 0;
+    margin-left: 20px;
+    padding: 0;
+
+    text-decoration: none;
+    list-style-type: none;
+}
+
+nav h1 {
+    width: 100%;
+    margin: 20px;
+}
+
+nav li {
+    margin: 20px;
+    margin-left: 10px;
+}
+
+nav .separator {
+    width: 1px;
+    height: 30px;
+
+    margin: auto 0;
+
+    background-color: white;
+}
+
+nav .bordered {
+    margin: 14px;
+    margin-left: 10px;
+
+    padding: 4px;
+
+    border: 1px solid white;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.tilegrid {
+    width: 95vw;
+    height: 100%;
+
+    margin: 50px auto;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 250px);
+    grid-gap: 50px;
+}
+
+.tilegrid .tile {
+    width: 100%;
+    height: 100%;
+
+    padding: 10px;
+
+    background: var(--tilecolor);
+
+    -webkit-box-shadow: 0px 0px 10px 0px black;
+    -moz-box-shadow: 0px 0px 10px 0px black;
+    box-shadow: 0px 0px 10px 0px black;
+
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.tilegrid .tile::before {
+    content: '';
+
+    position: absolute;
+
+    transform: translateX(224px);
+
+    width: 24px;
+    height: 24px;
+
+    background-image: url("icons/gear.png");
+    background-size: 24px;
+}
+
+.tilegrid .tile h1 {
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.tilegrid .tile h2 {
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+.tilegrid .tile .coloredbackground {
+    width: 100% !important;
+    height: max-content !important;
+
+    margin: 0 -10px;
+    padding: 0 10px;
+
+    margin-top: 20px;
+    padding-top: 1px;
+    padding-bottom: 20px;
+
+    background: var(--fade1);
+    background: -moz-linear-gradient(210deg, var(--fade1) 0%, var(--fade2) 100%);
+    background: -webkit-linear-gradient(210deg, var(--fade1) 0%, var(--fade2) 100%);
+    background: linear-gradient(210deg, var(--fade1) 0%, var(--fade2) 100%);
+}
+
+.tilegrid .tile h1::after {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: white;
+}
+
+.tilegrid .tile * {
+    width: 100%;
+    
+    margin: 3px 0;
+}
+
+.split2 {
+    display: grid;
+    grid-template-columns: 50% 47%;
+    grid-gap: 10px;
+}
+
+.auto-right {
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-gap: 10px;
+}
+
+.auto-left {
+    display: grid;
+    grid-template-columns: auto max-content;
+    grid-gap: 10px;
+}
+
+.split3 {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 10px;
+}
+
+.tilegrid button {
+    height: 24px;
+
+    color: white;
+
+    background-color: var(--maincolor);
+
+    border: 2px solid var(--maincolor);
+
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+
+    transition: border 200ms linear;
+}
+
+.tilegrid button:hover {
+    border: 2px solid white;
+}
+
+.container {
+    position: relative;
+
+    display: block;
+    
+    margin-top: 15px;
+    margin-right: 20px !important;
+    padding-left: 12.5px;
+ 
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+  
+.tile .container {
+    margin-top: 0px !important;
+}
+
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+  
+.checkmark {
+    position: absolute;
+
+    top: -2px;
+    left: 0;
+
+    height: 25px;
+    width: 25px !important;
+
+    background-color: #aaa;
+
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+  
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+  
+.container input:checked ~ .checkmark {
+    background-color: var(--maincolor);
+ }
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+  
+.container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.radio {
+    position: absolute;
+
+    top: -2px;
+    left: 0;
+
+    height: 25px;
+    width: 25px !important;
+
+    background-color: #aaa;
+
+    border-radius: 50% 50% 50% 50%;
+    -moz-border-radius: 50% 50% 50% 50%;
+    -webkit-border-radius: 50% 50% 50% 50%;
+}
+
+.radio::after {
+    content: "";
+
+    position: absolute;
+
+    top: 5px;
+    left: 5px;
+
+    width: 15px;
+    height: 15px;
+
+    background-color: none;
+
+    border-radius: 50% 50% 50% 50%;
+    -moz-border-radius: 50% 50% 50% 50%;
+    -webkit-border-radius: 50% 50% 50% 50%;
+}
+  
+.container:hover input ~ .radio {
+    background-color: #ccc;
+}
+  
+.container input:checked ~ .radio {
+    background-color: var(--maincolor);
+ }
+
+ .container input:checked ~ .radio::after {
+    background-color: white;
+ }
+
+ .settings {
+    width: 600px;
+
+    margin: auto;
+    padding: 50px;
+
+    border-left: 1px solid;
+    border-right: 1px solid;
+ }
+
+.settings h2::before {
+    content: "";
+
+    position: absolute;
+
+    transform: translateY(40px);
+
+    width: 600px;
+    height: 1px;
+
+    background-color: white;
+}
