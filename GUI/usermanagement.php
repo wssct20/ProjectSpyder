@@ -66,62 +66,66 @@ if ($action == "delete") {
 		<nav>
 			<h1><a href="main.php"><?php echo $systemname;?></a> Usermanagement</h1>
 			<ul>
-				<div class="seperator"></div>
+                <div class="separator"></div>
 				<li><a href="main.php">Home</a></li>
 			</ul>
 		</nav>
 		
-		<h3>User List</h3>
-		<?php 
-		$users = getusers();
-		if (sizeof($users) == 0) {
-			echo "Error: No users found.";
-		} else {
-			?>
-			<table>
-				<?php 
-				echo "<tr>";
-				echo "<th>" . "ID" . "</th>";
-				echo "<th>" . "Username" . "</th>";
-				echo "<th>" . "Role" . "</th>";
-				echo "<th>" . "" . "</th>"; //line with delete button
-				echo "</tr>";
-				foreach ($users as $user) {
-					echo "<tr>";
-					echo "<td>" . $user["id"] . "</td>";
-					echo "<td>" . $user["name"] . "</td>";
-					echo "<td>" . $user["role"] . "</td>";
-					?>
-					<td>
-						<form method=post style="margin: 0;">
-							<input type=text name=username value="<?php echo $user["name"]; ?>" style="display: none;">
-							<input type=text name=action value=delete style="display: none;">
-							<input type=submit name=submit value="Delete">
-						</form>
-					</td>
-					<?php
-					echo "</tr>";
-				}
-				?>
-			</table>
+		<div class="settings">
+			
+			<h3>User List</h3>
 			<?php 
-		}
-		?>
-		
-		<h3>Create User</h3>
-		<form method="post">
-			<input type=text name=username placeholder="Username"><br>
-			<input type=password name=password placeholder="Password"><br>
-			<div style="display: none;">
-			<input type="radio" id="admin" name="role" value="admin">
-		    <label for="admin"> Admin</label><br>
-		    <input type="radio" id="user" name="role" value="user">
-		    <label for="user"> User</label><br>
-		    <input type="radio" id="guest" name="role" value="guest">
-		    <label for="guest"> Guest</label><br>
-		    </div>
-			<input type=text name=action value=create style="display: none;">
-			<input type=submit value="Create User">
-		</form>
+			$users = getusers();
+			if (sizeof($users) == 0) {
+				echo "Error: No users found.";
+			} else {
+				?>
+				<table>
+					<?php 
+					echo "<tr>";
+					echo "<th>" . "ID" . "</th>";
+					echo "<th>" . "Username" . "</th>";
+					echo "<th>" . "Role" . "</th>";
+					echo "<th>" . "" . "</th>"; //line with delete button
+					echo "</tr>";
+					foreach ($users as $user) {
+						echo "<tr>";
+						echo "<td>" . $user["id"] . "</td>";
+						echo "<td>" . $user["name"] . "</td>";
+						echo "<td>" . $user["role"] . "</td>";
+						?>
+						<td>
+							<form method=post style="margin: 0;">
+								<input type=text name=username value="<?php echo $user["name"]; ?>" style="display: none;">
+								<input type=text name=action value=delete style="display: none;">
+								<input type=submit name=submit value="Delete">
+							</form>
+						</td>
+						<?php
+						echo "</tr>";
+					}
+					?>
+				</table>
+				<?php 
+			}
+			?>
+			
+			<h3>Create User</h3>
+			<form method="post">
+				<input type=text name=username placeholder="Username"><br>
+				<input type=password name=password placeholder="Password"><br>
+				<div style="display: none;">
+				<input type="radio" id="admin" name="role" value="admin">
+			    <label for="admin"> Admin</label><br>
+			    <input type="radio" id="user" name="role" value="user">
+			    <label for="user"> User</label><br>
+			    <input type="radio" id="guest" name="role" value="guest">
+			    <label for="guest"> Guest</label><br>
+			    </div>
+				<input type=text name=action value=create style="display: none;">
+				<input type=submit value="Create User">
+			</form>
+			
+		</div>
 	</body>
 </html>
