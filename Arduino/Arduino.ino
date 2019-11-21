@@ -1,7 +1,7 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-const String type = "rgbdetect";      //Enter the type of your client here.
+const String type = "rotation";      //Enter the type of your client here.
 
 #define debugmode               //some more debug information
 //#define reset_authcode          //resets authcode
@@ -56,7 +56,7 @@ void setup() {
       //tempsetup();
       break;
     case 3:
-      //rotationsetup();
+      rotationsetup();
       break;
     case 4:
       rgbdetectsetup();
@@ -106,7 +106,7 @@ void loop() {
         //temploop();
         break;
     case 3:
-        //rotationloop();
+        rotationloop();
         break;
     case 4:
         rgbdetectloop();
