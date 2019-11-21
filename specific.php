@@ -36,6 +36,16 @@ function checkstate($state, $type) {
 				if ($value < 0 | $value > (2**16)) return false;
 			}
 			return true;
+		case "rotation":
+			$values = explode(":", $state);
+			if (sizeof($values) != 5) return false;
+			if (intval($values[0]) < -127 | intval($values[0]) > 128) return false;
+			for ($i = 1; $i < sizeof($values) - 2; $i++) {
+				$value = intval($values[$i]);
+				if ($value < 0 | $value > 360) return false;
+			}
+			//if (intval($values[4]) < -65536 | intval($values[4]) > 65536) return false; //yet unknown size limits
+			return true;
 		case "raw":
 		default:
 			//no check needed

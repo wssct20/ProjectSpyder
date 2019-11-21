@@ -28,7 +28,7 @@ $types = array(
 		"button",
 		//"finger",
 		//"temp",
-		//"rotation",
+		"rotation",
 		"rgbdetect",
 	//raw data:
 		"raw",
