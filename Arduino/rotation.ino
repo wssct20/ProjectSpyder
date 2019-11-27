@@ -30,15 +30,20 @@ void rotationsetup() {
 
 void rotationloop() {
 
-  int8_t temp;
-  int x, y, z, m;
-  uint8_t sc, gc, ac, mc = 0;
+  int8_t temp;                        //temperature
+  uint16_t x, y, z, m, mx, my, mz;    //gyroskop and magnetometer values
+  uint8_t sc, gc, ac, mc = 0;         //calibration values
 
   imu::Vector<3> euler = rotation.getVector(Adafruit_BNO055::VECTOR_EULER);
+  imu::Vector<3> magnetic = rotation.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
+
+//////////temperature//////////
 
   temp = rotation.getTemp();
   Serial.print("Current temperature: ");
   Serial.println(temp);
+
+//////////gyroskop//////////
 
   x = (int) (euler.x() + 0.5);
   Serial.print("x: ");
@@ -52,12 +57,26 @@ void rotationloop() {
   Serial.print("z: ");
   Serial.println(z);
 
-  //TODO: add magnet
-  m = 0;
-  //m = get.mag
+//////////magnetometer//////////
+
+  mx = (int) (magnetic.x() + 0.5);
+  Serial.print("mx: ");
+  Serial.println(mx);
+  
+  my = (int) (magnetic.y() + 0.5);
+  Serial.print("my: ");
+  Serial.println(my);
+  
+  mz = (int) (magnetic.z() + 0.5);
+  Serial.print("mz: ");
+  Serial.println(mz);
+
+  m = max(mx, max(my, mz));
   Serial.print("m: ");
   Serial.println(m);
 
+//////////calibration//////////
+  
   rotation.getCalibration(&sc, &gc, &ac, &mc);
   Serial.print("system calibration: ");
   Serial.println(sc);
