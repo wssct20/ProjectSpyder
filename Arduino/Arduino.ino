@@ -13,8 +13,10 @@ int requesttimeout;
 const String typesstring = "button                   fingerprint              temp                     rotation                 rgbdetect                addressablergbledstrip   rgbled                   epaper                   lock                     motor                    led                      ";    // type every 25 chars
 String switchtype = type;
 
-// Notes:
-// Currently EEPROM address 0-128 are used by the php script. Please stick to addresses after 128.
+/*
+ * Notes:
+ * Currently EEPROM address 0-128 are used by the php script. Please stick to addresses after 128.
+ */
 
 void setup() {
 
@@ -56,7 +58,7 @@ void setup() {
       //tempsetup();
       break;
     case 3:
-//      rotationsetup();
+      rotationsetup();
       break;
     case 4:
       rgbdetectsetup();
@@ -106,7 +108,7 @@ void loop() {
         //temploop();
         break;
     case 3:
-//        rotationloop();
+        rotationloop();
         break;
     case 4:
         rgbdetectloop();

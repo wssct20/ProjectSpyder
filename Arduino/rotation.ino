@@ -1,4 +1,4 @@
-/*#include "Adafruit_BNO055.h"
+#include "Adafruit_BNO055.h"
 
 /*
  * Connection:
@@ -7,7 +7,7 @@
  * SCL  to the I²C SCL (at the ESP32 GPIO 22)
  * SDA  to the I²C SDA (at the ESP32 GPIO 21)
  */
-/*
+
 //initialise the sensor
 Adafruit_BNO055 rotation = Adafruit_BNO055(-1, 0x28);
 
@@ -99,4 +99,4 @@ void rotationloop() {
   putstate(state);
 
   lightsleep(requesttimeout);
-}*/
+}
