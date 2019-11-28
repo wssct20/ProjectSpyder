@@ -9,7 +9,7 @@ void addressablergbledstripsetup() {
 
   ledstrip.begin();
   ledstrip.show();
-  ledstrip.setBrightness(50;
+  ledstrip.setBrightness(50);
   
 }
 
