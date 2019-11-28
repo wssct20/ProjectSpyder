@@ -152,3 +152,10 @@ void hibernate(int seconds)
   //after hibernation the ESP32 will restart
   //this function will not return
 }
+
+
+//////////////converter//////////////
+uint8_t hextodec(String hex)
+{
+  
+}
