@@ -104,13 +104,13 @@ bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
 //TODO: implement lightsleep touch wakeup
 /*
 void touchcallback(){
-  Serial.println("touchcallback");
+  //Serial.println("touchcallback");
 }
 
 void lightsleeptouch(int seconds, int touchpin, int threshold)
 {
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
-  touchAttachInterrupt(T2, touchcallback, threshold);
+  touchAttachInterrupt(touchpin, touchcallback, threshold);
   esp_sleep_enable_touchpad_wakeup();
   Serial.print("Starting lightsleep for ");
   Serial.print(seconds);

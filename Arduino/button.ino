@@ -14,7 +14,9 @@ void buttonsetup() {
 
 void buttonloop() {
   
-  bool buttonstate = lightsleepgpio(requesttimeout, buttonPin, 0);
+//  bool buttonstate = lightsleepgpio(requesttimeout, buttonPin, 0);
+  bool buttonstate = false;
+  lightsleeptouch(20, T0, 20);
   digitalWrite(LED_BUILTIN, buttonstate ? HIGH : LOW);
   Serial.print("Button state: ");
   Serial.println(buttonstate);
