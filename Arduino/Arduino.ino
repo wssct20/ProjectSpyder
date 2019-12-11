@@ -10,7 +10,7 @@ int requesttimeout;
 
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()
 #define typesstringtypelength 25
-const String typesstring = "button                   fingerprint              temp                     rotation                 rgbdetect                addressablergbledstrip   rgbled                   epaper                   lock                     motor                    led                      ";    // type every 25 chars
+const String typesstring = "button                   fingerprint              temperature              rotation                 rgbdetect                addressablergbledstrip   rgbled                   epaper                   lock                     motor                    led                      ";    // type every 25 chars
 String switchtype = type;
 
 /*
@@ -55,7 +55,7 @@ void setup() {
       fingerprintsetup();
       break;
     case 2:
-      //tempsetup();
+      temperaturesetup();
       break;
     case 3:
       rotationsetup();
@@ -105,7 +105,7 @@ void loop() {
         fingerprintloop();
         break;
     case 2:
-        //temploop();
+        temperatureloop();
         break;
     case 3:
         rotationloop();
