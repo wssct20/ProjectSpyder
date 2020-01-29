@@ -14,6 +14,7 @@ $userhashalgo = "sha512"; //64 bytes, 128 chars
 //hash prefix for individualization
 $hashprefix = "WSS";
 //updatetime defines how long a client should wait until next update push/request in seconds
+//system is optimized for 10 seconds, only increase when needed, never decrease below 10
 $updatetime = 10;
 //types: defines which client types this system is compatible with
 $types = array(

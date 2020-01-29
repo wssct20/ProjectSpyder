@@ -101,6 +101,7 @@ function gettimeout($type) {
 	//updatetimes: time in seconds to add to default updatetime depending on device type
 	$updatetimes = array(
 		"button" => 120,
+		"rotation" => -9,
 		"" => 0, //default
 	);
 	$thisupdatetime = $updatetime + ($updatetimes[$type] ?? $updatetimes[""]);

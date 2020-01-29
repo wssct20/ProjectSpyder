@@ -9,7 +9,7 @@ if ($action == "create") {
 	$username = $_POST["username"] ?? "";
 	$password = $_POST["password"] ?? "";
 	$role = $_POST["role"] ?? "";
-	$role = "admin";
+	$role = "admin"; //TODO: configure role management
 	if ($username == "" || $password == "" || $role == "") die("CREDENTIALSINCOMPLETE");
 	$allusers = getusers();
 	foreach ($allusers as $user) {
@@ -77,7 +77,7 @@ if ($action == "delete") {
 			<?php 
 			$users = getusers();
 			if (sizeof($users) == 0) {
-				echo "Error: No users found.";
+				echo "No users found.";
 			} else {
 				?>
 				<table>
@@ -117,10 +117,12 @@ if ($action == "delete") {
 				<div style="display: none;">
 				<input type="radio" id="admin" name="role" value="admin">
 			    <label for="admin"> Admin</label><br>
+			    <!-- TODO: configure role management
 			    <input type="radio" id="user" name="role" value="user">
 			    <label for="user"> User</label><br>
 			    <input type="radio" id="guest" name="role" value="guest">
 			    <label for="guest"> Guest</label><br>
+			    -->
 			    </div>
 				<input type=text name=action value=create style="display: none;">
 				<input type=submit value="Create User">

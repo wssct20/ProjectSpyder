@@ -3,6 +3,18 @@ require_once("system.php");
 global $systemname;
 checksession();
 
+$action = $_POST["action"] ?? "";
+
+if ($action == "delete") {
+	//TODO: check for user permission
+	$id = $_POST["id"] ?? "";
+	if ($username == "") die("INVALIDID");
+	deletedevice($user["id"]);
+	header("DEBUG: devices.php delete device successful");
+	header("Location: usermanagement.php",true,303);
+	die();
+}
+
 $friendlytypenames = array(
 	//"motor" => "Motor",
 	//"lock" => "Lock",
@@ -16,7 +28,7 @@ $friendlytypenames = array(
 	//"rotation" => "rotational sensor",
 	"rgbdetect" => "RGB sensor",
 	"raw" => "unknown",
-	"" => null,
+	"" => null, //for automatic fallback using ?? when no friendlyname was found
 );
 
 
@@ -65,7 +77,7 @@ $friendlytypenames = array(
 			);*/
 			$devices = getdevices();
 			if (sizeof($devices) == 0) {
-				echo("Error: No devices found.");
+				echo("No devices found.");
 			} else {
 				?>
 				<table>
@@ -92,25 +104,23 @@ $friendlytypenames = array(
 					echo "<th>" . "Name" . "</th>";
 					echo "<th>" . "Type" . "</th>";
 					echo "<th>" . "IP-Address" . "</th>";
-					//echo "<th>" . "" . "</th>"; //line with delete button //currently not in use
+					echo "<th>" . "" . "</th>"; //line with edit/delete buttons
 					echo "</tr>";
 					foreach ($devices as $device) {
 						echo "<tr>";
 						echo "<td>" . $device["id"] . "</td>";
 						echo "<td>" . $device["name"] . "</td>";
-						echo "<td>" . $device["type"] . "</td>";
+						echo "<td>" . ($friendlytypenames[$device["type"]] ?? $device["type"]) . "</td>";
 						echo "<td>" . $device["ipaddress"] . "</td>";
-						/*
 						?>
 						<td>
 							<form method=post style="margin: 0;">
-								<input type=text name=username value="<?php echo $device["name"]; ?>" style="display: none;">
+								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
 								<input type=text name=action value=delete style="display: none;">
 								<input type=submit name=submit value="Delete">
 							</form>
 						</td>
 						<?php
-						*/
 						echo "</tr>";
 					}
 					?>
