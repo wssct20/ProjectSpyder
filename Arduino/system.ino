@@ -104,13 +104,13 @@ bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
 //TODO: implement lightsleep touch wakeup
 /*
 void touchcallback(){
-  Serial.println("touchcallback");
+  //Serial.println("touchcallback");
 }
 
 void lightsleeptouch(int seconds, int touchpin, int threshold)
 {
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
-  touchAttachInterrupt(T2, touchcallback, threshold);
+  touchAttachInterrupt(touchpin, touchcallback, threshold);
   esp_sleep_enable_touchpad_wakeup();
   Serial.print("Starting lightsleep for ");
   Serial.print(seconds);
@@ -151,4 +151,42 @@ void hibernate(int seconds)
   esp_deep_sleep_start();
   //after hibernation the ESP32 will restart
   //this function will not return
+}
+
+
+//////////////converter//////////////
+
+//hextodec() converts hex numbers to dec numbers (max. 8 bytes)
+uint32_t hextodec(String hex)
+{
+  String hexnumbers = "0123456789ABCDEF";
+  uint32_t dec = 0;
+  
+  for(int i = (hex.length() - 1); i >= 0; i--){
+    String hex0 = hex.substring(i, i + 1);
+    dec += (uint32_t)hexnumbers.indexOf(hex0) << (hex.length() - 1 - i) * 4;
+  }
+  return dec;
+}
+
+//dectohex() converts dec numbers to hex numbers
+String dectohex(uint32_t dec)
+{
+  String hexnumbers = "0123456789ABCDEF";
+  String hex = "";
+
+  int i = 0;
+  uint8_t num = 0;
+  do {
+    num = (dec & ((uint32_t)15 << (4 * i))) >> (4 * i);
+    String singlehex = hexnumbers.substring(num, num + 1);
+    singlehex.concat(hex);
+    hex = singlehex;
+    i++;
+  }
+  while(num != 0 && i < 8);
+  if(i < 8 && num == 0){
+    hex = hex.substring(1);
+  }
+  return hex;
 }
