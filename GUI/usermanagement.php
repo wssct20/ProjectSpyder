@@ -117,10 +117,12 @@ if ($action == "delete") {
 				<div style="display: none;">
 				<input type="radio" id="admin" name="role" value="admin">
 			    <label for="admin"> Admin</label><br>
+			    <!-- TODO: configure role management
 			    <input type="radio" id="user" name="role" value="user">
 			    <label for="user"> User</label><br>
 			    <input type="radio" id="guest" name="role" value="guest">
 			    <label for="guest"> Guest</label><br>
+			    -->
 			    </div>
 				<input type=text name=action value=create style="display: none;">
 				<input type=submit value="Create User">
