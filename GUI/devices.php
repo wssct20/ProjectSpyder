@@ -28,7 +28,7 @@ $friendlytypenames = array(
 	//"rotation" => "rotational sensor",
 	"rgbdetect" => "RGB sensor",
 	"raw" => "unknown",
-	"" => null,
+	"" => null, //for automatic fallback using ?? when no friendlyname was found
 );
 
 

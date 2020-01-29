@@ -9,7 +9,7 @@ if ($action == "create") {
 	$username = $_POST["username"] ?? "";
 	$password = $_POST["password"] ?? "";
 	$role = $_POST["role"] ?? "";
-	$role = "admin";
+	$role = "admin"; //TODO: configure role management
 	if ($username == "" || $password == "" || $role == "") die("CREDENTIALSINCOMPLETE");
 	$allusers = getusers();
 	foreach ($allusers as $user) {
