@@ -77,7 +77,7 @@ $friendlytypenames = array(
 			);*/
 			$devices = getdevices();
 			if (sizeof($devices) == 0) {
-				echo("Error: No devices found.");
+				echo("No devices found.");
 			} else {
 				?>
 				<table>

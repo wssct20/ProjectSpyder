@@ -77,7 +77,7 @@ if ($action == "delete") {
 			<?php 
 			$users = getusers();
 			if (sizeof($users) == 0) {
-				echo "Error: No users found.";
+				echo "No users found.";
 			} else {
 				?>
 				<table>
