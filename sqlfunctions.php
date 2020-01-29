@@ -120,6 +120,24 @@ function getdevices() {
 	return $result->fetch_all(MYSQLI_BOTH);
 }
 
+function deletedevice($id) {
+	//deletedevice: delete a device
+	global $db;
+	// delete device entry
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("DELETE FROM devices WHERE id=?"))) {
+		dieerror("ERRSQLTABLE", "deletedevice delete from devices Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("i", $id)) {
+		dieerror("ERRSQLTABLE", "deletedevice delete from devices Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "deletedevice delete from devices Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+}
+
 function getdata($id) {
 	//getdata: get data of a device from the according type table
 	global $db;
