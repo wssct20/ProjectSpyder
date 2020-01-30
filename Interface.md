@@ -39,7 +39,7 @@ Currently there are 2 requesttypes:
 requesttype | Description
 ----------- | -----------
 `GET` | Used for actors to acquire their state, which they are supposed to follow.
-`PUT` | Used for sensors ro send their current state to the server.
+`PUT` | Used for sensors to send their current state to the server.
 
 There will be more requesttypes in the future, as the system gets more complex.
 
@@ -88,6 +88,7 @@ In case of an error, you will get an `error` variable in your `#DATA` section.
 This will contain a short string of information about the error.
 
 Expected errors:
+
 Error | Description | Solution
 ----- | ----------- | --------
 AUTHFAILED | You will get this error, if your authcode is not valid. | Just go ahead and request a new one.
