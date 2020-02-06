@@ -27,6 +27,22 @@ if ($action == "rename") {
 	die();
 }
 
+if ($action == "overwritestate") {
+	//TODO: check for user permission
+	$id = $_POST["id"] ?? "";
+	if ($id == "") die("INVALIDID");
+	$state = $_POST["state"] ?? "";
+	if (!checkstate(getdata($device["id"]), $device["state"])) {
+		header("DEBUG: devices.php overwritestate failed due to invalid state");
+		header("Location: devices.php",true,303);
+		die();
+	}
+	updatedata($id, $state);
+	header("DEBUG: devices.php overwritestate successful");
+	header("Location: devices.php",true,303);
+	die();
+}
+
 if ($action == "details") {
 	$id = $_POST["id"] ?? "";
 	if ($id == "") die("INVALIDID");
@@ -54,7 +70,15 @@ if ($action == "details") {
 			</nav>
 			
 			<div class="settings">
-				<h2><?php echo $friendlytype." ".$device["id"]; echo empty($device["name"]) ? "" : " - ".$device["name"];?></h2>
+				<h2><?php echo $friendlytype." ".$device["id"]; echo empty($device["name"]) ? "" : " - ".$device["name"]; ?></h2>
+				<h3>State</h3>
+				<form method=post>
+					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
+					<input type=text name=action value=overwritestate style="display: none;">
+					<input type=text name=state value="<?php echo getdata($device["id"]); ?>">
+					<input type=submit name=submit value="Overwrite">
+				</form>
+				<br>
 				<h3>Manage</h3>
 				<form method=post>
 					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
