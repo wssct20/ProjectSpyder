@@ -14,7 +14,7 @@ $devices = getdevices();
 		?>
 		<div class="tile">
 			<h1><?php echo (empty($device["name"]) ? $device["type"]." ".$device["id"] : $device["name"]);?></h1>
-			<p><?php echo gettile($device["type"], getdata($device["id"])); ?></p>
+			<?php echo gettile($device["type"], getdata($device["id"])); ?>
 		</div>
 		<?php
 	}

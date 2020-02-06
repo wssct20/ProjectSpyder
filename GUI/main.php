@@ -34,6 +34,7 @@ checksession();
 				});
 			}
 			var refreshhandler = setInterval(refreshmainframe, 5000);
+			$(document).ready(refreshmainframe);
 		</script>
 	</head>
 	<body>
