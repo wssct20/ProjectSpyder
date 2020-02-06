@@ -18,4 +18,8 @@ function checksession() {
 	}
 }
 
+function sanitizehtml($input) {
+	return htmlspecialchars($input, ENT_QUOTES | ENT_HTML401);
+}
+
 ?>
