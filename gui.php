@@ -1,7 +1,4 @@
 <?php
-//die("GUIUNFINISHED");
-//TODO whole gui stuff is untested
-
 require_once("GUI/system.php");
 
 //this should only redirect to subpages
@@ -13,6 +10,5 @@ if (sessionvalid()) {
 } else {
 	header("Location: GUI/login.php",true,307);
 }
-//die();
 
 ?>
