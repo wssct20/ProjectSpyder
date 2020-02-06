@@ -30,7 +30,7 @@ checksession();
 					success: function(data) {
 						document.getElementById("mainframe").innerHTML = data;
 					},
-					dataType: html
+					dataType: "html"
 				});
 			}
 			var refreshhandler = setInterval(refreshmainframe, 5000);
