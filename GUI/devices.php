@@ -10,6 +10,7 @@ if ($action == "delete") {
 	//TODO: check for user permission
 	$id = $_POST["id"] ?? "";
 	if ($id == "") die("INVALIDID");
+	$id = intval($id);
 	deletedevice($id);
 	header("DEBUG: devices.php delete device successful");
 	header("Location: devices.php",true,303);
@@ -20,6 +21,7 @@ if ($action == "rename") {
 	//TODO: check for user permission
 	$id = $_POST["id"] ?? "";
 	if ($id == "") die("INVALIDID");
+	$id = intval($id);
 	$name = $_POST["name"] ?? "";
 	$name = sanitizehtml($name);
 	updatedevicename($id, $name);
@@ -48,6 +50,7 @@ if ($action == "overwritestate") {
 if ($action == "details") {
 	$id = $_POST["id"] ?? "";
 	if ($id == "") die("INVALIDID");
+	$id = intval($id);
 	$device = getdevicebyid($id);
 	$friendlytype = ($friendlytypenames[$device["type"]] ?? $device["type"]);
 	?>
