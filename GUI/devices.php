@@ -15,21 +15,6 @@ if ($action == "delete") {
 	die();
 }
 
-$friendlytypenames = array(
-	//"motor" => "Motor",
-	//"lock" => "Lock",
-	"addressablergbledstrip" => "LED-Strip",
-	"rgbled" => "RGB-LED",
-	"led" => "LED",
-	//"epaper" => "E-Paper Screen",
-	"button" => "Button",
-	//"finger" => "Fingerprint sensor",
-	//"temp" => "temperature sensor",
-	//"rotation" => "rotational sensor",
-	"rgbdetect" => "RGB sensor",
-	"raw" => "unknown",
-	"" => null, //for automatic fallback using ?? when no friendlyname was found
-);
 
 
 ?>

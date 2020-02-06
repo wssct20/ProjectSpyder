@@ -1,7 +1,24 @@
 <?php
 require_once(__DIR__."/../system.php"); //does this really reference to parent folder?
-
 if (!session_start()) die("SESSIONINITFAILED");
+
+
+$friendlytypenames = array(
+	//"motor" => "Motor",
+	//"lock" => "Lock",
+	"addressablergbledstrip" => "LED-Strip",
+	"rgbled" => "RGB-LED",
+	"led" => "LED",
+	//"epaper" => "E-Paper Screen",
+	"button" => "Button",
+	//"finger" => "Fingerprint sensor",
+	//"temperature" => "temperature sensor",
+	//"rotation" => "rotational sensor",
+	"rgbdetect" => "RGB sensor",
+	"raw" => "unknown",
+	"" => null, //for automatic fallback using ?? when no friendlyname was found
+);
+
 
 function sessionvalid() {
 	//TODO: check if login session is valid
