@@ -22,8 +22,18 @@ checksession();
 			    background-color: black;
 			}
 		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script>
-			//to be added
+			async function refreshmainframe() {
+				$.ajax({
+					url: "tilegrid.php",
+					success: function(data) {
+						document.getElementById("mainframe").innerHTML = data;
+					},
+					dataType: html
+				});
+			}
+			var refreshhandler = setInterval(refreshmainframe, 5000);
 		</script>
 	</head>
 	<body>
@@ -45,6 +55,6 @@ checksession();
 			</ul>
 		</nav>
 		
-		<iframe id=mainframe style="display: none;" />
+		<div id=mainframe></div>
 	</body>
 <html>
