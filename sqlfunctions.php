@@ -138,6 +138,22 @@ function deletedevice($id) {
 	}
 }
 
+function updatedevicename($id, $name) {
+	global $db;
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("UPDATE devices SET name=? WHERE id=?"))) {
+		dieerror("ERRSQLTABLE", "updatedevicename Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("si", $name, $id)) {
+		dieerror("ERRSQLTABLE", "updatedevicename Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "updatedevicename Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+}
+
 function getdata($id) {
 	//getdata: get data of a device from the according type table
 	global $db;

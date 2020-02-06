@@ -15,6 +15,18 @@ if ($action == "delete") {
 	die();
 }
 
+if ($action == "rename") {
+	//TODO: check for user permission
+	$id = $_POST["id"] ?? "";
+	if ($id == "") die("INVALIDID");
+	$name = $_POST["name"] ?? "";
+	$name = sanitizehtml($name);
+	updatedevicename($id, $name);
+	header("DEBUG: devices.php rename device successful");
+	header("Location: devices.php",true,303);
+	die();
+}
+
 if ($action == "details") {
 	$id = $_POST["id"] ?? "";
 	if ($id == "") die("INVALIDID");
@@ -42,8 +54,15 @@ if ($action == "details") {
 			</nav>
 			
 			<div class="settings">
-				<h2><?php echo $friendlytype." ".$device["id"];?></h2>
+				<h2><?php echo $friendlytype." ".$device["id"]; echo empty($device["name"]) ? "" : " - ".$device["name"];?></h2>
 				<h3>Manage</h3>
+				<form method=post>
+					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
+					<input type=text name=action value=rename style="display: none;">
+					<input type=text name=name placeholder="<?php echo $friendlytype." ".$device["id"]?>">
+					<input type=submit name=submit value="Rename">
+				</form>
+				<br>
 				<form method=post>
 					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
 					<input type=text name=action value=delete style="display: none;">
