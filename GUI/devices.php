@@ -1,6 +1,6 @@
 <?php
 require_once("system.php");
-require(__DIR__."/../specific.php");
+require_once(__DIR__."/../specific.php"); //idk why but this is needed although imported though system.php > system.php > functions.php > specific.php
 global $systemname;
 checksession();
 

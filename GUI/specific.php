@@ -1,6 +1,7 @@
 <?php 
 
 function gettile($type, $state) {
+	//gettile: needs to output the state userfriendly for the GUI
 	$state = sanitizehtml($state);
 	$returnstring = "";
 	switch($type) {
