@@ -11,10 +11,10 @@ $friendlytypenames = array(
 	"led" => "LED",
 	//"epaper" => "E-Paper Screen",
 	"button" => "Button",
-	//"finger" => "Fingerprint sensor",
-	//"temperature" => "temperature sensor",
-	//"rotation" => "rotational sensor",
-	"rgbdetect" => "RGB sensor",
+	//"finger" => "Fingerprint Sensor",
+	//"temperature" => "Temperature Sensor",
+	//"rotation" => "Rotational Sensor",
+	"rgbdetect" => "RGB Sensor",
 	"raw" => "unknown",
 	"" => null, //for automatic fallback using ?? when no friendlyname was found
 );
