@@ -14,7 +14,8 @@ function checkstate($state, $type) {
 	switch ($type) {
 		case "button":
 			if (sizeof(explode("", $state)) != 1) return false;
-			if (!($state == 1 | $state == 0)) return false;
+			$value = intval($state);
+			if (!($value == 1 | $value == 0)) return false;
 			return true;
 		case "rgbled":
 			$colors = explode(":", $state);
