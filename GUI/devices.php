@@ -15,6 +15,47 @@ if ($action == "delete") {
 	die();
 }
 
+if ($action == "details") {
+	$id = $_POST["id"] ?? "";
+	if ($id == "") die("INVALIDID");
+	$device = getdevicebyid($id);
+	$friendlytype = ($friendlytypenames[$device["type"]] ?? $device["type"]);
+	?>
+	
+	<!DOCTYPE html>
+	<html lang="de">
+		<head>
+	        <meta charset="utf-8">
+	        <link rel="stylesheet" href="style.css">
+	        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> 
+	        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet"> 
+			<title><?php echo $systemname;?> Devices</title>
+		</head>
+		<body>
+			<nav>
+				<h1><a href="main.php"><?php echo $systemname;?></a> Devices</h1>
+				<ul>
+	                <div class="separator"></div>
+					<li><a href="main.php">Home</a></li>
+					<li><a href="devices.php">Devices</a></li>
+				</ul>
+			</nav>
+			
+			<div class="settings">
+				<h2><?php echo $friendlytype." ".$device["id"];?></h2>
+				<h3>Manage</h3>
+				<form method=post>
+					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
+					<input type=text name=action value=delete style="display: none;">
+					<input type=submit name=submit value="Delete">
+				</form>
+			</div>
+		</body>
+	</html>
+	
+	<?php 
+	die();
+}
 
 
 ?>
@@ -50,7 +91,7 @@ if ($action == "delete") {
 		
 		<div class="settings">
 		
-			<h3>Paired Devices</h3>
+			<h2>Paired Devices</h2>
 			<?php 
 			//this generates a table of devices paired with the system
 			$devices = getdevices();
@@ -77,8 +118,8 @@ if ($action == "delete") {
 						<td>
 							<form method=post style="margin: 0;">
 								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
-								<input type=text name=action value=delete style="display: none;">
-								<input type=submit name=submit value="Delete">
+								<input type=text name=action value=details style="display: none;">
+								<input type=submit name=submit value="Manage">
 							</form>
 						</td>
 						<?php
