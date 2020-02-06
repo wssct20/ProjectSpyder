@@ -6,7 +6,7 @@ function gettile($type, $state) {
 	switch($type) {
 		case "button":
 			$value = intval($state);
-			$returnstring = "<p> The button is " . ($state == 0 ? "released" : "pressed") . "</p>";
+			$returnstring = "<p> The button is " . ($state == 0 ? "released" : "pressed") . ".</p>";
 			break;
 		case "raw":
 		default:
