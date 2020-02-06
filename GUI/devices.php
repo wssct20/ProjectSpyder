@@ -83,7 +83,9 @@ if ($action == "details") {
 				<form method=post>
 					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
 					<input type=text name=action value=rename style="display: none;">
-					<input type=text name=name placeholder="<?php echo $friendlytype." ".$device["id"]?>">
+					<input type=text name=name 
+						placeholder="<?php echo $friendlytype." ".$device["id"]; ?>" 
+						value="<?php echo empty($device["name"]) ? "" : $device["name"]; ?>">
 					<input type=submit name=submit value="Rename">
 				</form>
 				<br>
