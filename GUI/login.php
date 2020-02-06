@@ -2,6 +2,13 @@
 require_once("system.php");
 global $systemname;
 
+if (sizeof(getusers()) == 0) {
+	header("DEBUG: login.php autologin because of no users successful");
+	$_SESSION["login"] = true;
+	header("Location: main.php",true,303);
+	die();
+}
+
 $action = $_POST["action"] ?? "";
 switch ($action) {
 	case "login":
