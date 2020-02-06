@@ -1,5 +1,6 @@
 <?php
 require_once("system.php");
+require(__DIR__."/../specific.php");
 global $systemname;
 checksession();
 
