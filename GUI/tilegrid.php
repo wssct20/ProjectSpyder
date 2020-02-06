@@ -2,8 +2,6 @@
 require_once("system.php");
 if (!sessionvalid()) die("INVALIDSESSION");
 
-include_once("specific.php");
-
 $devices = getdevices();
 ?>
 

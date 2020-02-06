@@ -10,6 +10,8 @@ function specificactions($device, $requesttype, $returnstack) {
 	}
 }
 
+//SANITY CHECKS
+
 function checkstate($state, $type) {
 	switch ($type) {
 		case "button":
@@ -47,11 +49,37 @@ function checkstate($state, $type) {
 			}
 			//if (intval($values[4]) < -65536 | intval($values[4]) > 65536) return false; //yet unknown size limits
 			return true;
+		case "temperature":
+			$values = explode(":", $state);
+			if (sizeof($values) != 2) return false;
+			if (floatval($values[0]) < -273.15 | floatval($values[0]) > 1000) return false; //TODO: check limits
+			if (floatval($values[1]) < 0 | floatval($values[1]) > 100) return false;
+			return true;
 		case "raw":
 		default:
 			//no check needed
 			return true;	
 	}
+}
+
+
+//GUI STUFF
+
+function gettile($type, $state) {
+	//gettile: needs to output the state as is should be to present to user
+	$state = sanitizehtml($state);
+	$returnstring = "";
+	switch($type) {
+		case "button":
+			$value = intval($state);
+			$returnstring = "<p> The button is " . ($state == 0 ? "released" : "pressed") . ".</p>";
+			break;
+		case "raw":
+		default:
+			$returnstring = "<p>" . $state . "</p>";
+			break;
+	}
+	return $returnstring;
 }
 
 ?>
