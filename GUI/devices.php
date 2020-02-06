@@ -8,10 +8,10 @@ $action = $_POST["action"] ?? "";
 if ($action == "delete") {
 	//TODO: check for user permission
 	$id = $_POST["id"] ?? "";
-	if ($username == "") die("INVALIDID");
-	deletedevice($user["id"]);
+	if ($id == "") die("INVALIDID");
+	deletedevice($id);
 	header("DEBUG: devices.php delete device successful");
-	header("Location: usermanagement.php",true,303);
+	header("Location: devices.php",true,303);
 	die();
 }
 
