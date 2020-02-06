@@ -67,14 +67,7 @@ $friendlytypenames = array(
 		
 			<h3>Paired Devices</h3>
 			<?php 
-			//this will generate a table of devices paired with the system
-			//devices array: columns of the devices table to show. format: Visible text => column name of table devices.
-			/*$columns = array(
-				"ID" => "id",
-				"Name" => "name",
-				"Type" => "type",
-				"IP-Address" => "ipaddress",
-			);*/
+			//this generates a table of devices paired with the system
 			$devices = getdevices();
 			if (sizeof($devices) == 0) {
 				echo("No devices found.");
@@ -82,23 +75,6 @@ $friendlytypenames = array(
 				?>
 				<table>
 					<?php
-					/*echo "<tr>";
-					foreach ($columns as $key => $column) {
-						echo "<th>";
-						echo $key;
-						echo "</th>";
-					}
-					echo "</tr>";
-					foreach ($devices as $device) {
-						echo "<tr>";
-						foreach ($columns as $column) {
-							echo "<td>";
-							echo ($friendlytypenames[$device[$column]] ?? $device[$column]);
-							echo "</td>";
-						}
-						echo "</tr>";
-					}*/
-					
 					echo "<tr>";
 					echo "<th>" . "ID" . "</th>";
 					echo "<th>" . "Name" . "</th>";
