@@ -34,7 +34,8 @@ if ($action == "overwritestate") {
 	$state = $_POST["state"] ?? "";
 	if (!checkstate(getdata($device["id"]), $device["state"])) {
 		header("DEBUG: devices.php overwritestate failed due to invalid state");
-		header("Location: devices.php",true,303);
+		$_POST["action"] = "";
+		header("Location: devices.php",true,307);
 		die();
 	}
 	updatedata($id, $state);
