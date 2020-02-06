@@ -47,7 +47,7 @@ checksession();
 				<li><a href="usermanagement.php">Usermanagement</a></li>
 			</ul>
 			<ul>
-				<li><a href="https://github.com/wssct20/ProjectSpyder">GitHub</a></li>
+				<li><a target="_blank" href="https://github.com/wssct20/ProjectSpyder">GitHub</a></li>
 				<div class="seperator"></div>
 				<li class="bordered">
 					<form action="login.php" method=post>
