@@ -161,7 +161,7 @@ if ($action == "details") {
 					foreach ($devices as $device) {
 						echo "<tr>";
 						echo "<td>" . $device["id"] . "</td>";
-						echo "<td>" . $device["name"] . "</td>";
+						echo "<td>" . (empty($device["name"]) ? ($friendlytypenames[$device["type"]] ?? $device["type"])." ".$device["id"] : $device["name"]) . "</td>";
 						echo "<td>" . ($friendlytypenames[$device["type"]] ?? $device["type"]) . "</td>";
 						echo "<td>" . $device["ipaddress"] . "</td>";
 						?>
