@@ -26,6 +26,6 @@ adddevice($type, $ip, $pairtime, $now, $authcode);
 $returnstack["requesttimeout"] = 5;
 $returnstack["authcode"] = $authcode;
 
-echo formatreturnvalues($returnstack);
+echo formatreturnvalues($returnstack, null);
 
 ?>

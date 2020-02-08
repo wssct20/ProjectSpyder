@@ -45,7 +45,7 @@ function checkstate($state, $type) {
 				$value = intval($values[$i]);
 				if ($value < 0 | $value > 360) return false;
 			}
-			//if (intval($values[4]) < -65536 | intval($values[4]) > 65536) return false; //yet unknown size limits
+			//if (intval($values[4]) < -65536 | intval($values[4]) > 65536) return false; //TODO: yet unknown size limits
 			return true;
 		case "temperature":
 			$values = explode(":", $state);
