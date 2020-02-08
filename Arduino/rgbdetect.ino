@@ -69,8 +69,7 @@ void rgbdetectloop() {
   state.concat(":");
   state.concat(lux);
 
-  Serial.print("state: ");
-  Serial.println(state);
+  Serial.println("state: " + String(state));
   
   //send the values to the server
   putstate(state);

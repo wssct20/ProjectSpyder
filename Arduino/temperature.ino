@@ -33,8 +33,7 @@ void temperatureloop() {
   state.concat(":");
   state.concat(lastValues.humidity);
 
-  Serial.print("state: ");
-  Serial.println(state);
+  Serial.println("state: " + String(state));
   
   //send the values to the server
   putstate(state);

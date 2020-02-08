@@ -8,12 +8,9 @@ void writeEEPROM(int address, int length, String data)
   Serial.println("writeEEPROM() start");
   EEPROM.begin(address + length);
 
-  Serial.print("address: ");
-  Serial.println(address);
-  Serial.print("length: ");
-  Serial.println(length);
-  Serial.print("data: ");
-  Serial.println(data);
+  Serial.println("address: " + String(address));
+  Serial.println("length: " + String(length));
+  Serial.println("data: " + String(data));
 
   char dataarray[length + 1];
   data.toCharArray(dataarray, length + 1);
@@ -30,10 +27,8 @@ String readEEPROM(int address, int length)
   Serial.println("readEEPROM() start");
   EEPROM.begin(address + length);
 
-  Serial.print("address: ");
-  Serial.println(address);
-  Serial.print("length: ");
-  Serial.println(length);
+  Serial.println("address: " + String(address));
+  Serial.println("length: " + String(length));
   Serial.print("read data: ");
 
   char dataarray[length];
@@ -57,9 +52,7 @@ void lightsleep(int seconds)
     return;
   }
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
-  Serial.print("Starting lightsleep for ");
-  Serial.print(seconds);
-  Serial.println(" seconds.");
+  Serial.println("Starting lightsleep for " + String(seconds) + String(" seconds."));
   Serial.println("------sleep------");
   #ifdef debugmode
   delay(1000);
@@ -78,14 +71,8 @@ bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
   gpio_wakeup_enable((gpio_num_t)pin, triggerlevel?GPIO_INTR_HIGH_LEVEL:GPIO_INTR_LOW_LEVEL);
   esp_sleep_enable_gpio_wakeup();
-  Serial.print("Starting lightsleep for ");
-  Serial.print(seconds);
-  Serial.println(" seconds.");
-  Serial.print("Added interrupt for Pin ");
-  Serial.print(pin);
-  Serial.print(" for state ");
-  Serial.print(triggerlevel);
-  Serial.println(".");
+  Serial.println("Starting lightsleep for " + String(seconds) + String(" seconds."));
+  Serial.println("Added interrupt for Pin " + String(pin) + String(" for state ") + String(triggerlevel) + String("."));
   Serial.println("------sleep------");
   #ifdef debugmode
   delay(1000);
@@ -112,12 +99,8 @@ void lightsleeptouch(int seconds, int touchpin, int threshold)
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
   touchAttachInterrupt(touchpin, touchcallback, threshold);
   esp_sleep_enable_touchpad_wakeup();
-  Serial.print("Starting lightsleep for ");
-  Serial.print(seconds);
-  Serial.println(" seconds.");
-  Serial.print("Added touch interrupt for Pin ");
-  Serial.print(touchpin);
-  Serial.println(".");
+  Serial.println("Starting lightsleep for " + String(seconds) + String(" seconds."));
+  Serial.println("Added touch interrupt for Pin " + String(touchpin) + String("."));
   Serial.println("------sleep------");
   #ifdef debugmode
   delay(1000);
@@ -135,9 +118,7 @@ void lightsleeptouch(int seconds, int touchpin, int threshold)
 
 void hibernate(int seconds)
 {
-  Serial.print("Go to Hibernation for ");
-  Serial.print(seconds);
-  Serial.println(" seconds.");
+  Serial.println("Go to Hibernation for " + String(seconds) + String(" seconds."));
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
   esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_FAST_MEM, ESP_PD_OPTION_OFF);
   esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_SLOW_MEM, ESP_PD_OPTION_OFF);

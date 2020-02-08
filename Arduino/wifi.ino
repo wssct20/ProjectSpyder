@@ -19,26 +19,11 @@ void wifisetup()
       delay(5000);
     }
     Serial.println();    
-    Serial.print("Wifi Connected to \"");     // Wifi connection
-    Serial.print(ssid);
-    Serial.println("\"");
-    Serial.print("IP address: ");             // IP address
-    Serial.println(WiFi.localIP());
+    Serial.println("Wifi Connected to \"" + String(ssid) + String("\""));     // Wifi connection
+    Serial.println("IP address: " + String(WiFi.localIP()));             // IP address
     byte mac[6];                              // MAC address
     WiFi.macAddress(mac);
-    Serial.print("MAC address: ");
-    Serial.print(mac[0],HEX);
-    Serial.print(":");
-    Serial.print(mac[1],HEX);
-    Serial.print(":");
-    Serial.print(mac[2],HEX);
-    Serial.print(":");
-    Serial.print(mac[3],HEX);
-    Serial.print(":");
-    Serial.print(mac[4],HEX);
-    Serial.print(":");
-    Serial.println(mac[5],HEX);
-    Serial.print("Hostname: ");               // Hostname
-    Serial.println(WiFi.getHostname());
+    Serial.println("MAC address: " + String(mac[0],HEX) + String(":") + String(mac[1],HEX) + String(":") + String(mac[2],HEX) + String(":") + String(mac[3],HEX) + String(":") + String(mac[4],HEX) + String(":") + String(mac[5],HEX));
+    Serial.println("Hostname: " + String(WiFi.getHostname()));               // Hostname
     Serial.println("_________________________________");
 }

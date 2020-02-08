@@ -40,48 +40,38 @@ void rotationloop() {
 //////////temperature//////////
 
   temp = rotation.getTemp();
-  Serial.print("Current temperature: ");
-  Serial.println(temp);
+  Serial.println("Current temperature: " + String(temp));
 
 //////////gyroskop//////////
 
   x = (int) (euler.x() + 0.5);
-  Serial.print("x: ");
-  Serial.println(x);
+  Serial.println("x: " + String(x));
 
   y = (int) (euler.y() + 0.5);
-  Serial.print("y: ");
-  Serial.println(y);
+  Serial.println("y: " + String(y));
 
   z = (int) (euler.z() + 0.5);
-  Serial.print("z: ");
-  Serial.println(z);
+  Serial.println("z: " + String(z));
 
 //////////magnetometer//////////
 
   mx = (int) (magnetic.x() + 0.5);
-  Serial.print("mx: ");
-  Serial.println(mx);
+  Serial.println("mx: " + String(mx));
   
   my = (int) (magnetic.y() + 0.5);
-  Serial.print("my: ");
-  Serial.println(my);
+  Serial.println("my: " + String(my));
   
   mz = (int) (magnetic.z() + 0.5);
-  Serial.print("mz: ");
-  Serial.println(mz);
+  Serial.println("mz: " + String(mz));
 
   m = max(mx, max(my, mz));
-  Serial.print("m: ");
-  Serial.println(m);
+  Serial.println("m: " + String(m));
 
 //////////calibration//////////
   
   rotation.getCalibration(&sc, &gc, &ac, &mc);
-  Serial.print("system calibration: ");
-  Serial.println(sc);
-  Serial.print("magnet calibration: ");
-  Serial.println(mc);
+  Serial.println("system calibration: " + String(sc));
+  Serial.println("magnet calibration: " + String(mc));
 
   String state = String(temp);
   state.concat(":");
@@ -93,8 +83,7 @@ void rotationloop() {
   state.concat(":");
   state.concat(m);
 
-  Serial.print("state: ");
-  Serial.println(state);
+  Serial.println("state: " + String(state));
 
   putstate(state);
 

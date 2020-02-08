@@ -19,8 +19,7 @@ void buttonloop() {
 //TODO:  lightsleeptouch(20, T0, 20);
   lightsleep(10);
   digitalWrite(LED_BUILTIN, buttonstate ? HIGH : LOW);
-  Serial.print("Button state: ");
-  Serial.println(buttonstate);
+  Serial.println("Button state: " + String(buttonstate));
   
   //delay(5000);
   putstate(String(!buttonstate));

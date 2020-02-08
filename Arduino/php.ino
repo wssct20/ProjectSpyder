@@ -19,8 +19,7 @@ void pair()
   String answer;
   
   Serial.println("php pair() start");
-  Serial.print("php connecting to ");
-  Serial.println(serverhostname);
+  Serial.println("php connecting to " + String(serverhostname));
   
   WiFiClient SpyderHub;
   const int httpPort = 80;
@@ -35,8 +34,7 @@ void pair()
   url += "?type=";
   url += type;
   
-  Serial.print("Requesting URL: ");
-  Serial.println(url);
+  Serial.println("Requesting URL: " + String(url));
   
   SpyderHub.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + serverhostname + "\r\n" + "Connection: close\r\n\r\n");
   delay(1000);
@@ -81,8 +79,7 @@ void pair()
     lastindex = currentindex + 1;
     count++;
   }
-  Serial.print("Count: ");
-  Serial.println(count);
+  Serial.println("Count: " + String(count));
   String answerdata[count][2];
 
   lastindex = 0;
@@ -101,8 +98,7 @@ void pair()
     lastindex = currentindex + 1;
     count++;
   }
-  Serial.print("Sizeof: ");
-  Serial.println(sizeof(answerdata));
+  Serial.println("Sizeof: " + String(sizeof(answerdata)));
   Serial.println("---");
 
 // search for error
@@ -110,8 +106,7 @@ void pair()
   {
     if (answerdata[i][0] == "error")
     {
-      Serial.print("ERROR: ");
-      Serial.println(answerdata[i][1]);
+      Serial.println("ERROR: " + String(answerdata[i][1]));
 
       String errorsstring = "TYPEINVALID        ";    // error every 20 chars
       int e = errorsstring.indexOf(answerdata[i][1]);
@@ -174,9 +169,7 @@ void pair()
   
   for (int i = 0; i < count; i++)
   {
-    Serial.print(answerdata[i][0]);
-    Serial.print("\t");
-    Serial.println(answerdata[i][1]);
+    Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
   }
 
   Serial.println("---");
@@ -204,8 +197,7 @@ String interact(int requesttype, String state)
   String answer;
   
   Serial.println("php interact() start");
-  Serial.print("php connecting to ");
-  Serial.println(serverhostname);
+  Serial.println("php connecting to " + String(serverhostname));
   
   WiFiClient SpyderHub;
   const int httpPort = 80;
@@ -234,8 +226,7 @@ String interact(int requesttype, String state)
   url += "&type=";
   url += type;
   
-  Serial.print("Requesting URL: ");
-  Serial.println(url);
+  Serial.println("Requesting URL: " + String(url));
   
   SpyderHub.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + serverhostname + "\r\n" + "Connection: close\r\n\r\n");
   delay(1000);
@@ -281,8 +272,7 @@ String interact(int requesttype, String state)
     lastindex = currentindex + 1;
     count++;
   }
-  Serial.print("Count: ");
-  Serial.println(count);
+  Serial.println("Count: " + String(count));
   String answerdata[count][2];
 
   lastindex = 0;
@@ -301,8 +291,7 @@ String interact(int requesttype, String state)
     lastindex = currentindex + 1;
     count++;
   }
-  Serial.print("Sizeof: ");
-  Serial.println(sizeof(answerdata));
+  Serial.println("Sizeof: " + String(sizeof(answerdata)));
   Serial.println("---");
 
 ////////////////////////////////////////
@@ -311,8 +300,7 @@ String interact(int requesttype, String state)
   {
     if (answerdata[i][0] == errorindex)
     {
-      Serial.print("ERROR: ");
-      Serial.println(answerdata[i][1]);
+      Serial.println("ERROR: " + String(answerdata[i][1]));
 
       String errorsstring = "default             AUTHFAILED          REQUESTTYPEINVALID  TYPEMISMATCH        ";    // error every 20 chars
       int e = errorsstring.indexOf(answerdata[i][1]);
@@ -389,9 +377,7 @@ String interact(int requesttype, String state)
   
   for (int i = 0; i < count; i++)
   {
-    Serial.print(answerdata[i][0]);
-    Serial.print("\t");
-    Serial.println(answerdata[i][1]);
+    Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
   }
 
   Serial.println("---");
