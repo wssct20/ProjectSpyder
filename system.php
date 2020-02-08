@@ -28,7 +28,7 @@ $types = array(
 	//sensors:
 		"button",
 		//"finger",
-		//"temp",
+		"temperature",
 		"rotation",
 		"rgbdetect",
 	//raw data:
