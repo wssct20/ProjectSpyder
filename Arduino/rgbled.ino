@@ -2,10 +2,10 @@
 #define pincount 3                    //number of pins you use
 const int pins[] = {19, 18, 5};       //Enter the pin of your led here
 
-const int rgbled_frequency = 5000;            //pwm frequency
-#define pwmchannelcount 3             //number of pwm channels you use
+#define rgbled_frequency 5000                //pwm frequency
+#define pwmchannelcount 3                    //number of pwm channels you use
 const int rgbled_pwmchannel[] = {0, 1, 2};   //pwm channels
-const int rgbled_resolution = 8;             //8-bit resolution
+#define rgbled_resolution 8                  //8-bit resolution
 
 
 
