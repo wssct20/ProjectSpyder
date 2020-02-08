@@ -9,6 +9,10 @@ function gettile($type, $state) {
 			$value = intval($state);
 			$returnstring = "<p> The button is " . ($state == 0 ? "released" : "pressed") . ".</p>";
 			break;
+		case "digitaloutput":
+			$value = intval($state);
+			$returnstring = "<p> This output is " . ($state == 0 ? "off" : "on") . ".</p>";
+			break;
 		case "raw":
 		default:
 			$returnstring = "<p>" . $state . "</p>";

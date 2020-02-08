@@ -13,6 +13,7 @@ function specificactions($device, $requesttype, $returnstack) {
 function checkstate($state, $type) {
 	switch ($type) {
 		case "button":
+		case "digitaloutput":
 			if (sizeof(explode("", $state)) != 1) return false;
 			$value = intval($state);
 			if (!($value == 1 | $value == 0)) return false;

@@ -20,7 +20,7 @@ $updatetime = 10;
 $types = array(
 	//actuators:
 		//"motor",
-		//"lock",
+		"digitaloutput",
 		"addressablergbledstrip",
 		"rgbled",
 		"led",
