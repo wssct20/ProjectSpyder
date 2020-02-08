@@ -20,7 +20,10 @@ String switchtype = type;
 
 void setup() {
 
-  Serial.begin(115200);
+  #ifdef debugmode
+    Serial.begin(115200);
+  #endif
+  
   //esp_bt_controller_disable(); //disable bluetooth controller for power savings, but currently commented out, because I believe its not started if library isnt included
 
   #ifdef reset_authcode
