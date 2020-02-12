@@ -11,6 +11,7 @@ function specificactions($device, $requesttype, $returnstack) {
 }
 
 function checkstate($state, $type) {
+	return true; //TODO: complete rework
 	switch ($type) {
 		case "button":
 		case "digitaloutput":

@@ -23,9 +23,7 @@ function formatreturnvalues($data, $debug) {
 		$returntext = $returntext . $debug . "\n";
 	}
 	$returntext = $returntext . "#DATA\n";
-	foreach ($data as $key => $value) {
-		$returntext = $returntext . "[" . $key . "]" . "=>" . $value . "\n";
-	}
+	$returntext = $returntext . jsonencode($data) . "\n";
 	$returntext = $returntext . "#END";
 	//$returntext = $returntext."\n";
 	return $returntext;
@@ -107,6 +105,14 @@ function gettimeout($type) {
 	$thisupdatetime = $updatetime + ($updatetimes[$type] ?? $updatetimes[""]);
 	if ($thisupdatetime < 0) $thisupdatetime = 0;
 	return $thisupdatetime;
+}
+
+function jsondecode($json) {
+	return json_decode($json, true);
+}
+
+function jsonencode($data) {
+	return json_encode($data);
 }
 
 ?>
