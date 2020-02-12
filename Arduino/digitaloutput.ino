@@ -21,7 +21,7 @@ void digitaloutputloop() {
   int state = rawstate.toInt();
   
   //check state
-  if (state < 0 | state > 1) state = 0;
+  if (state != 1) state = 0;
 
   Serial.println("state: " + String(state));
   
