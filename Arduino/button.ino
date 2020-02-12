@@ -18,7 +18,9 @@ void buttonloop() {
   bool buttonstate = false;
   lightsleep(10);
   digitalWrite(LED_BUILTIN, buttonstate ? HIGH : LOW);
-  Serial.println("Button state: " + String(buttonstate));
+  #ifdef debugmode
+    Serial.println("Button state: " + String(buttonstate));
+  #endif
   
   //delay(5000);
   putstate(String(!buttonstate));

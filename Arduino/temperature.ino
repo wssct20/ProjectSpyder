@@ -26,14 +26,18 @@ void temperatureloop() {
 
   TempAndHumidity lastValues = dht.getTempAndHumidity();
 
-  Serial.println("Temperature: " + String(lastValues.temperature, 1));
-  Serial.println("Humidity: " + String(lastValues.humidity, 1));
+  #ifdef debugmode
+    Serial.println("Temperature: " + String(lastValues.temperature, 1));
+    Serial.println("Humidity: " + String(lastValues.humidity, 1));
+  #endif
 
   String state = String(lastValues.temperature);
   state.concat(":");
   state.concat(lastValues.humidity);
 
-  Serial.println("state: " + String(state));
+  #ifdef debugmode
+    Serial.println("state: " + String(state));
+  #endif
   
   //send the values to the server
   putstate(state);

@@ -11,11 +11,15 @@ void digitaloutputsetup() {
 
 void digitaloutputloop() {
 
-  Serial.println("digitaloutput() look for state");
+  #ifdef debugmode
+    Serial.println("digitaloutput() look for state");
+  #endif
 
   //get state from system
   String rawstate = getstate();
-  Serial.println("rawstate: " + String(rawstate));
+  #ifdef debugmode
+    Serial.println("rawstate: " + String(rawstate));
+  #endif
   
   //extract state
   int state = rawstate.toInt();
@@ -23,7 +27,9 @@ void digitaloutputloop() {
   //check state
   if (state != 1) state = 0;
 
-  Serial.println("state: " + String(state));
+  #ifdef debugmode
+    Serial.println("state: " + String(state));
+  #endif
   
   //set pin
   digitalWrite(output_pin, state);

@@ -18,15 +18,19 @@ void pair()
 
   String answer;
   
-  Serial.println("php pair() start");
-  Serial.println("php connecting to " + String(serverhostname));
+  #ifdef debugmode
+    Serial.println("php pair() start");
+    Serial.println("php connecting to " + String(serverhostname));
+  #endif
   
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort))
   {
-    Serial.println("php connection failed");
-    Serial.println("_________________________________");
+    #ifdef debugmode
+      Serial.println("php connection failed");
+      Serial.println("_________________________________");
+    #endif
     return;
   }
   
@@ -34,42 +38,60 @@ void pair()
   url += "?type=";
   url += type;
   
-  Serial.println("Requesting URL: " + String(url));
+  #ifdef debugmode
+    Serial.println("Requesting URL: " + String(url));
+  #endif
   
   SpyderHub.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + serverhostname + "\r\n" + "Connection: close\r\n\r\n");
   delay(1000);
 
-  Serial.println("___________Answer:___________");
+  #ifdef debugmode
+    Serial.println("___________Answer:___________");
+  #endif
   while (SpyderHub.available())
   {
     answer = SpyderHub.readStringUntil('\r');
-    Serial.print(answer);
+    #ifdef debugmode
+      Serial.print(answer);
+    #endif
   }
-  Serial.println();
-  Serial.println("_____________________________");
+  #ifdef debugmode
+    Serial.println();
+    Serial.println("_____________________________");
+  #endif
 
 ////////////////////////////////////////
 // search for #START
-  Serial.println("Search for #START");
+  #ifdef debugmode
+    Serial.println("Search for #START");
+  #endif
 
   if (answer.indexOf("#START") == -1)
   {
-    Serial.println("#START not found");
+    #ifdef debugmode
+      Serial.println("#START not found");
+    #endif
 
     hibernate(fatalerrordelay);
   }
   else
   {
-    Serial.println("#START found");
+    #ifdef debugmode
+      Serial.println("#START found");
+    #endif
   }
 
 ////////////////////////////////////////
-  Serial.println("split:");
+  #ifdef debugmode
+    Serial.println("split:");
+  #endif
   
   String answerdatasubstring = answer.substring(answer.indexOf("#DATA") + 6, answer.indexOf("#END") - 1);
-  Serial.println(answerdatasubstring);
-  
-  Serial.println("---");
+  #ifdef debugmode
+    Serial.println(answerdatasubstring);
+    
+    Serial.println("---");
+  #endif
 
   int lastindex = 0;
   int count = 0;
@@ -79,7 +101,9 @@ void pair()
     lastindex = currentindex + 1;
     count++;
   }
-  Serial.println("Count: " + String(count));
+  #ifdef debugmode
+    Serial.println("Count: " + String(count));
+  #endif
   String answerdata[count][2];
 
   lastindex = 0;
@@ -98,15 +122,19 @@ void pair()
     lastindex = currentindex + 1;
     count++;
   }
-  Serial.println("Sizeof: " + String(sizeof(answerdata)));
-  Serial.println("---");
+  #ifdef debugmode
+    Serial.println("Sizeof: " + String(sizeof(answerdata)));
+    Serial.println("---");
+  #endif
 
 // search for error
   for (int i = 0; i < count; i++)
   {
     if (answerdata[i][0] == "error")
     {
-      Serial.println("ERROR: " + String(answerdata[i][1]));
+      #ifdef debugmode
+        Serial.println("ERROR: " + String(answerdata[i][1]));
+      #endif
 
       String errorsstring = "TYPEINVALID        ";    // error every 20 chars
       int e = errorsstring.indexOf(answerdata[i][1]);
@@ -118,7 +146,9 @@ void pair()
       switch (e / 20)
       {
         case 0:
-          Serial.println("Current type is not supported by server, halting program.");
+          #ifdef debugmode
+            Serial.println("Current type is not supported by server, halting program.");
+          #endif
           hibernate(fatalerrordelay);
         default:
           hibernate(fatalerrordelay);
@@ -126,7 +156,9 @@ void pair()
     }
     else
     {
-      Serial.println("No ERROR");
+      #ifdef debugmode
+        Serial.println("No ERROR");
+      #endif
     }
   }
 
@@ -143,7 +175,9 @@ void pair()
   }
   if (!authcodefound)
   {
-    Serial.println("ERROR: authcode not found");
+    #ifdef debugmode
+      Serial.println("ERROR: authcode not found");
+    #endif
     hibernate(fatalerrordelay);
   }
   
@@ -162,20 +196,28 @@ void pair()
   }
   if (!requesttimeoutfound)
   {
-    Serial.println("ERROR: requesttimeout not found");
+    #ifdef debugmode
+      Serial.println("ERROR: requesttimeout not found");
+    #endif
     requesttimeout = defaultdelay;
   }
   
   
   for (int i = 0; i < count; i++)
   {
-    Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
+    #ifdef debugmode
+      Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
+    #endif
   }
 
-  Serial.println("---");
+  #ifdef debugmode
+    Serial.println("---");
+  #endif
 ////////////////////////////////////////
-  Serial.println("closing pair() connection");
-  Serial.println("_________________________________");
+  #ifdef debugmode
+    Serial.println("closing pair() connection");
+    Serial.println("_________________________________");
+  #endif
 }
 
 
@@ -196,15 +238,19 @@ String interact(int requesttype, String state)
 
   String answer;
   
-  Serial.println("php interact() start");
-  Serial.println("php connecting to " + String(serverhostname));
+  #ifdef debugmode
+    Serial.println("php interact() start");
+    Serial.println("php connecting to " + String(serverhostname));
+  #endif
   
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort))
   {
-    Serial.println("php connection failed");
-    Serial.println("_________________________________");
+    #ifdef debugmode
+      Serial.println("php connection failed");
+      Serial.println("_________________________________");
+    #endif
     return "";
   }
   
@@ -226,43 +272,61 @@ String interact(int requesttype, String state)
   url += "&type=";
   url += type;
   
-  Serial.println("Requesting URL: " + String(url));
+  #ifdef debugmode
+    Serial.println("Requesting URL: " + String(url));
+  #endif
   
   SpyderHub.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + serverhostname + "\r\n" + "Connection: close\r\n\r\n");
   delay(1000);
   
-  Serial.println("___________Answer:___________");
+  #ifdef debugmode
+    Serial.println("___________Answer:___________");
+  #endif
   while (SpyderHub.available())
   {
     answer = SpyderHub.readStringUntil('\r');
-    Serial.print(answer);
+    #ifdef debugmode
+      Serial.print(answer);
+    #endif
   }
-  Serial.println();
-  Serial.println("_____________________________");
+  #ifdef debugmode
+    Serial.println();
+    Serial.println("_____________________________");
+  #endif
 
 ////////////////////////////////////////
 //search for #START
-  Serial.println("Search for #START");
+  #ifdef debugmode
+    Serial.println("Search for #START");
+  #endif
 
   if (answer.indexOf("#START") == -1)
   {
-    Serial.println("#START not found");
+    #ifdef debugmode
+      Serial.println("#START not found");
+    #endif
 
     hibernate(defaulterrordelay);
   }
   else
   {
-    Serial.println("#START found");
+    #ifdef debugmode
+      Serial.println("#START found");
+    #endif
   }
 
 ////////////////////////////////////////
 //processing answer
-  Serial.println("split:");
+  #ifdef debugmode
+    Serial.println("split:");
+  #endif
   
   String answerdatasubstring = answer.substring(answer.indexOf("#DATA") + 6, answer.indexOf("#END") - 1);
-  Serial.println(answerdatasubstring);
-  
-  Serial.println("---");
+  #ifdef debugmode
+    Serial.println(answerdatasubstring);
+    
+    Serial.println("---");
+  #endif
 
   int lastindex = 0;
   int count = 0;
@@ -272,7 +336,9 @@ String interact(int requesttype, String state)
     lastindex = currentindex + 1;
     count++;
   }
-  Serial.println("Count: " + String(count));
+  #ifdef debugmode
+    Serial.println("Count: " + String(count));
+  #endif
   String answerdata[count][2];
 
   lastindex = 0;
@@ -291,8 +357,10 @@ String interact(int requesttype, String state)
     lastindex = currentindex + 1;
     count++;
   }
-  Serial.println("Sizeof: " + String(sizeof(answerdata)));
-  Serial.println("---");
+  #ifdef debugmode
+    Serial.println("Sizeof: " + String(sizeof(answerdata)));
+    Serial.println("---");
+  #endif
 
 ////////////////////////////////////////
 // search for error
@@ -300,7 +368,9 @@ String interact(int requesttype, String state)
   {
     if (answerdata[i][0] == errorindex)
     {
-      Serial.println("ERROR: " + String(answerdata[i][1]));
+      #ifdef debugmode
+        Serial.println("ERROR: " + String(answerdata[i][1]));
+      #endif
 
       String errorsstring = "default             AUTHFAILED          REQUESTTYPEINVALID  TYPEMISMATCH        ";    // error every 20 chars
       int e = errorsstring.indexOf(answerdata[i][1]);
@@ -311,17 +381,23 @@ String interact(int requesttype, String state)
       switch (e / 20)
       {
         case 1:
-          Serial.println("Authentication failed, requesting new authcode.");
+          #ifdef debugmode
+            Serial.println("Authentication failed, requesting new authcode.");
+          #endif
           pair();
           lightsleep(requesttimeout);
           return interact(requesttype, state);
         case 3:
-          Serial.println("Type mismatch, requesting new authcode.");
+          #ifdef debugmode
+            Serial.println("Type mismatch, requesting new authcode.");
+          #endif
           pair();
           lightsleep(requesttimeout);
           return interact(requesttype, state);
         case 2:
-          Serial.println("FATALERROR: requesttype invalid");
+          #ifdef debugmode
+            Serial.println("FATALERROR: requesttype invalid");
+          #endif
         case 0:
         default:
           hibernate(fatalerrordelay);
@@ -329,7 +405,9 @@ String interact(int requesttype, String state)
     }
     else
     {
-      Serial.println("No ERROR");
+      #ifdef debugmode
+        Serial.println("No ERROR");
+      #endif
     }
   }
 
@@ -350,7 +428,9 @@ String interact(int requesttype, String state)
     }
     if (!statefound)
     {
-      Serial.println("ERROR: state not found");
+      #ifdef debugmode
+        Serial.println("ERROR: state not found");
+      #endif
       hibernate(fatalerrordelay);
     }
   }
@@ -370,20 +450,28 @@ String interact(int requesttype, String state)
   }
   if (!requesttimeoutfound)
   {
-    Serial.println("ERROR: requesttimeout not found");
+    #ifdef debugmode
+      Serial.println("ERROR: requesttimeout not found");
+    #endif
     requesttimeout = defaultdelay;
   }
 
   
   for (int i = 0; i < count; i++)
   {
-    Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
+    #ifdef debugmode
+      Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
+    #endif
   }
 
-  Serial.println("---");
+  #ifdef debugmode
+    Serial.println("---");
+  #endif
 ////////////////////////////////////////
-  Serial.println("closing interact() connection");
-  Serial.println("_________________________________");
+  #ifdef debugmode
+    Serial.println("closing interact() connection");
+    Serial.println("_________________________________");
+  #endif
   return returnstate;
 }
 

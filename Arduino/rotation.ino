@@ -16,11 +16,15 @@ void rotationsetup() {
   //start the sensor communication
   if (rotation.begin())
   {
-    Serial.println("Found rotation sensor");
+    #ifdef debugmode
+      Serial.println("Found rotation sensor");
+    #endif
   }
   else
   {
-    Serial.println("No rotation sensor found");
+    #ifdef debugmode
+      Serial.println("No rotation sensor found");
+    #endif
     hibernate(60*60*24);
   }
 
@@ -40,38 +44,56 @@ void rotationloop() {
 //////////temperature//////////
 
   temp = rotation.getTemp();
-  Serial.println("Current temperature: " + String(temp));
+  #ifdef debugmode
+    Serial.println("Current temperature: " + String(temp));
+  #endif
 
 //////////gyroskop//////////
 
   x = (int) (euler.x() + 0.5);
-  Serial.println("x: " + String(x));
+  #ifdef debugmode
+    Serial.println("x: " + String(x));
+  #endif
 
   y = (int) (euler.y() + 0.5);
-  Serial.println("y: " + String(y));
+  #ifdef debugmode
+    Serial.println("y: " + String(y));
+  #endif
 
   z = (int) (euler.z() + 0.5);
-  Serial.println("z: " + String(z));
+  #ifdef debugmode
+    Serial.println("z: " + String(z));
+  #endif
 
 //////////magnetometer//////////
 
   mx = (int) (magnetic.x() + 0.5);
-  Serial.println("mx: " + String(mx));
+  #ifdef debugmode
+    Serial.println("mx: " + String(mx));
+  #endif
   
   my = (int) (magnetic.y() + 0.5);
-  Serial.println("my: " + String(my));
+  #ifdef debugmode
+    Serial.println("my: " + String(my));
+  #endif
   
   mz = (int) (magnetic.z() + 0.5);
-  Serial.println("mz: " + String(mz));
+  #ifdef debugmode
+    Serial.println("mz: " + String(mz));
+  #endif
 
   m = max(mx, max(my, mz));
-  Serial.println("m: " + String(m));
+  #ifdef debugmode
+    Serial.println("m: " + String(m));
+  #endif
 
 //////////calibration//////////
   
   rotation.getCalibration(&sc, &gc, &ac, &mc);
-  Serial.println("system calibration: " + String(sc));
-  Serial.println("magnet calibration: " + String(mc));
+  #ifdef debugmode
+    Serial.println("system calibration: " + String(sc));
+    Serial.println("magnet calibration: " + String(mc));
+  #endif
 
   String state = String(temp);
   state.concat(":");
@@ -83,7 +105,9 @@ void rotationloop() {
   state.concat(":");
   state.concat(m);
 
-  Serial.println("state: " + String(state));
+  #ifdef debugmode
+    Serial.println("state: " + String(state));
+  #endif
 
   putstate(state);
 
