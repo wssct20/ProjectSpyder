@@ -25,7 +25,9 @@ void addressablergbledstripsetup() {
 
 void addressablergbledstriploop() {
 
-  Serial.println("ledstrip look for state");
+  #ifdef debugmode
+    Serial.println("ledstrip look for state");
+  #endif
 
   String rawstate = getstate();               //get state from system
 

@@ -19,11 +19,15 @@ void rgbdetectsetup() {
   //start the sensor communication
   if (rgbdetect.begin())
   {
-    Serial.println("Found rgb sensor");
+    #ifdef debugmode
+      Serial.println("Found rgb sensor");
+    #endif
   }
   else
   {
-    Serial.println("No rgb sensor found");
+    #ifdef debugmode
+      Serial.println("No rgb sensor found");
+    #endif
     hibernate(60*60*24);
   }
 
@@ -49,13 +53,15 @@ void rgbdetectloop() {
   //turn off the sensor led
   digitalWrite(detectledpin, LOW);
 
-  Serial.print("Color Temp: "); Serial.print(colorTemp, DEC); Serial.print(" K - ");
-  Serial.print("Lux: "); Serial.print(lux, DEC); Serial.print(" - ");
-  Serial.print("R: "); Serial.print(r, DEC); Serial.print(" ");
-  Serial.print("G: "); Serial.print(g, DEC); Serial.print(" ");
-  Serial.print("B: "); Serial.print(b, DEC); Serial.print(" ");
-  Serial.print("C: "); Serial.print(c, DEC); Serial.print(" ");
-  Serial.println(" ");
+  #ifdef debugmode
+    Serial.print("Color Temp: "); Serial.print(colorTemp, DEC); Serial.print(" K - ");
+    Serial.print("Lux: "); Serial.print(lux, DEC); Serial.print(" - ");
+    Serial.print("R: "); Serial.print(r, DEC); Serial.print(" ");
+    Serial.print("G: "); Serial.print(g, DEC); Serial.print(" ");
+    Serial.print("B: "); Serial.print(b, DEC); Serial.print(" ");
+    Serial.print("C: "); Serial.print(c, DEC); Serial.print(" ");
+    Serial.println(" ");
+  #endif
 
   String state = String(r);
   state.concat(":");
@@ -69,7 +75,9 @@ void rgbdetectloop() {
   state.concat(":");
   state.concat(lux);
 
-  Serial.println("state: " + String(state));
+  #ifdef debugmode
+    Serial.println("state: " + String(state));
+  #endif
   
   //send the values to the server
   putstate(state);

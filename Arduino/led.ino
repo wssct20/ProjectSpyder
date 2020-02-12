@@ -19,11 +19,15 @@ void ledsetup() {
 
 void ledloop() {
 
-  Serial.println("led() look for state");
+  #ifdef debugmode
+    Serial.println("led() look for state");
+  #endif
 
   //get state from system
   String rawstate = getstate();
-  Serial.println("rawstate: " + String(rawstate));
+  #ifdef debugmode
+    Serial.println("rawstate: " + String(rawstate));
+  #endif
   
   //extract state
   int state = rawstate.toInt();
@@ -31,7 +35,9 @@ void ledloop() {
   //check state
   if ((state < 0) | (state > 255)) state = 0;
 
-  Serial.println("state: " + String(state));
+  #ifdef debugmode
+    Serial.println("state: " + String(state));
+  #endif
   
   //set pin
   ledcWrite(led_pwmchannel, state);

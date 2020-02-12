@@ -46,7 +46,9 @@ void setup() {
   int e = typesstring.indexOf(switchtype);
   if (e == -1)
   {
-    Serial.println("Current type invalid.");
+    #ifdef debugmode
+      Serial.println("Current type invalid.");
+    #endif
     hibernate(60*60*24);
   }
   switch (e / typesstringtypelength)
@@ -85,7 +87,9 @@ void setup() {
       ledsetup();
       break;
     default:
-      Serial.println("Current type invalid.");
+      #ifdef debugmode
+        Serial.println("Current type invalid.");
+      #endif
       hibernate(60*60*24);
   }
 
@@ -96,7 +100,9 @@ void loop() {
   int e = typesstring.indexOf(switchtype);
   if (e == -1)
   {
-    Serial.println("Current type invalid.");
+    #ifdef debugmode
+      Serial.println("Current type invalid.");
+    #endif
     hibernate(60*60*24);
   }
   switch (e / typesstringtypelength)
@@ -135,7 +141,9 @@ void loop() {
       ledloop();
       break;
     default:
-      Serial.println("Current type invalid.");
+      #ifdef debugmode
+        Serial.println("Current type invalid.");
+      #endif
       hibernate(60*60*24);
   }
   

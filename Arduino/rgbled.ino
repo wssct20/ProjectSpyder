@@ -24,20 +24,28 @@ void rgbledsetup() {
 
 void rgbledloop() {
 
-  Serial.println("rgbled() look for state");
+  #ifdef debugmode
+    Serial.println("rgbled() look for state");
+  #endif
 
   String rawstate = getstate();       //get state from system
-  Serial.println("rawstate: " + String(rawstate));
+  #ifdef debugmode
+    Serial.println("rawstate: " + String(rawstate));
+  #endif
 
   //catch wrong format
   if (rawstate.indexOf(":") == -1) rawstate = "0:0:0";
   
   //search for seperators
   int seperator1 = rawstate.indexOf(":");
-  Serial.println("seperator1: " + String(seperator1));
+  #ifdef debugmode
+    Serial.println("seperator1: " + String(seperator1));
+  #endif
   
   int seperator2 = rawstate.indexOf(":", seperator1 + 1);
-  Serial.println("seperator2: " + String(seperator2));
+  #ifdef debugmode
+    Serial.println("seperator2: " + String(seperator2));
+  #endif
   
   //extract states
   int state[] = {
@@ -58,9 +66,11 @@ void rgbledloop() {
     ledcWrite(rgbled_pwmchannel[i], state[i]);
   }
 
-  Serial.println("redstate: " + String(state[0]));
-  Serial.println("greenstate: " + String(state[1]));
-  Serial.println("bluestate: " + String(state[2]));
+  #ifdef debugmode
+    Serial.println("redstate: " + String(state[0]));
+    Serial.println("greenstate: " + String(state[1]));
+    Serial.println("bluestate: " + String(state[2]));
+  #endif
   
   //go to lightsleep
   lightsleep(requesttimeout);
