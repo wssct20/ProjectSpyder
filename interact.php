@@ -5,7 +5,7 @@ $now = time();
 require_once("system.php");
 
 $authcode = $_REQUEST["authcode"] ?? "";
-$state = $_REQUEST["state"] ?? "";
+$data = $_REQUEST["data"] ?? "";
 $requesttype = $_REQUEST["requesttype"] ?? "";
 $type = $_REQUEST["type"] ?? "";
 
@@ -32,15 +32,15 @@ updatedevice($device["id"], $now, $ip);
 switch ($requesttype) {
 	case "GET":
 		// requesttype GET: get data and return it to client
-		$returnstack["state"] = getdata($device["id"]);
+		$returnstack["data"] = getdata($device["id"]);
 		break;
 	case "PUT":
 		// requesttype PUT: place new state into table
-		//check for previos state and only update table and conditions if state changed
-		if (!checkstate($state, $device["type"])) dieerror("STATEINVALID", "State is invalid, wrong type or old authcode?");
-		$stateprevious = getdata($device["id"]);
-		if ($stateprevious != $state) {
-			updatedata($device["id"], $state);
+		//check for previuos data and only update table and conditions if state changed
+		//if (!checkstate($data, $device["type"])) dieerror("DATAINVALID", "Data is invalid, wrong type or old authcode?");
+		$previousdata = getdata($device["id"]);
+		if ($previousdata != $data) {
+			updatedata($device["id"], $data);
 			updateconditions();
 		}
 		break;

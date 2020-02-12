@@ -27,16 +27,16 @@ function adddevice($type, $ip, $pairtime, $now, $authcode) {
 	
 	// Create type specific entry
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("INSERT INTO states(id) VALUES (?)"))) {
-		dieerror("ERRSQLTABLE", "adddevice insert states Prepare failed: (" . $db->errno . ") " . $db->error);
+	if (!($statement = $db->prepare("INSERT INTO devicedata(id) VALUES (?)"))) {
+		dieerror("ERRSQLTABLE", "adddevice insert devicedata Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
 	if (!$statement->bind_param("i", $device["id"])) {
-		dieerror("ERRSQLTABLE", "adddevice insert states Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+		dieerror("ERRSQLTABLE", "adddevice insert devicedata Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		dieerror("ERRSQLTABLE", "adddevice insert states Execute failed: (" . $statement->errno . ") " . $statement->error);
+		dieerror("ERRSQLTABLE", "adddevice insert devicedata Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 }
 
@@ -158,7 +158,7 @@ function getdata($id) {
 	//getdata: get data of a device from the according type table
 	global $db;
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("SELECT * FROM states WHERE id=?"))) {
+	if (!($statement = $db->prepare("SELECT * FROM devices WHERE id=?"))) {
 		dieerror("ERRSQLTABLE", "getdata Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind parameters
@@ -173,24 +173,24 @@ function getdata($id) {
 	if (!($result = $statement->get_result())) {
 		dieerror("ERRSQLTABLE", "getdata Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
-	// Stage 5: fetch state from row
-	return $result->fetch_array()["state"];
+	// Stage 5: fetch data from row
+	return $result->fetch_array()["data"];
 }
 
-function updatedata($id, $state) {
+function updatedata($id, $data) {
 	//updatedata: set data of a device in the according type table
 	global $db;
 	// Stage 1: prepare
-	if (!($statement = $db->prepare("UPDATE states SET state=? WHERE id=?"))) {
-		dieerror("ERRSQLTABLE", "updatedevice Prepare failed: (" . $db->errno . ") " . $db->error);
+	if (!($statement = $db->prepare("UPDATE devices SET data=? WHERE id=?"))) {
+		dieerror("ERRSQLTABLE", "updatedata Prepare failed: (" . $db->errno . ") " . $db->error);
 	}
 	// Stage 2: bind
-	if (!$statement->bind_param("si", $state, $id)) {
-		dieerror("ERRSQLTABLE", "updatedevice Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	if (!$statement->bind_param("si", $data, $id)) {
+		dieerror("ERRSQLTABLE", "updatedata Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 3: execute
 	if (!$statement->execute()) {
-		dieerror("ERRSQLTABLE", "updatedevice Execute failed: (" . $statement->errno . ") " . $statement->error);
+		dieerror("ERRSQLTABLE", "updatedata Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
 }
 
@@ -200,17 +200,12 @@ function checktables() {
 	//checktables: check if all needed tables are available by querying a create if not exist
 	global $db;
 	//unprepared query: create table devices
-	if (!$db->query("create table if not exists devices(id INT NOT NULL AUTO_INCREMENT, name TEXT, type TEXT NOT NULL, ipaddress TEXT NOT NULL, lastact BIGINT NOT NULL, pairtime BIGINT NOT NULL, authcode TEXT NOT NULL, PRIMARY KEY (id));")
+	if (!$db->query("create table if not exists devices(id INT NOT NULL AUTO_INCREMENT, name TEXT, type TEXT NOT NULL, ipaddress TEXT NOT NULL, lastact BIGINT NOT NULL, pairtime BIGINT NOT NULL, authcode TEXT NOT NULL, data TEXT , PRIMARY KEY (id));")
 	) {
 		dieerror("ERRSQLTABLE", "checktables devices Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
-	//unprepared query: create table states
-	if (!$db->query("create table if not exists states(id INT NOT NULL, state TEXT, PRIMARY KEY(id));")
-	) {
-		dieerror("ERRSQLTABLE", "checktables states Table creation failed: (" . $db->errno . ") " . $db->error);
-	}
 	//unprepared query: create table conditions
-	if (!$db->query("create table if not exists conditions(ifid INT NOT NULL, ifstate TEXT NOT NULL, thenid INT NOT NULL, thenstate TEXT NOT NULL);")
+	if (!$db->query("create table if not exists conditions(ifid INT NOT NULL, ifdata TEXT NOT NULL, thenid INT NOT NULL, thendata TEXT NOT NULL);")
 	) {
 		dieerror("ERRSQLTABLE", "checktables conditions Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
