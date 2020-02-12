@@ -23,7 +23,7 @@ function formatreturnvalues($data, $debug) {
 		$returntext = $returntext . $debug . "\n";
 	}
 	$returntext = $returntext . "#DATA\n";
-	$returntext = $returntext . jsonencode($data);
+	$returntext = $returntext . jsonencode($data) . "\n";
 	$returntext = $returntext . "#END";
 	//$returntext = $returntext."\n";
 	return $returntext;
