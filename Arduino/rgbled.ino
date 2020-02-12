@@ -49,7 +49,7 @@ void rgbledloop() {
   //check state
   for (int i = 0; i < pincount; i++)
   {
-    if (state[i] < 0 | state[i] > 255) state[i] = 0;
+    if ((state[i] < 0) | (state[i] > 255)) state[i] = 0;
   }
   
   //set pins
