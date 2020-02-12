@@ -32,7 +32,7 @@ updatedevice($device["id"], $now, $ip);
 switch ($requesttype) {
 	case "GET":
 		// requesttype GET: get data and return it to client
-		$returnstack["data"] = getdata($device["id"]);
+		$returnstack["data"] = jsondecode($device["data"]);
 		break;
 	case "PUT":
 		// requesttype PUT: place new state into table

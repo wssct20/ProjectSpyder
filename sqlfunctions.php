@@ -179,6 +179,7 @@ function updatedata($id, $data) {
 
 function checktables() {
 	//checktables: check if all needed tables are available by querying a create if not exist
+	//TODO: check if tables are correct
 	global $db;
 	//unprepared query: create table devices
 	if (!$db->query("create table if not exists devices(id INT NOT NULL AUTO_INCREMENT, name TEXT, type TEXT NOT NULL, ipaddress TEXT NOT NULL, lastact BIGINT NOT NULL, pairtime BIGINT NOT NULL, authcode TEXT NOT NULL, data TEXT , PRIMARY KEY (id));")
