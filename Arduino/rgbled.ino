@@ -12,8 +12,7 @@ const int rgbled_pwmchannel[] = {0, 1, 2};   //pwm channels
 void rgbledsetup() {
 
   //setup channels and link pins
-  for (int i = 0; i < pwmchannelcount; i++)
-  {
+  for (int i = 0; i < pwmchannelcount; i++) {
     ledcSetup(rgbled_pwmchannel[i], rgbled_frequency, rgbled_resolution);
     ledcAttachPin(pins[i], rgbled_pwmchannel[i]);
   }
@@ -55,14 +54,12 @@ void rgbledloop() {
   };
 
   //check state
-  for (int i = 0; i < pincount; i++)
-  {
+  for (int i = 0; i < pincount; i++) {
     if ((state[i] < 0) | (state[i] > 255)) state[i] = 0;
   }
   
   //set pins
-  for (int i = 0; i < pincount; i++)
-  {
+  for (int i = 0; i < pincount; i++) {
     ledcWrite(rgbled_pwmchannel[i], state[i]);
   }
 

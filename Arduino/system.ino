@@ -3,8 +3,7 @@
 //#include "rtc_io.h"
 
 //////////////EEPROM//////////////
-void writeEEPROM(int address, int length, String data)
-{
+void writeEEPROM(int address, int length, String data) {
   #ifdef debugmode
     Serial.println("writeEEPROM() start");
   #endif
@@ -18,16 +17,14 @@ void writeEEPROM(int address, int length, String data)
 
   char dataarray[length + 1];
   data.toCharArray(dataarray, length + 1);
-  for (int i = 0; i < length; i++)
-  {
+  for (int i = 0; i < length; i++) {
     if (EEPROM.read(address + i) != dataarray[i]) EEPROM.write(address + i, dataarray[i]);
   }
   EEPROM.commit();
 }
 
 
-String readEEPROM(int address, int length)
-{
+String readEEPROM(int address, int length) {
   #ifdef debugmode
     Serial.println("readEEPROM() start");
   #endif
@@ -40,8 +37,7 @@ String readEEPROM(int address, int length)
   #endif
 
   char dataarray[length];
-  for (int i = 0; i < length; i++)
-  {
+  for (int i = 0; i < length; i++) {
     dataarray[i] = EEPROM.read(address + i);
     #ifdef debugmode
       Serial.print(dataarray[i]);
@@ -55,8 +51,7 @@ String readEEPROM(int address, int length)
 
 
 //////////////sleep//////////////
-void lightsleep(int seconds)
-{
+void lightsleep(int seconds) {
   if (seconds < 10) {
     #ifdef debugmode
       Serial.println("Lightsleep not needed for less than 10s, staying awake.");
@@ -86,8 +81,7 @@ void lightsleep(int seconds)
   wifisetup();
 }
 
-bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
-{
+bool lightsleepgpio(int seconds, int pin, bool triggerlevel) {
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
   gpio_wakeup_enable((gpio_num_t)pin, triggerlevel?GPIO_INTR_HIGH_LEVEL:GPIO_INTR_LOW_LEVEL);
   esp_sleep_enable_gpio_wakeup();
@@ -114,12 +108,11 @@ bool lightsleepgpio(int seconds, int pin, bool triggerlevel)
 
 //TODO: implement lightsleep touch wakeup
 /*
-void touchcallback(){
+void touchcallback() {
   //Serial.println("touchcallback");
 }
 
-void lightsleeptouch(int seconds, int touchpin, int threshold)
-{
+void lightsleeptouch(int seconds, int touchpin, int threshold) {
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
   touchAttachInterrupt(touchpin, touchcallback, threshold);
   esp_sleep_enable_touchpad_wakeup();
@@ -144,8 +137,7 @@ void lightsleeptouch(int seconds, int touchpin, int threshold)
 */
 
 
-void hibernate(int seconds)
-{
+void hibernate(int seconds) {
   #ifdef debugmode
     Serial.println("Go to Hibernation for " + String(seconds) + String(" seconds."));
   #endif
@@ -168,12 +160,11 @@ void hibernate(int seconds)
 //////////////converter//////////////
 
 //hextodec() converts hex numbers to dec numbers (max. 8 bytes)
-uint32_t hextodec(String hex)
-{
+uint32_t hextodec(String hex) {
   String hexnumbers = "0123456789ABCDEF";
   uint32_t dec = 0;
   
-  for(int i = (hex.length() - 1); i >= 0; i--){
+  for(int i = (hex.length() - 1); i >= 0; i--) {
     String hex0 = hex.substring(i, i + 1);
     dec += (uint32_t)hexnumbers.indexOf(hex0) << (hex.length() - 1 - i) * 4;
   }
@@ -181,8 +172,7 @@ uint32_t hextodec(String hex)
 }
 
 //dectohex() converts dec numbers to hex numbers
-String dectohex(uint32_t dec)
-{
+String dectohex(uint32_t dec) {
   String hexnumbers = "0123456789ABCDEF";
   String hex = "";
 
@@ -196,7 +186,7 @@ String dectohex(uint32_t dec)
     i++;
   }
   while(num != 0 && i < 8);
-  if(i < 8 && num == 0){
+  if(i < 8 && num == 0) {
     hex = hex.substring(1);
   }
   return hex;

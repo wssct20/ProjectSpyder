@@ -44,15 +44,13 @@ void setup() {
   wifisetup();
   
   int e = typesstring.indexOf(switchtype);
-  if (e == -1)
-  {
+  if (e == -1) {
     #ifdef debugmode
       Serial.println("Current type invalid.");
     #endif
     hibernate(60*60*24);
   }
-  switch (e / typesstringtypelength)
-  {
+  switch (e / typesstringtypelength) {
     case 0:
       buttonsetup();
       break;
@@ -95,15 +93,13 @@ void setup() {
 void loop() {
 
   int e = typesstring.indexOf(switchtype);
-  if (e == -1)
-  {
+  if (e == -1) {
     #ifdef debugmode
       Serial.println("Current type invalid.");
     #endif
     hibernate(60*60*24);
   }
-  switch (e / typesstringtypelength)
-  {
+  switch (e / typesstringtypelength) {
     case 0:
         buttonloop();
         break;
