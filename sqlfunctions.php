@@ -19,25 +19,6 @@ function adddevice($type, $ip, $pairtime, $now, $authcode) {
 	if (!$statement->execute()) {
 		dieerror("ERRSQLTABLE", "adddevice insert devices Execute failed: (" . $statement->errno . ") " . $statement->error);
 	}
-	
-	$statement->close();
-	$statement = null;
-	
-	$device = getdevicebyauthcode($authcode);
-	
-	// Create type specific entry
-	// Stage 1: prepare
-	if (!($statement = $db->prepare("INSERT INTO devicedata(id) VALUES (?)"))) {
-		dieerror("ERRSQLTABLE", "adddevice insert devicedata Prepare failed: (" . $db->errno . ") " . $db->error);
-	}
-	// Stage 2: bind
-	if (!$statement->bind_param("i", $device["id"])) {
-		dieerror("ERRSQLTABLE", "adddevice insert devicedata Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
-	}
-	// Stage 3: execute
-	if (!$statement->execute()) {
-		dieerror("ERRSQLTABLE", "adddevice insert devicedata Execute failed: (" . $statement->errno . ") " . $statement->error);
-	}
 }
 
 function getdevicebyauthcode($authcode) {
