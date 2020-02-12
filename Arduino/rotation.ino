@@ -14,14 +14,12 @@ Adafruit_BNO055 rotation = Adafruit_BNO055(-1, 0x28);
 void rotationsetup() {
 
   //start the sensor communication
-  if (rotation.begin())
-  {
+  if (rotation.begin()) {
     #ifdef debugmode
       Serial.println("Found rotation sensor");
     #endif
   }
-  else
-  {
+  else {
     #ifdef debugmode
       Serial.println("No rotation sensor found");
     #endif

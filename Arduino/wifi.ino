@@ -3,8 +3,7 @@
 //#define clienthostname "SpyderClient"
 const char * clienthostname = "SpyderClient";
 
-void wifisetup()
-{
+void wifisetup() {
     WiFi.mode(WIFI_STA);
     WiFi.setHostname(clienthostname);
 
@@ -15,7 +14,7 @@ void wifisetup()
     WiFi.begin(ssid, password);
     delay(1000);
     
-    while(WiFi.status() != WL_CONNECTED){
+    while(WiFi.status() != WL_CONNECTED) {
       #ifdef debugmode
         Serial.print(".");
       #endif

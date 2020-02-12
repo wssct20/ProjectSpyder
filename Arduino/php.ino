@@ -13,8 +13,7 @@
 #define defaultdelay 60           //in seconds
 
 
-void pair()
-{
+void pair() {
 
   String answer;
   
@@ -25,8 +24,7 @@ void pair()
   
   WiFiClient SpyderHub;
   const int httpPort = 80;
-  if (!SpyderHub.connect(serverhostname, httpPort))
-  {
+  if (!SpyderHub.connect(serverhostname, httpPort)) {
     #ifdef debugmode
       Serial.println("php connection failed");
       Serial.println("_________________________________");
@@ -48,8 +46,7 @@ void pair()
   #ifdef debugmode
     Serial.println("___________Answer:___________");
   #endif
-  while (SpyderHub.available())
-  {
+  while (SpyderHub.available()) {
     answer = SpyderHub.readStringUntil('\r');
     #ifdef debugmode
       Serial.print(answer);
@@ -66,16 +63,14 @@ void pair()
     Serial.println("Search for #START");
   #endif
 
-  if (answer.indexOf("#START") == -1)
-  {
+  if (answer.indexOf("#START") == -1) {
     #ifdef debugmode
       Serial.println("#START not found");
     #endif
 
     hibernate(fatalerrordelay);
   }
-  else
-  {
+  else {
     #ifdef debugmode
       Serial.println("#START found");
     #endif
@@ -128,23 +123,19 @@ void pair()
   #endif
 
 // search for error
-  for (int i = 0; i < count; i++)
-  {
-    if (answerdata[i][0] == "error")
-    {
+  for (int i = 0; i < count; i++) {
+    if (answerdata[i][0] == "error") {
       #ifdef debugmode
         Serial.println("ERROR: " + String(answerdata[i][1]));
       #endif
 
       String errorsstring = "TYPEINVALID        ";    // error every 20 chars
       int e = errorsstring.indexOf(answerdata[i][1]);
-      if (e == -1)
-      {
+      if (e == -1) {
         delay(defaulterrordelay * 1000);
         return pair();
       }
-      switch (e / 20)
-      {
+      switch (e / 20) {
         case 0:
           #ifdef debugmode
             Serial.println("Current type is not supported by server, halting program.");
@@ -154,8 +145,7 @@ void pair()
           hibernate(fatalerrordelay);
       }
     }
-    else
-    {
+    else {
       #ifdef debugmode
         Serial.println("No ERROR");
       #endif
@@ -164,17 +154,14 @@ void pair()
 
 // search for authcode
   bool authcodefound = false;
-  for (int i = 0; i < count; i++)
-  {
-    if (answerdata[i][0] == authcodeindex)
-    {
+  for (int i = 0; i < count; i++) {
+    if (answerdata[i][0] == authcodeindex) {
       writeEEPROM(authcodeaddress, authcodelength, answerdata[i][1]);
       authcodefound = true;
       break;
     }
   }
-  if (!authcodefound)
-  {
+  if (!authcodefound) {
     #ifdef debugmode
       Serial.println("ERROR: authcode not found");
     #endif
@@ -184,18 +171,15 @@ void pair()
 
 // search for requesttimeout
   bool requesttimeoutfound = false;
-  for (int i = 0; i < count; i++)
-  {
-    if (answerdata[i][0] == requesttimeoutindex)
-    {
+  for (int i = 0; i < count; i++) {
+    if (answerdata[i][0] == requesttimeoutindex) {
       requesttimeout = answerdata[i][1].toInt();
       if (requesttimeout == 0) requesttimeout = defaultdelay;
       requesttimeoutfound = true;
       break;
     }
   }
-  if (!requesttimeoutfound)
-  {
+  if (!requesttimeoutfound) {
     #ifdef debugmode
       Serial.println("ERROR: requesttimeout not found");
     #endif
@@ -203,8 +187,7 @@ void pair()
   }
   
   
-  for (int i = 0; i < count; i++)
-  {
+  for (int i = 0; i < count; i++) {
     #ifdef debugmode
       Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
     #endif
@@ -222,19 +205,16 @@ void pair()
 
 
 
-String getstate()
-{
+String getstate() {
   return interact(0, ""); //returns "" on failure
 }
 
-void putstate(String state)
-{
+void putstate(String state) {
   interact(1, state);
 }
 
 
-String interact(int requesttype, String state)
-{
+String interact(int requesttype, String state) {
 
   String answer;
   
@@ -245,8 +225,7 @@ String interact(int requesttype, String state)
   
   WiFiClient SpyderHub;
   const int httpPort = 80;
-  if (!SpyderHub.connect(serverhostname, httpPort))
-  {
+  if (!SpyderHub.connect(serverhostname, httpPort)) {
     #ifdef debugmode
       Serial.println("php connection failed");
       Serial.println("_________________________________");
@@ -258,8 +237,7 @@ String interact(int requesttype, String state)
   url += "?authcode=";
   String authtoken = readEEPROM(authcodeaddress, authcodelength);
   url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM why we get 3 unknown chars at the end of the read string
-  if (requesttype == 1)
-  {
+  if (requesttype == 1) {
     url += "&state=";
     url += state;
   }
@@ -282,8 +260,7 @@ String interact(int requesttype, String state)
   #ifdef debugmode
     Serial.println("___________Answer:___________");
   #endif
-  while (SpyderHub.available())
-  {
+  while (SpyderHub.available()) {
     answer = SpyderHub.readStringUntil('\r');
     #ifdef debugmode
       Serial.print(answer);
@@ -300,16 +277,14 @@ String interact(int requesttype, String state)
     Serial.println("Search for #START");
   #endif
 
-  if (answer.indexOf("#START") == -1)
-  {
+  if (answer.indexOf("#START") == -1) {
     #ifdef debugmode
       Serial.println("#START not found");
     #endif
 
     hibernate(defaulterrordelay);
   }
-  else
-  {
+  else {
     #ifdef debugmode
       Serial.println("#START found");
     #endif
@@ -364,10 +339,8 @@ String interact(int requesttype, String state)
 
 ////////////////////////////////////////
 // search for error
-  for (int i = 0; i < count; i++)
-  {
-    if (answerdata[i][0] == errorindex)
-    {
+  for (int i = 0; i < count; i++) {
+    if (answerdata[i][0] == errorindex) {
       #ifdef debugmode
         Serial.println("ERROR: " + String(answerdata[i][1]));
       #endif
@@ -378,8 +351,7 @@ String interact(int requesttype, String state)
         //unrecognized error
         e = 0;
       }
-      switch (e / 20)
-      {
+      switch (e / 20) {
         case 1:
           #ifdef debugmode
             Serial.println("Authentication failed, requesting new authcode.");
@@ -403,8 +375,7 @@ String interact(int requesttype, String state)
           hibernate(fatalerrordelay);
       }
     }
-    else
-    {
+    else {
       #ifdef debugmode
         Serial.println("No ERROR");
       #endif
@@ -414,20 +385,16 @@ String interact(int requesttype, String state)
 ////////////////////////////////////////
 // search for state
   String returnstate = "";
-  if (requesttype == 0)
-  {
+  if (requesttype == 0) {
     bool statefound = false;
-    for (int i = 0; i < count; i++)
-    {
-      if (answerdata[i][0] == stateindex)
-      {
+    for (int i = 0; i < count; i++) {
+      if (answerdata[i][0] == stateindex) {
         returnstate = answerdata[i][1];
         statefound = true;
         break;
       }
     }
-    if (!statefound)
-    {
+    if (!statefound) {
       #ifdef debugmode
         Serial.println("ERROR: state not found");
       #endif
@@ -438,18 +405,15 @@ String interact(int requesttype, String state)
 ////////////////////////////////////////
 // search for requesttimeout
   bool requesttimeoutfound = false;
-  for (int i = 0; i < count; i++)
-  {
-    if (answerdata[i][0] == requesttimeoutindex)
-    {
+  for (int i = 0; i < count; i++) {
+    if (answerdata[i][0] == requesttimeoutindex) {
       requesttimeout = answerdata[i][1].toInt();
       if (requesttimeout == 0) requesttimeout = defaultdelay;
       requesttimeoutfound = true;
       break;
     }
   }
-  if (!requesttimeoutfound)
-  {
+  if (!requesttimeoutfound) {
     #ifdef debugmode
       Serial.println("ERROR: requesttimeout not found");
     #endif
@@ -457,8 +421,7 @@ String interact(int requesttype, String state)
   }
 
   
-  for (int i = 0; i < count; i++)
-  {
+  for (int i = 0; i < count; i++) {
     #ifdef debugmode
       Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
     #endif
@@ -475,11 +438,9 @@ String interact(int requesttype, String state)
   return returnstate;
 }
 
-void resetauthcode()
-{
+void resetauthcode() {
   String empty = "";
-  for (int i = 0; i < authcodelength; i++) 
-  {
+  for (int i = 0; i < authcodelength; i++) {
     empty += '\0';
   }
   writeEEPROM(authcodeaddress, authcodelength, empty);

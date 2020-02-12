@@ -17,14 +17,12 @@ int detectledpin = 23;
 void rgbdetectsetup() {
 
   //start the sensor communication
-  if (rgbdetect.begin())
-  {
+  if (rgbdetect.begin()) {
     #ifdef debugmode
       Serial.println("Found rgb sensor");
     #endif
   }
-  else
-  {
+  else {
     #ifdef debugmode
       Serial.println("No rgb sensor found");
     #endif

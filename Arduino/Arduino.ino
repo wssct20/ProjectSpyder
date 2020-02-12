@@ -10,7 +10,7 @@ int requesttimeout;
 
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()
 #define typesstringtypelength 25
-const String typesstring = "button                   fingerprint              temperature              rotation                 rgbdetect                addressablergbledstrip   rgbled                   epaper                   digitaloutput            motor                    led                      ";    // type every 25 chars
+const String typesstring = "button                   fingerprint              temperature              rotation                 rgbdetect                addressablergbledstrip   rgbled                   epaper                   digitaloutput            led                      ";    // type every 25 chars
 String switchtype = type;
 
 /*
@@ -44,15 +44,13 @@ void setup() {
   wifisetup();
   
   int e = typesstring.indexOf(switchtype);
-  if (e == -1)
-  {
+  if (e == -1) {
     #ifdef debugmode
       Serial.println("Current type invalid.");
     #endif
     hibernate(60*60*24);
   }
-  switch (e / typesstringtypelength)
-  {
+  switch (e / typesstringtypelength) {
     case 0:
       buttonsetup();
       break;
@@ -81,9 +79,6 @@ void setup() {
       digitaloutputsetup();
       break;
     case 9:
-      //motorsetup();
-      break;
-    case 10:
       ledsetup();
       break;
     default:
@@ -98,15 +93,13 @@ void setup() {
 void loop() {
 
   int e = typesstring.indexOf(switchtype);
-  if (e == -1)
-  {
+  if (e == -1) {
     #ifdef debugmode
       Serial.println("Current type invalid.");
     #endif
     hibernate(60*60*24);
   }
-  switch (e / typesstringtypelength)
-  {
+  switch (e / typesstringtypelength) {
     case 0:
         buttonloop();
         break;
@@ -135,9 +128,6 @@ void loop() {
         digitaloutputloop();
         break;
     case 9:
-        //motorloop();
-        break;
-    case 10:
       ledloop();
       break;
     default:
