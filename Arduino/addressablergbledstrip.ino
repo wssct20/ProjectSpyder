@@ -1,16 +1,15 @@
-#include <Adafruit_NeoPixel.h>
+#include <NeoPixelBrightnessBus.h>
 
 #define datapin 5           //Pin to which the data pin of the strip is connected
 #define ledcount 60*5       //Number of connected LEDs
 
 //initialise the sensor
-Adafruit_NeoPixel ledstrip(ledcount, datapin, NEO_GRB + NEO_KHZ800); 
+NeoPixelBrightnessBus<NeoGrbFeature, Neo800KbpsMethod> ledstrip(ledcount, datapin); 
 
 void addressablergbledstripsetup() {
 
-  ledstrip.begin();             //starts the connection to the led strip
-  ledstrip.clear();             //turns all leds off
-  ledstrip.setBrightness(50);   //sets the maximum brightness
+  ledstrip.Begin();             //starts the connection to the led strip
+  ledstrip.SetBrightness(50);   //sets the maximum brightness
 
   //puts a initialize state to the system
   String initstate = "";
@@ -45,10 +44,10 @@ void addressablergbledstriploop() {
       colors[i] = hextodec(ledstate.substring(i * 2, (i + 1) * 2));
     }
     
-    ledstrip.setPixelColor(i, ledstrip.Color(colors[0], colors[1], colors[2]));   //sets the led state
+    ledstrip.SetPixelColor(i, RgbColor(colors[0], colors[1], colors[2]));   //sets the led state
   }
 
-  ledstrip.show();      //shows the states on the strip
+  ledstrip.Show();      //shows the states on the strip
 
   lightsleep(requesttimeout);
   
