@@ -31,7 +31,7 @@ DirectoryIndex index.php index.html
 <Files gui.php>
 	allow from all
 </Files>
-<Files arduinotest.php>
+<Files test.php>
 	allow from all
 </Files>
 <Files mysqlinfo.php>
