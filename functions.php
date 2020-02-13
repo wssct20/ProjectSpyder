@@ -17,15 +17,14 @@ function calculateuserhash($username, $password) {
 
 function formatreturnvalues($data, $debug) {
 	$returntext = "";
-	$returntext = $returntext . "#START\n";
+	$returntext = $returntext . "#START" . "\n";
 	if (isset($debug)) {
-		$returntext = $returntext . "#DEBUG\n";
+		$returntext = $returntext . "#DEBUG" . "\n";
 		$returntext = $returntext . $debug . "\n";
 	}
-	$returntext = $returntext . "#DATA\n";
+	$returntext = $returntext . "#DATA" . "\n";
 	$returntext = $returntext . jsonencode($data) . "\n";
-	$returntext = $returntext . "#END";
-	//$returntext = $returntext."\n";
+	$returntext = $returntext . "#END" . "\n";
 	return $returntext;
 }
 
@@ -33,7 +32,7 @@ function formaterrorreturn($simpleerrorstring, $debugerrorstring) {
 	//prepare error feedback
 	$returnstack = array(
 		"error" => $simpleerrorstring,
-		"requesttimeout" => 60*60, // default to 1h, maybe move? //TODO: implement gettimeout(type)
+		"requesttimeout" => 60*60, // default to 1h //TODO: implement gettimeout(type)
 	);
 	return formatreturnvalues($returnstack, $debugerrorstring);
 }

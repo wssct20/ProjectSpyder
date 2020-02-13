@@ -12,6 +12,7 @@ if ($action == "delete") {
 	if ($id == "") die("INVALIDID");
 	$id = intval($id);
 	deletedevice($id);
+	//TODO: delete conditions with this device
 	header("DEBUG: devices.php delete device successful");
 	header("Location: devices.php",true,303);
 	die();
