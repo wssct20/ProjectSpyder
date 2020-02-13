@@ -7,13 +7,13 @@ Specification of the ProjectSpyder Interface for clients.
 There is no practical way to locate a ProjectSpyder server at the moment.
 This is why you need to give the user the ability to enter in the hostname/ip address of the server.
 You should default the hostname to `SpyderHub`, as this is also the default hostname of the server.
-Maybe you need to append the local domain, e.g. `SpyderHub.fritz.box`.
+Maybe you need to append the local domain, e.g. `SpyderHub.localdomain` or `SpyderHub.fritz.box`.
 
 ## Communicate with the server
 
 All communication is done using HTTP requests.
-We currently only support HTTP GET requests.
-
+We currently only support HTTP GET requests,
+but we will support HTTP POST soon too.
 
 ## Pair client
 
@@ -38,17 +38,10 @@ Currently there are 2 requesttypes:
 
 requesttype | Description
 ----------- | -----------
-`GET` | Used for actors to acquire their state, which they are supposed to follow.
-`PUT` | Used for sensors to send their current state to the server.
+`GET` | Used to acquire all saved data.
+`PUT` | Used to update the entire saved data.
 
 There will be more requesttypes in the future, as the system gets more complex.
-
-## How states work
-
-A `state` is an accurate description of the clients current properties.
-This can be any string, as long as some rules are followed:
-The `state` must not contain any HTML relevant characters, e.g. ` : / # `.
-The `state` must follow the global definition of the `type`, if you are not using the type `raw`.
 
 ## Syntax
 
@@ -65,15 +58,25 @@ You don't need to interpret this section, as you will have another way of detect
 
 Then follows the `#DATA` section.
 This section contains all of the important response data.
-It is formatted like this: `[VarName]=>Value`, one per line.
+It is formatted in JSON.
+The parameters of your device are saved in a nested object within the JSON response named `data`.
 
 For conclusion, the response will end with `#END`.
+
+## How `data` works
+
+`data` contains an accurate description of the clients current properties.
+This needs to be JSON formatted and needs to follow following rules:
+The `data` must follow the global definition.
+The `data` must not contain any HTML relevant characters, e.g. ` : / # `.
+
+___TODO:__ add global definition_
 
 ## requesttimeout
 
 With every request, your answer will contain a variable named `requesttimeout`.
 This value defines the amount of time in seconds you at least need to wait until the next request.
-You may break this rule, if you are an sensor, which needs their state updated for UX quality purposes.
+You may break this rule, if you need your data updated for UX quality purposes.
 (e.g. a button gets pressed)
 
 ## The type `raw`
@@ -84,14 +87,16 @@ The UI will allow the user to directly edit this string.
 ## Error, errors, errors!
 
 You should not interpret the `#DEBUG` section!
-In case of an error, you will get an `error` variable in your `#DATA` section.
+In case of an error, you will get an `error` variable in the `#DATA` JSON response.
 This will contain a short string of information about the error.
 
 Expected errors:
 
 Error | Description | Solution
 ----- | ----------- | --------
-AUTHFAILED | You will get this error, if your authcode is not valid. | Just go ahead and request a new one.
-TYPEINVALID | You will get this error, if your client's type doesn't match the authcode associated device. | Just pair up again.
+AUTHFAILED          | Your authcode is not valid. | Pair up again.
+TYPEMISMATCH        | Your client's type doesn't match the authcode associated device. | Pair up again.
+JSONINVALID         | The sent JSON is not deserializable by the server. | Check the JSON for correct formatting.
+REQUESTTYPEINVALID  | The requesttype sent is not recognized by the system | Check for Syntax or ask user to update the system.
 
 On other errors, wait and try again once a day.
