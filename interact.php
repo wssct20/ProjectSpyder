@@ -55,7 +55,7 @@ switch ($requesttype) {
 // run type specific actions
 specificactions($device, $requesttype, $returnstack);
 
-$returnstack["requesttimeout"] = gettimeout($device["type"]);
+$returnstack["requesttimeout"] = gettimeout($device);
 
 echo formatreturnvalues($returnstack, $debugstring);
 

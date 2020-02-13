@@ -92,17 +92,11 @@ function updateconditions() {
 	}
 }
 
-function gettimeout($type) {
+function gettimeout($device) {
 	// gettimeout: get the client request timeout in seconds
 	//TODO: calculate dynamic timeout
 	global $updatetime;
-	//updatetimes: time in seconds to add to default updatetime depending on device type
-	$updatetimes = array(
-		"button" => 120,
-		"rotation" => -9,
-		"" => 0, //default
-	);
-	$thisupdatetime = $updatetime + ($updatetimes[$type] ?? $updatetimes[""]);
+	$thisupdatetime = (intval(getdata($device)["preferredupdatetime"]) ?? $updatetime);
 	if ($thisupdatetime < 0) $thisupdatetime = 0;
 	return $thisupdatetime;
 }
