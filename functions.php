@@ -115,4 +115,15 @@ function jsonencode($data) {
 	return json_encode($data);
 }
 
+function getdata($device) {
+	return jsondecode($device["data"]);
+}
+
+function collectdeviceproperties($device) {
+	$deviceprops = array();
+	$deviceprops["name"] = $device["name"];
+	$deviceprops["type"] = $device["type"];
+	return $deviceprops;
+}
+
 ?>

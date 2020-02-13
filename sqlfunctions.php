@@ -135,7 +135,7 @@ function updatedevicename($id, $name) {
 	}
 }
 
-function getdata($id) {
+/*function getdata($id) {
 	//getdata: get data of a device from the according type table
 	global $db;
 	// Stage 1: prepare
@@ -156,7 +156,7 @@ function getdata($id) {
 	}
 	// Stage 5: fetch data from row
 	return $result->fetch_array()["data"];
-}
+}*/
 
 function updatedata($id, $data) {
 	//updatedata: set data of a device in the according type table
