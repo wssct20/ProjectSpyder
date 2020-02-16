@@ -12,8 +12,9 @@ Maybe you need to append the local domain, e.g. `SpyderHub.localdomain` or `Spyd
 ## Communicate with the server
 
 All communication is done using HTTP requests.
-We currently only support HTTP GET requests,
-but we will support HTTP POST soon too.
+We support both, HTTP GET and POST requests.
+If data from both is available at the same time,
+then POST data is preferred.
 
 ## Pair client
 

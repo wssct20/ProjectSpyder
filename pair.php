@@ -1,10 +1,9 @@
 <?php 
-
 $now = time();
-
 require_once("system.php");
+$PARAM = getparameters();
 
-$type = $_REQUEST["type"];
+$type = $PARAM["type"];
 
 
 //return array

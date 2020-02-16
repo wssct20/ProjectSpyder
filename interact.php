@@ -1,13 +1,12 @@
 <?php
-
 $now = time();
-
 require_once("system.php");
+$PARAM = getparameters();
 
-$authcode = $_REQUEST["authcode"] ?? "";
-$data = $_REQUEST["data"] ?? "";
-$requesttype = $_REQUEST["requesttype"] ?? "";
-$type = $_REQUEST["type"] ?? "";
+$authcode = $PARAM["authcode"] ?? "";
+$data = $PARAM["data"] ?? "";
+$requesttype = $PARAM["requesttype"] ?? "";
+$type = $PARAM["type"] ?? "";
 
 
 $ip = getipaddress();
