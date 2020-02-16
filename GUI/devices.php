@@ -77,6 +77,7 @@ if ($action == "details") {
 			
 			<div class="settings">
 				<h2><?php echo $friendlytype." ".$device["id"]; echo empty($device["name"]) ? "" : " - ".$device["name"]; ?></h2>
+				<!-- TODO: change to json
 				<h3>State</h3>
 				<form method=post>
 					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
@@ -85,6 +86,7 @@ if ($action == "details") {
 					<input type=submit name=submit value="Overwrite">
 				</form>
 				<br>
+				-->
 				<h3>Manage</h3>
 				<form method=post>
 					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
