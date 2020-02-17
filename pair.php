@@ -20,6 +20,7 @@ $pairtime = $now;
 $authcode = calculateauthcode($type, $ip, $pairtime);
 
 adddevice($type, $ip, $pairtime, $now, $authcode);
+updatedevice(getdevicebyauthcode($authcode)["id"], $now, $ip);
 
 
 $returnstack["requesttimeout"] = 5;
