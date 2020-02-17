@@ -1,5 +1,6 @@
 #include "WiFi.h"
 
+//TODO: delete if interact is changed
 #define authcodeindex "authcode"
 #define stateindex "state"
 #define requesttimeoutindex "requesttimeout"
@@ -58,7 +59,7 @@ void pair() {
   #endif
 
 ////////////////////////////////////////
-// search for #START
+//search for #START
   #ifdef debugmode
     Serial.println("Search for #START");
   #endif
@@ -77,7 +78,17 @@ void pair() {
   }
 
 ////////////////////////////////////////
+//#DEBUG
+  String debugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
   #ifdef debugmode
+    Serial.println("DEBUG:");
+    Serial.println(debugsubstring);
+  #endif
+
+////////////////////////////////////////
+//#DATA
+  #ifdef debugmode
+    Serial.println("DATA:");
     Serial.println("split:");
   #endif
   
@@ -88,114 +99,61 @@ void pair() {
     Serial.println("---");
   #endif
 
-  int lastindex = 0;
-  int count = 0;
-  while(true) {
-    int currentindex = answerdatasubstring.indexOf("=>", lastindex);
-    if (currentindex == -1) break;
-    lastindex = currentindex + 1;
-    count++;
+
+  DynamicJsonDocument pairdata(2500);
+  deserializeJson(pairdata, answerdatasubstring);
+  
+//////////////error//////////////
+  String answererror = pairdata["error"];
+  if (answererror != NULL) {
+    #ifdef debugmode
+      Serial.println("ERROR: " + String(answererror));
+    #endif
   }
-  #ifdef debugmode
-    Serial.println("Count: " + String(count));
-  #endif
-  String answerdata[count][2];
-
-  lastindex = 0;
-  count = 0;
-  while(true) {
-    int currentindex = answerdatasubstring.indexOf("[", lastindex);
-    if (currentindex == -1) break;
-    answerdata[count][0] = answerdatasubstring.substring(
-      currentindex + 1,
-      answerdatasubstring.indexOf("]", currentindex)
-    );
-    answerdata[count][1] = answerdatasubstring.substring(
-      answerdatasubstring.indexOf("=>", currentindex) + 2, 
-      answerdatasubstring.indexOf("\n", currentindex)
-    );
-    lastindex = currentindex + 1;
-    count++;
-  }
-  #ifdef debugmode
-    Serial.println("Sizeof: " + String(sizeof(answerdata)));
-    Serial.println("---");
-  #endif
-
-// search for error
-  for (int i = 0; i < count; i++) {
-    if (answerdata[i][0] == "error") {
-      #ifdef debugmode
-        Serial.println("ERROR: " + String(answerdata[i][1]));
-      #endif
-
-      String errorsstring = "TYPEINVALID        ";    // error every 20 chars
-      int e = errorsstring.indexOf(answerdata[i][1]);
-      if (e == -1) {
-        delay(defaulterrordelay * 1000);
-        return pair();
-      }
-      switch (e / 20) {
-        case 0:
-          #ifdef debugmode
-            Serial.println("Current type is not supported by server, halting program.");
-          #endif
-          hibernate(fatalerrordelay);
-        default:
-          hibernate(fatalerrordelay);
-      }
-    }
-    else {
-      #ifdef debugmode
-        Serial.println("No ERROR");
-      #endif
-    }
+  else {
+    #ifdef debugmode
+      Serial.println("No ERROR");
+    #endif
   }
 
-// search for authcode
-  bool authcodefound = false;
-  for (int i = 0; i < count; i++) {
-    if (answerdata[i][0] == authcodeindex) {
-      writeEEPROM(authcodeaddress, authcodelength, answerdata[i][1]);
-      authcodefound = true;
-      break;
-    }
+//////////////authcode//////////////
+  String answerauthcode = pairdata["authcode"];
+  if (answerauthcode != NULL) {
+    writeEEPROM(authcodeaddress, authcodelength, answerauthcode);
   }
-  if (!authcodefound) {
+  else {
     #ifdef debugmode
       Serial.println("ERROR: authcode not found");
     #endif
     hibernate(fatalerrordelay);
   }
-  
 
-// search for requesttimeout
-  bool requesttimeoutfound = false;
-  for (int i = 0; i < count; i++) {
-    if (answerdata[i][0] == requesttimeoutindex) {
-      requesttimeout = answerdata[i][1].toInt();
-      if (requesttimeout == 0) requesttimeout = defaultdelay;
-      requesttimeoutfound = true;
-      break;
-    }
+//////////////requesttimeout//////////////
+  int answerrequesttimeout = pairdata["requesttimeout"].as<int>();
+  //TODO: error if no requesttimeout & print requesttimeout
+  if (answerrequesttimeout != NULL) {
+    requesttimeout = answerrequesttimeout;
+    if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
   }
-  if (!requesttimeoutfound) {
+  else {
     #ifdef debugmode
       Serial.println("ERROR: requesttimeout not found");
     #endif
     requesttimeout = defaultdelay;
   }
+
+  #ifdef debugmode
+    Serial.println("---");
   
-  
-  for (int i = 0; i < count; i++) {
-    #ifdef debugmode
-      Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
-    #endif
-  }
+    Serial.println("error:" + String("\t") + String(answererror));
+    Serial.println("authcode:" + String("\t") + String(answerauthcode));
+    Serial.println("requesttimeout:" + String("\t") + String(answerrequesttimeout));
+  #endif
 
   #ifdef debugmode
     Serial.println("---");
   #endif
+
 ////////////////////////////////////////
   #ifdef debugmode
     Serial.println("closing pair() connection");
