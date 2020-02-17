@@ -130,12 +130,12 @@ Field | Description
 `settings` | This contains setting values of this client. This isn't needed, but if there is anything to configure on the client, this should be provided. These values will be directly editable by the user.
 `preferredupdatetime` | This contains the preferred updatetime of the client. This will influence the systems decision of the `requesttimeount`. You still must follow the rules of `requesttimeout`! This value is in seconds, please decide upon a high value, preferably above 10 seconds, to not overload the system. As per `requesttimeout` guidelines, you can still send data upon user interaction with the client. Please read the `requesttimeout` paragraph for more information.
 `usermodifiabledata` | This contains an array of internal `data` variable names, which the user is allowed to edit. Pure actors should include all their `data` variables, and combined sensor and actors can define which values are "outputs".
+`device` | All nested objects contain system protected data of your sensor. This includes your type and the user assigned name of your client. More values will be available for you soon. You cannot overwrite these values.
 `friendly`: | Following values describe nested objects of `friendly`. Everything in `friendly` is used for the GUI to provide a userfriendly interface
 `type` | The type only contains a String (preferrably as few words as possible) to describe the clients device type to the user. E.g. a type `button` would be `Button` and `temperature` would be `Temperature Sensor`
 `datavar` | This contains userfriendly names of the `data` variable names. The format is internal variable name and the userfriendly variable name.
 `datavalue` | This contains userfriendly variants of the `data` variable values. The format is internal variable name and the userfriendly value of that variable. E.g. a humidity of 0.5 would be 50%.
 `settingsvar` | This contains userfriendly variants of the `settings` variable names. The format is settings variable name and a friendly name for this setting. This will only change what is displayed in front if the input field, so the user knows what he is changing.
-`device` | All nested objects contain system protected data of your sensor. This includes your type and the user assigned name of your client. More values will be available for you soon. You cannot overwrite these values.
 
 Every of those values can be left undefined and defaults will be assumed where needed.
 We recommend to define `data` variables and highly encourage you to provide according userfriendly names.
