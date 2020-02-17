@@ -85,9 +85,12 @@ function updateconditions() {
 	$conditions = getconditions();
 	foreach($conditions as $condition) {
 		$ifdevice = getdevicebyid($condition["ifid"]);
-		if ($condition["ifstate"] != getdata($ifdevice["id"])) continue;
+		$ifdata = getdata($device);
+		if ($ifdata[$condition["ifvar"]] != $condition["ifvalue"]) continue;
 		$thendevice = getdevicebyid($condition["thenid"]);
-		updatedata($thendevice["id"], $condition["thenstate"]);
+		$thendata = getdata($thendevice);
+		$thendata[$condition["thenvar"]] = $condition["thenvalue"];
+		updatedata($thendevice["id"], jsonencode($thendata));
 	}
 }
 
