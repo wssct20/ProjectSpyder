@@ -81,10 +81,66 @@ This value defines the amount of time in seconds you at least need to wait until
 You may break this rule, if you need your data updated for UX quality purposes.
 (e.g. a button gets pressed)
 
-## The type `raw`
+## JSON `data`
 
-`raw` is a special type, as it allows the client to use any string as their state.
-The UI will allow the user to directly edit this string.
+Syntax:
+```
+{
+	"settings": {
+		"SettingName1": "Value1",
+		"SettingName2": "Value2",
+		"SettingName3": "Value3",
+		
+	},
+	"data": {
+		"VarName1": "Value1",  //raw data
+		"VarName2": "Value2",  
+		"VarName3": "Value3",
+		"VarName4": "Value4",
+		"VarName5": "Value5",
+	},
+	"usermodifiabledata": ["VarName1", "VarName2"],
+	"friendly": {
+		"settingsvar": {
+			"SettingName1": "Setting 1",
+			"SettingName2": "Setting 2",
+		},
+		"datavar": {
+			"VarName1": "Variable 1",
+			"VarName2": "Variable 2",
+		},
+		"datavalue": {
+			"VarName1": "Wert 1",
+			"VarName2": "Wert 2",
+		},
+		"type": "Type",
+	},
+	"preferredupdatetime": 10,  //preferred update time in s, you still must obey requesttimeout
+	"device": {   //system protected info about this client
+		"type": "type", 
+		"name": "Name",
+	},
+}
+```
+
+
+Field | Description
+----- | -----------
+`data` | This contains all the raw data of this client, which the system uses to compare values. The format of the values is internal variable name and the raw value.
+`settings` | This contains setting values of this client. This isn't needed, but if there is anything to configure on the client, this should be provided. These values will be directly editable by the user.
+`preferredupdatetime` | This contains the preferred updatetime of the client. This will influence the systems decision of the `requesttimeount`. You still must follow the rules of `requesttimeout`! This value is in seconds, please decide upon a high value, preferably above 10 seconds, to not overload the system. As per `requesttimeout` guidelines, you can still send data upon user interaction with the client. Please read the `requesttimeout` paragraph for more information.
+`usermodifiabledata` | This contains an array of internal `data` variable names, which the user is allowed to edit. Pure actors should include all their `data` variables, and combined sensor and actors can define which values are "outputs".
+`friendly`: | Following values describe nested objects of `friendly`. Everything in `friendly` is used for the GUI to provide a userfriendly interface
+`type` | The type only contains a String (preferrably as few words as possible) to describe the clients device type to the user. E.g. a type `button` would be `Button` and `temperature` would be `Temperature Sensor`
+`datavar` | This contains userfriendly names of the `data` variable names. The format is internal variable name and the userfriendly variable name.
+`datavalue` | This contains userfriendly variants of the `data` variable values. The format is internal variable name and the userfriendly value of that variable. E.g. a humidity of 0.5 would be 50%.
+`settingsvar` | This contains userfriendly variants of the `settings` variable names. The format is settings variable name and a friendly name for this setting. This will only change what is displayed in front if the input field, so the user knows what he is changing.
+`device` | All nested objects contain system protected data of your sensor. This includes your type and the user assigned name of your client. More values will be available for you soon. You cannot overwrite these values.
+
+Every of those values can be left undefined and defaults will be assumed where needed.
+We recommend to define `data` variables and highly encourage you to provide according userfriendly names.
+Also we recommend you to define a userfriendly type.
+If your client has no settings, you can leave the `settings` part away.
 
 ## Error, errors, errors!
 
