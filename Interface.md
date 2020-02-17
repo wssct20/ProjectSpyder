@@ -39,8 +39,9 @@ Currently there are 2 requesttypes:
 
 requesttype | Description
 ----------- | -----------
-`GET` | Used to acquire all saved data.
-`PUT` | Used to update the entire saved data.
+`GET` | Acquire all saved data.
+`PUT` | Set the entire saved data, overwrites everything on the server.
+`UPDATE` | Update saved data, merging new data with already the already existing data on the server. On conflict, existing data gets overwritten.
 
 There will be more requesttypes in the future, as the system gets more complex.
 

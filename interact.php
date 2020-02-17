@@ -36,13 +36,23 @@ switch ($requesttype) {
 		$returnstack["data"] = $data;
 		break;
 	case "PUT":
-		// requesttype PUT: place new state into table
+		// requesttype PUT: place new data into table
 		//check for previuos data and only update table and conditions if state changed
 		//if (!checkstate($data, $device["type"])) dieerror("DATAINVALID", "Data is invalid, wrong type or old authcode?");
 		if (jsondecode($data) == null) dieerror("DATAINVALID", "Data is invalid, maybe the JSON is not complete");
 		$previousdata = getdata($device["id"]);
 		if ($previousdata != $data) {
 			updatedata($device["id"], $data);
+			updateconditions();
+		}
+		break;
+	case "UPDATE":
+		// requesttype UPDATE: merge new data with already existing data
+		if (jsondecode($data) == null) dieerror("DATAINVALID", "Data is invalid, maybe the JSON is not complete");
+		$previousdata = getdata($device["id"]);
+		$newdata = array_merge($previousdata, $data);
+		if ($previousdata != $newdata) {
+			updatedata($device["id"], $newdata);
 			updateconditions();
 		}
 		break;
