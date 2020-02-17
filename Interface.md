@@ -84,45 +84,44 @@ You may break this rule, if you need your data updated for UX quality purposes.
 ## JSON `data`
 
 Syntax:
-```
+```json
 {
 	"settings": {
 		"SettingName1": "Value1",
 		"SettingName2": "Value2",
-		"SettingName3": "Value3",
+		"SettingName3": "Value3"
 		
 	},
 	"data": {
-		"VarName1": "Value1",  //raw data
+		"VarName1": "Value1",
 		"VarName2": "Value2",  
 		"VarName3": "Value3",
 		"VarName4": "Value4",
-		"VarName5": "Value5",
+		"VarName5": "Value5"
 	},
 	"usermodifiabledata": ["VarName1", "VarName2"],
 	"friendly": {
 		"settingsvar": {
 			"SettingName1": "Setting 1",
-			"SettingName2": "Setting 2",
+			"SettingName2": "Setting 2"
 		},
 		"datavar": {
 			"VarName1": "Variable 1",
-			"VarName2": "Variable 2",
+			"VarName2": "Variable 2"
 		},
 		"datavalue": {
-			"VarName1": "Wert 1",
-			"VarName2": "Wert 2",
+			"VarName1": "Value 1",
+			"VarName2": "Value 2"
 		},
-		"type": "Type",
+		"type": "Type"
 	},
-	"preferredupdatetime": 10,  //preferred update time in s, you still must obey requesttimeout
-	"device": {   //system protected info about this client
+	"preferredupdatetime": 10,
+	"device": {
 		"type": "type", 
-		"name": "Name",
-	},
+		"name": "Name"
+	}
 }
 ```
-
 
 Field | Description
 ----- | -----------
