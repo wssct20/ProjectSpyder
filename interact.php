@@ -24,6 +24,8 @@ if ($device["authcode"] != $authcode) die("AUTHCODESQLFATALERROR"); //should nev
 //check if device type matches
 if ($device["type"] != $type) dieerror("TYPEMISMATCH","Type doesn't match.");
 
+if (!empty($data)) if (jsondecode($data) == null) dieerror("DATAINVALID", "Data is invalid, maybe the JSON is not complete");
+
 //update device ip and lastact timestamp
 updatedevice($device["id"], $now, $ip);
 
@@ -39,7 +41,6 @@ switch ($requesttype) {
 		// requesttype PUT: place new data into table
 		//check for previuos data and only update table and conditions if state changed
 		//if (!checkstate($data, $device["type"])) dieerror("DATAINVALID", "Data is invalid, wrong type or old authcode?");
-		if (jsondecode($data) == null) dieerror("DATAINVALID", "Data is invalid, maybe the JSON is not complete");
 		$previousdata = getdata($device["id"]);
 		if ($previousdata != $data) {
 			updatedata($device["id"], $data);
@@ -48,7 +49,6 @@ switch ($requesttype) {
 		break;
 	case "UPDATE":
 		// requesttype UPDATE: merge new data with already existing data
-		if (jsondecode($data) == null) dieerror("DATAINVALID", "Data is invalid, maybe the JSON is not complete");
 		$previousdata = getdata($device["id"]);
 		$newdata = array_merge($previousdata, $data);
 		if ($previousdata != $newdata) {
