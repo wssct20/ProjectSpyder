@@ -13,8 +13,8 @@ Maybe you need to append the local domain, e.g. `SpyderHub.localdomain` or `Spyd
 
 All communication is done using HTTP requests.
 We support both, HTTP GET and POST requests.
-If data from both is available at the same time,
-then POST data is preferred.
+If request parameters are available from both at the same time,
+then POST parameters are preferred.
 
 ## Pair client
 
@@ -56,7 +56,7 @@ After that, there maybe is a `#DEBUG` section.
 Anything within the `#DEBUG` section should be available for a developer or even the user, 
 so that he can find out what went wrong.
 A good way would be to output this section entirely to the serial console.
-You don't need to interpret this section, as you will have another way of detection failures.
+You don't need to interpret this section, as you will have another way of detecting failures.
 
 Then follows the `#DATA` section.
 This section contains all of the important response data.
@@ -69,19 +69,8 @@ For conclusion, the response will end with `#END`.
 
 `data` contains an accurate description of the clients current properties.
 This needs to be JSON formatted and needs to follow following rules:
-The `data` must follow the global definition.
 The `data` must not contain any HTML relevant characters, e.g. ` : / # `.
-
-___TODO:__ add global definition_
-
-## requesttimeout
-
-With every request, your answer will contain a variable named `requesttimeout`.
-This value defines the amount of time in seconds you at least need to wait until the next request.
-You may break this rule, if you need your data updated for UX quality purposes.
-(e.g. a button gets pressed)
-
-## JSON `data`
+The `data` must follow the global definition:
 
 Syntax:
 ```json
@@ -141,6 +130,13 @@ We recommend to define `data` variables and highly encourage you to provide acco
 Also we recommend you to define a userfriendly type.
 If your client has no settings, you can leave the `settings` part away.
 
+## requesttimeout
+
+With every request, your answer will contain a variable named `requesttimeout`.
+This value defines the amount of time in seconds you at least need to wait until the next request.
+You may break this rule, if you need your data updated for UX quality purposes.
+(e.g. a button gets pressed)
+
 ## Error, errors, errors!
 
 You should not interpret the `#DEBUG` section!
@@ -151,9 +147,9 @@ Expected errors:
 
 Error | Description | Solution
 ----- | ----------- | --------
-AUTHFAILED          | Your authcode is not valid. | Pair up again.
-TYPEMISMATCH        | Your client's type doesn't match the authcode associated device. | Pair up again.
-JSONINVALID         | The sent JSON is not deserializable by the server. | Check the JSON for correct formatting.
-REQUESTTYPEINVALID  | The requesttype sent is not recognized by the system | Check for Syntax or ask user to update the system.
+`AUTHFAILED`          | Your authcode is not valid. | Pair up again.
+`TYPEMISMATCH`        | Your client's type doesn't match the authcode associated device. | Pair up again.
+`JSONINVALID`         | The sent JSON is not deserializable by the server. | Check the JSON for correct formatting.
+`REQUESTTYPEINVALID`  | The requesttype sent is not recognized by the system | Check for Syntax or ask user to update the system.
 
 On other errors, wait and try again once a day.
