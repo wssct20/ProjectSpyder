@@ -98,7 +98,7 @@ function getdevices() {
 		dieerror("ERRSQLTABLE", "getdevices Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 4: fetch all as array with associative names
-	return $result->fetch_all(MYSQLI_BOTH);
+	return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 function deletedevice($id) {
@@ -187,7 +187,7 @@ function checktables() {
 		dieerror("ERRSQLTABLE", "checktables devices Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
 	//unprepared query: create table conditions
-	if (!$db->query("create table if not exists conditions(ifid INT NOT NULL, ifdata TEXT NOT NULL, thenid INT NOT NULL, thendata TEXT NOT NULL);")
+	if (!$db->query("create table if not exists conditions(ifid INT NOT NULL, ifvar TEXT NOT NULL, ifvalue TEXT NOT NULL, thenid INT NOT NULL, thenvar TEXT NOT NULL, thenvalue TEXT NOT NULL);")
 	) {
 		dieerror("ERRSQLTABLE", "checktables conditions Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
@@ -216,7 +216,7 @@ function getconditions() {
 		dieerror("ERRSQLTABLE", "getconditions Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 4: fetch all as array with associative names
-	return $result->fetch_all(MYSQLI_BOTH);
+	return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 // USER MANAGEMENT
@@ -260,7 +260,7 @@ function getusers() {
 		dieerror("ERRSQLTABLE", "getusers Getting result set failed: (" . $statement->errno . ") " . $statement->error);
 	}
 	// Stage 4: fetch all as array with associative names
-	return $result->fetch_all(MYSQLI_BOTH);
+	return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 function adduser($username, $password, $role) {
