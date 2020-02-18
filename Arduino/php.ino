@@ -130,10 +130,12 @@ void pair() {
 
 //////////////requesttimeout//////////////
   int answerrequesttimeout = pairdata["requesttimeout"].as<int>();
-  //TODO: error if no requesttimeout & print requesttimeout
   if (answerrequesttimeout != NULL) {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
+    #ifdef debugmode
+      Serial.println("new requesttimeout: " + String(requesttimeout));
+    #endif
   }
   else {
     #ifdef debugmode
@@ -142,15 +144,16 @@ void pair() {
     requesttimeout = defaultdelay;
   }
 
+////////////////////////////////////////
+
   #ifdef debugmode
     Serial.println("---");
-  
+
+    //print all data
     Serial.println("error:" + String("\t") + String(answererror));
     Serial.println("authcode:" + String("\t") + String(answerauthcode));
     Serial.println("requesttimeout:" + String("\t") + String(answerrequesttimeout));
-  #endif
-
-  #ifdef debugmode
+    
     Serial.println("---");
   #endif
 
@@ -159,6 +162,20 @@ void pair() {
     Serial.println("closing pair() connection");
     Serial.println("_________________________________");
   #endif
+}
+
+
+
+String getdata() {
+  return interact(0, "");
+}
+
+void putdata(String data) {
+  interact(1, data);
+}
+
+String updatedata() {
+  
 }
 
 
@@ -172,7 +189,8 @@ void putstate(String state) {
 }
 
 
-String interact(int requesttype, String state) {
+
+String interact(int requesttype, String data) {
 
   String answer;
   
@@ -196,12 +214,13 @@ String interact(int requesttype, String state) {
   String authtoken = readEEPROM(authcodeaddress, authcodelength);
   url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM why we get 3 unknown chars at the end of the read string
   if (requesttype == 1) {
-    url += "&state=";
-    url += state;
+    url += "&data=";
+    url += data;
   }
   String requesttypes[] = {
     "GET",
     "PUT",
+    "UPDATE",
   };
   url += "&requesttype=";
   url += requesttypes[requesttype];
@@ -249,8 +268,17 @@ String interact(int requesttype, String state) {
   }
 
 ////////////////////////////////////////
-//processing answer
+//#DEBUG
+  String debugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
   #ifdef debugmode
+    Serial.println("DEBUG:");
+    Serial.println(debugsubstring);
+  #endif
+
+////////////////////////////////////////
+//#DATA
+  #ifdef debugmode
+    Serial.println("DATA:");
     Serial.println("split:");
   #endif
   
@@ -261,140 +289,61 @@ String interact(int requesttype, String state) {
     Serial.println("---");
   #endif
 
-  int lastindex = 0;
-  int count = 0;
-  while(true) {
-    int currentindex = answerdatasubstring.indexOf("=>", lastindex);
-    if (currentindex == -1) break;
-    lastindex = currentindex + 1;
-    count++;
+
+  DynamicJsonDocument interactdata(2500);
+  deserializeJson(interactdata, answerdatasubstring);
+  
+//////////////error//////////////
+//TODO: check if answer from programminghoch10
+  String answererror = interactdata["error"];
+  if (answererror != NULL) {
+    #ifdef debugmode
+      Serial.println("ERROR: " + String(answererror));
+    #endif
   }
-  #ifdef debugmode
-    Serial.println("Count: " + String(count));
-  #endif
-  String answerdata[count][2];
-
-  lastindex = 0;
-  count = 0;
-  while(true) {
-    int currentindex = answerdatasubstring.indexOf("[", lastindex);
-    if (currentindex == -1) break;
-    answerdata[count][0] = answerdatasubstring.substring(
-      currentindex + 1,
-      answerdatasubstring.indexOf("]", currentindex)
-    );
-    answerdata[count][1] = answerdatasubstring.substring(
-      answerdatasubstring.indexOf("=>", currentindex) + 2, 
-      answerdatasubstring.indexOf("\n", currentindex)
-    );
-    lastindex = currentindex + 1;
-    count++;
-  }
-  #ifdef debugmode
-    Serial.println("Sizeof: " + String(sizeof(answerdata)));
-    Serial.println("---");
-  #endif
-
-////////////////////////////////////////
-// search for error
-  for (int i = 0; i < count; i++) {
-    if (answerdata[i][0] == errorindex) {
-      #ifdef debugmode
-        Serial.println("ERROR: " + String(answerdata[i][1]));
-      #endif
-
-      String errorsstring = "default             AUTHFAILED          REQUESTTYPEINVALID  TYPEMISMATCH        ";    // error every 20 chars
-      int e = errorsstring.indexOf(answerdata[i][1]);
-      if (e == -1) {
-        //unrecognized error
-        e = 0;
-      }
-      switch (e / 20) {
-        case 1:
-          #ifdef debugmode
-            Serial.println("Authentication failed, requesting new authcode.");
-          #endif
-          pair();
-          lightsleep(requesttimeout);
-          return interact(requesttype, state);
-        case 3:
-          #ifdef debugmode
-            Serial.println("Type mismatch, requesting new authcode.");
-          #endif
-          pair();
-          lightsleep(requesttimeout);
-          return interact(requesttype, state);
-        case 2:
-          #ifdef debugmode
-            Serial.println("FATALERROR: requesttype invalid");
-          #endif
-        case 0:
-        default:
-          hibernate(fatalerrordelay);
-      }
-    }
-    else {
-      #ifdef debugmode
-        Serial.println("No ERROR");
-      #endif
-    }
+  else {
+    #ifdef debugmode
+      Serial.println("No ERROR");
+    #endif
   }
 
-////////////////////////////////////////
-// search for state
-  String returnstate = "";
-  if (requesttype == 0) {
-    bool statefound = false;
-    for (int i = 0; i < count; i++) {
-      if (answerdata[i][0] == stateindex) {
-        returnstate = answerdata[i][1];
-        statefound = true;
-        break;
-      }
-    }
-    if (!statefound) {
-      #ifdef debugmode
-        Serial.println("ERROR: state not found");
-      #endif
-      hibernate(fatalerrordelay);
-    }
-  }
+//////////////data//////////////
+//TODO
 
-////////////////////////////////////////
-// search for requesttimeout
-  bool requesttimeoutfound = false;
-  for (int i = 0; i < count; i++) {
-    if (answerdata[i][0] == requesttimeoutindex) {
-      requesttimeout = answerdata[i][1].toInt();
-      if (requesttimeout == 0) requesttimeout = defaultdelay;
-      requesttimeoutfound = true;
-      break;
-    }
+//////////////requesttimeout//////////////
+  int answerrequesttimeout = interactdata["preferredupdatetime"].as<int>();
+  if (answerrequesttimeout != NULL) {
+    requesttimeout = answerrequesttimeout;
+    if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
+    #ifdef debugmode
+      Serial.println("new requesttimeout: " + String(requesttimeout));
+    #endif
   }
-  if (!requesttimeoutfound) {
+  else {
     #ifdef debugmode
       Serial.println("ERROR: requesttimeout not found");
     #endif
     requesttimeout = defaultdelay;
   }
 
-  
-  for (int i = 0; i < count; i++) {
-    #ifdef debugmode
-      Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
-    #endif
-  }
+////////////////////////////////////////
 
   #ifdef debugmode
     Serial.println("---");
+
+    //TODO: perhaps print all data
+  
+    Serial.println("---");  
   #endif
 ////////////////////////////////////////
   #ifdef debugmode
     Serial.println("closing interact() connection");
     Serial.println("_________________________________");
   #endif
-  return returnstate;
+  return returnstate; //TODO: note when editing data
 }
+
+
 
 void resetauthcode() {
   String empty = "";
