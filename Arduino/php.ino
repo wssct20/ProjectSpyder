@@ -165,7 +165,7 @@ void pair() {
 }
 
 
-
+/*
 String getdata() {
   return interact(0, "");
 }
@@ -177,7 +177,7 @@ void putdata(String data) {
 String updatedata() {
   
 }
-
+*/
 
 
 String getstate() {
@@ -340,7 +340,8 @@ String interact(int requesttype, String data) {
     Serial.println("closing interact() connection");
     Serial.println("_________________________________");
   #endif
-  return returnstate; //TODO: note when editing data
+//  return returnstate; //TODO: note when editing data
+  return "currently not working";
 }
 
 
