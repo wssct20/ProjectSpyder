@@ -13,6 +13,16 @@
 #define fatalerrordelay 60*30     //in seconds
 #define defaultdelay 60           //in seconds
 
+enum REQEUSTTYPES {
+  REQUESTTYPE_GET,
+  REQUESTTYPE_PUT,
+  REQUESTTYPE_UPDATE,
+};
+const String requesttypes[] = {
+  "GET",
+  "PUT",
+  "UPDATE",
+};
 
 void pair() {
 
@@ -165,27 +175,17 @@ void pair() {
 }
 
 
-/*
+
 String getdata() {
-  return interact(0, "");
+  return interact(REQUESTTYPE_GET, "");
 }
 
 void putdata(String data) {
-  interact(1, data);
+  interact(REQUESTTYPE_PUT, data);
 }
 
-String updatedata() {
-  
-}
-*/
-
-
-String getstate() {
-  return interact(0, ""); //returns "" on failure
-}
-
-void putstate(String state) {
-  interact(1, state);
+void updatedata(String data) {
+  interact(REQUESTTYPE_UPDATE, data);
 }
 
 
@@ -213,15 +213,10 @@ String interact(int requesttype, String data) {
   url += "?authcode=";
   String authtoken = readEEPROM(authcodeaddress, authcodelength);
   url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM why we get 3 unknown chars at the end of the read string
-  if (requesttype == 1) {
+  if (!data.equals("")) {
     url += "&data=";
     url += data;
   }
-  String requesttypes[] = {
-    "GET",
-    "PUT",
-    "UPDATE",
-  };
   url += "&requesttype=";
   url += requesttypes[requesttype];
   url += "&type=";
