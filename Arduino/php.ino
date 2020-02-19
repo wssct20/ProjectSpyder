@@ -171,6 +171,15 @@ void pair() {
 }
 
 
+////////////////////////////only to be able to compile
+String getstate() {
+  return getdata();
+}
+
+void putstate(String data) {
+  putdata(data); 
+}
+///////////////////////////
 
 String getdata() {
   return interact(REQUESTTYPE_GET, "");
@@ -331,7 +340,7 @@ String interact(int requesttype, String data) {
   }
 
 //////////////data//////////////
-//TODO
+  String returndata = "Does not work yet"; //TODO: return nestedobject "data"
 
 //////////////requesttimeout//////////////
   int answerrequesttimeout = interactdata["requesttimeout"].as<int>();
@@ -363,8 +372,7 @@ String interact(int requesttype, String data) {
     Serial.println("closing interact() connection");
     Serial.println("_________________________________");
   #endif
-//  return returnstate; //TODO: note when editing data
-  return "currently not working";
+  return returndata;  //returns the data for client
 }
 
 
