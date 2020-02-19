@@ -1,11 +1,5 @@
 #include "WiFi.h"
 
-//TODO: delete if interact is changed
-#define authcodeindex "authcode"
-#define stateindex "state"
-#define requesttimeoutindex "requesttimeout"
-#define errorindex "error"
-
 #define authcodeaddress 0
 #define authcodelength 128
 
@@ -91,10 +85,10 @@ void pair() {
 
 ////////////////////////////////////////
 //#DEBUG
-  String debugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
+  String answerdebugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
   #ifdef debugmode
     Serial.println("DEBUG:");
-    Serial.println(debugsubstring);
+    Serial.println(answerdebugsubstring);
   #endif
 
 ////////////////////////////////////////
@@ -266,10 +260,10 @@ String interact(int requesttype, String data) {
 
 ////////////////////////////////////////
 //#DEBUG
-  String debugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
+  String answerdebugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
   #ifdef debugmode
     Serial.println("DEBUG:");
-    Serial.println(debugsubstring);
+    Serial.println(answerdebugsubstring);
   #endif
 
 ////////////////////////////////////////
@@ -291,12 +285,44 @@ String interact(int requesttype, String data) {
   deserializeJson(interactdata, answerdatasubstring);
   
 //////////////error//////////////
-//TODO: check if answer from programminghoch10
   String answererror = interactdata["error"];
   if (answererror != NULL) {
-    #ifdef debugmode
-      Serial.println("ERROR: " + String(answererror));
-    #endif
+    String errors = "default             AUTHFAILED          TYPEMISMATCH        JSONINVALID         REQUESTTYPEINVALID  ";  //error every 20 chars
+    int e = errors.indexOf(answererror);
+    if (e == -1) e = 0; //unrecognized error
+    switch (e / 20) {
+        case 1:
+          #ifdef debugmode
+            Serial.println("Authentication failed, requesting new authcode.");
+          #endif
+          pair();
+          lightsleep(requesttimeout);
+          return interact(requesttype, data);
+        case 2:
+          #ifdef debugmode
+            Serial.println("Type mismatch, requesting new authcode.");
+          #endif
+          pair();
+          lightsleep(requesttimeout);
+          return interact(requesttype, data);
+        case 3:
+          #ifdef debugmode
+            Serial.println("JSON isn´t deserializable, check the JSON formatting.");
+            Serial.println("Your JSON:");
+            Serial.println(answerdatasubstring);
+          #endif
+          hibernate(fatalerrordelay);
+          break;
+        case 4:
+          #ifdef debugmode
+            Serial.println("Requesttype invalid");
+          #endif
+          hibernate(fatalerrordelay);
+          break;
+        case 0:
+        default:
+          hibernate(fatalerrordelay);
+    }
   }
   else {
     #ifdef debugmode
