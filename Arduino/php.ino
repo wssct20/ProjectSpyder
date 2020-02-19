@@ -24,6 +24,8 @@ const String requesttypes[] = {
   "UPDATE",
 };
 
+
+
 void pair() {
 
   String answer;
@@ -306,7 +308,7 @@ String interact(int requesttype, String data) {
 //TODO
 
 //////////////requesttimeout//////////////
-  int answerrequesttimeout = interactdata["preferredupdatetime"].as<int>();
+  int answerrequesttimeout = interactdata["requesttimeout"].as<int>();
   if (answerrequesttimeout != NULL) {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
