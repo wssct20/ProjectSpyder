@@ -340,7 +340,7 @@ String interact(int requesttype, String data) {
   }
 
 //////////////data//////////////
-  String returndata = "Does not work yet"; //TODO: return nestedobject "data"
+  String returndata = interactdata["data"];
 
 //////////////requesttimeout//////////////
   int answerrequesttimeout = interactdata["requesttimeout"].as<int>();
