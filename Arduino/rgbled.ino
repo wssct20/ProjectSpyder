@@ -16,57 +16,39 @@ void rgbledsetup() {
     ledcSetup(rgbled_pwmchannel[i], rgbled_frequency, rgbled_resolution);
     ledcAttachPin(pins[i], rgbled_pwmchannel[i]);
   }
-
-  putstate("255:255:255");    //only a test state. red:green:blue
   
 }
 
 void rgbledloop() {
 
   #ifdef debugmode
-    Serial.println("rgbled() look for state");
+    Serial.println("rgbled() look for data");
   #endif
 
-  String rawstate = getstate();       //get state from system
-  #ifdef debugmode
-    Serial.println("rawstate: " + String(rawstate));
-  #endif
+  //get data from system
+  DynamicJsonDocument data(2500);
+  deserializeJson(data, getdata());
 
-  //catch wrong format
-  if (rawstate.indexOf(":") == -1) rawstate = "0:0:0";
-  
-  //search for seperators
-  int seperator1 = rawstate.indexOf(":");
-  #ifdef debugmode
-    Serial.println("seperator1: " + String(seperator1));
-  #endif
-  
-  int seperator2 = rawstate.indexOf(":", seperator1 + 1);
-  #ifdef debugmode
-    Serial.println("seperator2: " + String(seperator2));
-  #endif
-  
-  //extract states
-  int state[] = {
-    rawstate.substring(0, seperator1).toInt(),
-    rawstate.substring(seperator1 + 1, seperator2).toInt(),
-    rawstate.substring(seperator2 + 1).toInt(),
+  int pindata[] = {
+    data["data"]["red"].as<int>(),
+    data["data"]["green"].as<int>(),
+    data["data"]["blue"].as<int>(),
   };
 
-  //check state
+  //chack data
   for (int i = 0; i < pincount; i++) {
-    if ((state[i] < 0) | (state[i] > 255)) state[i] = 0;
+    if ((pindata[i] < 0) | (pindata[i] > 255)) pindata[i] = 0;
   }
   
   //set pins
   for (int i = 0; i < pincount; i++) {
-    ledcWrite(rgbled_pwmchannel[i], state[i]);
+    ledcWrite(rgbled_pwmchannel[i], pindata[i]);
   }
 
   #ifdef debugmode
-    Serial.println("redstate: " + String(state[0]));
-    Serial.println("greenstate: " + String(state[1]));
-    Serial.println("bluestate: " + String(state[2]));
+    Serial.println("red: " + String(pindata[0]));
+    Serial.println("green: " + String(pindata[1]));
+    Serial.println("blue: " + String(pindata[2]));
   #endif
   
   //go to lightsleep
