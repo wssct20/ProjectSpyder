@@ -37,7 +37,7 @@ void rgbledloop() {
 
   //chack data
   for (int i = 0; i < pincount; i++) {
-    if ((pindata[i] < 0) | (pindata[i] > 255)) pindata[i] = 0;
+    if ((pindata[i] < 0) || (pindata[i] > 255)) pindata[i] = 0;
   }
   
   //set pins

@@ -28,7 +28,7 @@ void ledloop() {
   int brightness = data["data"]["brightness"].as<int>();
 
   //check data
-  if ((brightness < 0) | (brightness > 255)) brightness = 0;
+  if ((brightness < 0) || (brightness > 255)) brightness = 0;
 
   #ifdef debugmode
     Serial.println("brightness: " + String(brightness));
