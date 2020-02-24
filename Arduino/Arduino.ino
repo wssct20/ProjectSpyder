@@ -21,9 +21,7 @@ String switchtype = type;
 
 void setup() {
 
-  #ifdef debugmode
-    Serial.begin(115200);
-  #endif
+  Serial.begin(115200);
   
   //esp_bt_controller_disable(); //disable bluetooth controller for power savings, but currently commented out, because I believe its not started if library isnt included
 
@@ -46,9 +44,7 @@ void setup() {
   
   int e = typesstring.indexOf(switchtype);
   if (e == -1) {
-    #ifdef debugmode
-      Serial.println("Current type invalid.");
-    #endif
+    Serial.println("Current type invalid.");
     hibernate(60*60*24);
   }
   switch (e / typesstringtypelength) {
@@ -83,9 +79,7 @@ void setup() {
       ledsetup();
       break;
     default:
-      #ifdef debugmode
-        Serial.println("Current type invalid.");
-      #endif
+      Serial.println("Current type invalid.");
       hibernate(60*60*24);
   }
 
@@ -95,9 +89,7 @@ void loop() {
 
   int e = typesstring.indexOf(switchtype);
   if (e == -1) {
-    #ifdef debugmode
-      Serial.println("Current type invalid.");
-    #endif
+    Serial.println("Current type invalid.");
     hibernate(60*60*24);
   }
   switch (e / typesstringtypelength) {
@@ -132,9 +124,7 @@ void loop() {
       ledloop();
       break;
     default:
-      #ifdef debugmode
-        Serial.println("Current type invalid.");
-      #endif
+      Serial.println("Current type invalid.");
       hibernate(60*60*24);
   }
   

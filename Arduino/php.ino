@@ -32,8 +32,8 @@ void pair() {
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
-    #ifdef debugmode
       Serial.println("php connection failed");
+    #ifdef debugmode
       Serial.println("_________________________________");
     #endif
     return;
@@ -71,10 +71,7 @@ void pair() {
   #endif
 
   if (answer.indexOf("#START") == -1) {
-    #ifdef debugmode
-      Serial.println("#START not found");
-    #endif
-
+    Serial.println("#START not found");
     hibernate(fatalerrordelay);
   }
   else {
@@ -112,9 +109,7 @@ void pair() {
 //////////////error//////////////
   String answererror = pairdata["error"];
   if (answererror != NULL) {
-    #ifdef debugmode
-      Serial.println("ERROR: " + String(answererror));
-    #endif
+    Serial.println("ERROR: " + String(answererror));
   }
   else {
     #ifdef debugmode
@@ -128,9 +123,7 @@ void pair() {
     writeEEPROM(authcodeaddress, authcodelength, answerauthcode);
   }
   else {
-    #ifdef debugmode
-      Serial.println("ERROR: authcode not found");
-    #endif
+    Serial.println("ERROR: authcode not found");
     hibernate(fatalerrordelay);
   }
 
@@ -144,9 +137,7 @@ void pair() {
     #endif
   }
   else {
-    #ifdef debugmode
-      Serial.println("ERROR: requesttimeout not found");
-    #endif
+    Serial.println("ERROR: requesttimeout not found");
     requesttimeout = defaultdelay;
   }
 
@@ -207,8 +198,8 @@ String interact(int requesttype, String data) {
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
+    Serial.println("php connection failed");
     #ifdef debugmode
-      Serial.println("php connection failed");
       Serial.println("_________________________________");
     #endif
     return "";
@@ -255,10 +246,7 @@ String interact(int requesttype, String data) {
   #endif
 
   if (answer.indexOf("#START") == -1) {
-    #ifdef debugmode
-      Serial.println("#START not found");
-    #endif
-
+    Serial.println("#START not found");
     hibernate(defaulterrordelay);
   }
   else {
@@ -302,30 +290,28 @@ String interact(int requesttype, String data) {
     switch (e / 20) {
         case 1:
           #ifdef debugmode
-            Serial.println("Authentication failed, requesting new authcode.");
+            Serial.println("ERROR: Authentication failed, requesting new authcode.");
           #endif
           pair();
           lightsleep(requesttimeout);
           return interact(requesttype, data);
         case 2:
           #ifdef debugmode
-            Serial.println("Type mismatch, requesting new authcode.");
+            Serial.println("ERROR: Type mismatch, requesting new authcode.");
           #endif
           pair();
           lightsleep(requesttimeout);
           return interact(requesttype, data);
         case 3:
+          Serial.println("ERROR: JSON isn´t deserializable, check the JSON formatting.");
           #ifdef debugmode
-            Serial.println("JSON isn´t deserializable, check the JSON formatting.");
             Serial.println("Your JSON:");
             Serial.println(answerdatasubstring);
           #endif
           hibernate(fatalerrordelay);
           break;
         case 4:
-          #ifdef debugmode
-            Serial.println("Requesttype invalid");
-          #endif
+          Serial.println("ERROR: Requesttype invalid");
           hibernate(fatalerrordelay);
           break;
         case 0:
@@ -352,9 +338,7 @@ String interact(int requesttype, String data) {
     #endif
   }
   else {
-    #ifdef debugmode
-      Serial.println("ERROR: requesttimeout not found");
-    #endif
+    Serial.println("ERROR: requesttimeout not found");
     requesttimeout = defaultdelay;
   }
 

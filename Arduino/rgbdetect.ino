@@ -37,7 +37,7 @@ void rgbdetectsetup() {
 
 void rgbdetectloop() {
 
-  uint16_t r, g, b, c, colorTemp, lux;
+  uint16_t r, g, b, c, colortemp, lux;
 
   //turn on the sensor led
   digitalWrite(detectledpin, HIGH);
@@ -45,14 +45,14 @@ void rgbdetectloop() {
 
   //measure the rgb values and calculate the themperature and brightness
   rgbdetect.getRawData(&r, &g, &b, &c);
-  colorTemp = rgbdetect.calculateColorTemperature_dn40(r, g, b, c);
+  colortemp = rgbdetect.calculateColorTemperature_dn40(r, g, b, c);
   lux = rgbdetect.calculateLux(r, g, b);
 
   //turn off the sensor led
   digitalWrite(detectledpin, LOW);
 
   #ifdef debugmode
-    Serial.print("Color Temp: "); Serial.print(colorTemp, DEC); Serial.print(" K - ");
+    Serial.print("Color Temp: "); Serial.print(colortemp, DEC); Serial.print(" K - ");
     Serial.print("Lux: "); Serial.print(lux, DEC); Serial.print(" - ");
     Serial.print("R: "); Serial.print(r, DEC); Serial.print(" ");
     Serial.print("G: "); Serial.print(g, DEC); Serial.print(" ");
@@ -69,7 +69,7 @@ void rgbdetectloop() {
   state.concat(":");
   state.concat(c);
   state.concat(":");
-  state.concat(colorTemp);
+  state.concat(colortemp);
   state.concat(":");
   state.concat(lux);
 
