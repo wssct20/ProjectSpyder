@@ -26,7 +26,7 @@ void rgbledloop() {
   #endif
 
   //get data from system
-  DynamicJsonDocument data(2500);
+  DynamicJsonDocument data(JSONCAPACITY);
   deserializeJson(data, getdata());
 
   int pindata[] = {

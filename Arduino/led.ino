@@ -22,7 +22,7 @@ void ledloop() {
   #endif
 
   //get data from system
-  DynamicJsonDocument data(2500);
+  DynamicJsonDocument data(JSONCAPACITY);
   deserializeJson(data, getdata());
 
   int brightness = data["data"]["brightness"].as<int>();

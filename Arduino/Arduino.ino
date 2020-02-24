@@ -7,6 +7,8 @@ const String type = "temperature";      //Enter the type of your client here.
 #define debugmode               //some more debug information
 //#define reset_authcode          //resets authcode
 
+#define JSONCAPACITY 2500
+
 int requesttimeout;
 
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()

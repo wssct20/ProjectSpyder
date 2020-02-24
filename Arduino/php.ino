@@ -103,7 +103,7 @@ void pair() {
   #endif
 
 
-  DynamicJsonDocument pairdata(2500);
+  DynamicJsonDocument pairdata(JSONCAPACITY);
   deserializeJson(pairdata, answerdatasubstring);
   
 //////////////error//////////////
@@ -278,7 +278,7 @@ String interact(int requesttype, String data) {
   #endif
 
 
-  DynamicJsonDocument interactdata(2500);
+  DynamicJsonDocument interactdata(JSONCAPACITY);
   deserializeJson(interactdata, answerdatasubstring);
   
 //////////////error//////////////
