@@ -4,6 +4,7 @@ require_once("system.php");
 $PARAM = getparameters();
 
 $type = $PARAM["type"];
+$data = $PARAM["data"];
 
 
 //return array
@@ -21,6 +22,7 @@ $authcode = calculateauthcode($type, $ip, $pairtime);
 
 adddevice($type, $ip, $pairtime, $now, $authcode);
 updatedevice(getdevicebyauthcode($authcode)["id"], $now, $ip);
+if (!empty($data)) updatedata(getdevicebyauthcode($authcode)["id"], $data);
 
 
 $returnstack["requesttimeout"] = 5;
