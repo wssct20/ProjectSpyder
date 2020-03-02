@@ -6,6 +6,8 @@ void buttonsetup() {
   
   pinMode(buttonPin, INPUT_PULLUP);
 
+  jsonstructure = "";
+
 }
 
 void buttonloop() {

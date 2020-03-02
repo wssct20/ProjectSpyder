@@ -7,6 +7,7 @@
 #define fatalerrordelay 60*30     //in seconds
 #define defaultdelay 60           //in seconds
 
+
 enum REQEUSTTYPES {
   REQUESTTYPE_GET,
   REQUESTTYPE_PUT,
@@ -159,6 +160,10 @@ void pair() {
     Serial.println("closing pair() connection");
     Serial.println("_________________________________");
   #endif
+
+////////////////////////////////////////
+//send jsonstructure
+  putdata(jsonstructure);
 }
 
 
@@ -293,14 +298,12 @@ String interact(int requesttype, String data) {
             Serial.println("ERROR: Authentication failed, requesting new authcode.");
           #endif
           pair();
-          lightsleep(requesttimeout);
           return interact(requesttype, data);
         case 2:
           #ifdef debugmode
             Serial.println("ERROR: Type mismatch, requesting new authcode.");
           #endif
           pair();
-          lightsleep(requesttimeout);
           return interact(requesttype, data);
         case 3:
           Serial.println("ERROR: JSON isn´t deserializable, check the JSON formatting.");

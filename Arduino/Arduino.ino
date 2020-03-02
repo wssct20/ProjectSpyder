@@ -8,6 +8,7 @@ const String type = "temperature";      //Enter the type of your client here.
 //#define reset_authcode          //resets authcode
 
 #define JSONCAPACITY 2500
+String jsonstructure;
 
 int requesttimeout;
 
