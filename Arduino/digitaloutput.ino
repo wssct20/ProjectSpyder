@@ -5,7 +5,7 @@ void digitaloutputsetup() {
 
   digitalWrite(output_pin, LOW);
   
-  putstate("1");    //only a test state
+  jsonstructure = "{\"data\":{\"data\":{\"state\":0},\"usermodifiabledata\":[\"state\"],\"friendly\":{\"datavar\":{\"state\":\"Output State\"},\"datavalues\":{\"state\":\"off\"},\"digitaloutput\":\"Digital Output\"},\"preferredupdatetime\":10}}";
   
 }
 
@@ -17,7 +17,7 @@ void digitaloutputloop() {
 
   //get data from system
   DynamicJsonDocument data(JSONCAPACITY);
-  deserializeJson(data,getdata());
+  deserializeJson(data, getdata());
 
   int outputstate = data["data"]["state"].as<int>();
 
