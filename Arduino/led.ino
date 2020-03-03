@@ -12,6 +12,8 @@ void ledsetup() {
   //setup channels and link pins
   ledcSetup(led_pwmchannel, led_frequency, led_resolution);
   ledcAttachPin(led_pin, led_pwmchannel);
+
+  jsonstructure = "{\"data\":{\"data\":{\"brightness\":0},\"usermodifiabledata\":[\"brightness\"],\"friendly\":{\"datavar\":{\"brightness\":\"Brightness\"},\"led\":\"LED\"},\"preferredupdatetime\":2}}";
   
 }
 
