@@ -2,11 +2,6 @@
 #define buttonPin 4
 //#define touchthreshold 40
 
-const String friendlybuttonstate[] = {
-  "Released",
-  "Pressed",
-};
-
 void buttonsetup() {
   
   pinMode(buttonPin, INPUT_PULLUP);
@@ -27,6 +22,10 @@ void buttonloop() {
     Serial.println("buttonstate: " + String(buttonstate));
   #endif
   data["state"] = buttonstate;
+  const String friendlybuttonstate[] = {
+    "Released",
+    "Pressed",
+  };
   friendly["datavalue"] = friendlybuttonstate[buttonstate];
   serializeJson(datadoc, buttondata);
   #ifdef debugmode
