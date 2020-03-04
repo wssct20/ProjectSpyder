@@ -1,11 +1,11 @@
 <?php
-require_once("specific.php"); //sensor/actuator specifc stuff
-require_once ("sqlfunctions.php"); //sql specific stuff
+require_once("sqlfunctions.php"); //sql specific stuff
 
 function calculateauthcode($type, $ipaddress, $pairtime) {
 	global $hashprefix, $devicehashalgo;
 	$data = $hashprefix . $type . $ipaddress . $pairtime;
-	return hash($devicehashalgo, $data, false);
+	$hash = hash($devicehashalgo, $data, false);
+	return strtolower($hash);
 }
 
 function calculateuserhash($username, $password) {
@@ -69,17 +69,6 @@ function getipaddress() {
 	return $ipaddress;
 }
 
-function checktype($inputtype) {
-	//checktype: checks if type is valid and supported by the system
-	global $types;
-	foreach ($types as $type) {
-		if ($type == $inputtype) {
-			return true;
-		}
-	}
-	return false;
-}
-
 function updateconditions() {
 	//updateconditions: update devices if conditions match
 	$conditions = getconditions();
@@ -99,24 +88,32 @@ function gettimeout($device) {
 	//TODO: calculate dynamic timeout
 	global $updatetime;
 	$thisupdatetime = (intval(getdata($device)["preferredupdatetime"]) ?? $updatetime);
-	if ($thisupdatetime < 0) $thisupdatetime = 0;
+	if ($thisupdatetime < 0) $thisupdatetime = $updatetime;
 	return $thisupdatetime;
 }
 
 function jsondecode($json) {
+	//decodes a JSON string to an associative array
 	return json_decode($json, true);
 }
 
 function jsonencode($data) {
+	//encodes an associative array to a JSON string
 	return json_encode($data);
 }
 
 function getdata($device) {
-	return jsondecode($device["data"]);
+	global $basestructure;
+	return array_merge($basestructure, jsondecode($device["data"]) ?? array());
+}
+
+function updatedata($id, $data) {
+	sqlupdatedata($id, jsonencode($data));
 }
 
 function collectdeviceproperties($device) {
 	$deviceprops = array();
+	$deviceprops["id"] = $device["id"];
 	$deviceprops["name"] = $device["name"];
 	$deviceprops["type"] = $device["type"];
 	return $deviceprops;

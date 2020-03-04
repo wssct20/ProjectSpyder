@@ -3,7 +3,7 @@ $now = time();
 require_once("system.php");
 $PARAM = getparameters();
 
-$authcode = $PARAM["authcode"] ?? "";
+$authcode = strtolower($PARAM["authcode"] ?? "");
 $data = $PARAM["data"] ?? "";
 $requesttype = $PARAM["requesttype"] ?? "";
 $type = $PARAM["type"] ?? "";
@@ -39,8 +39,6 @@ switch ($requesttype) {
 		break;
 	case "PUT":
 		// requesttype PUT: place new data into table
-		//check for previuos data and only update table and conditions if state changed
-		//if (!checkstate($data, $device["type"])) dieerror("DATAINVALID", "Data is invalid, wrong type or old authcode?");
 		$previousdata = getdata($device["id"]);
 		if ($previousdata != $data) {
 			updatedata($device["id"], $data);
@@ -58,12 +56,9 @@ switch ($requesttype) {
 		break;
 	default:
 		// requesttype not recognized: return error to client
-		dieerror("REQUESTTYPEINVALID");
+		dieerror("REQUESTTYPEINVALID", "");
 		break;
 }
-
-// run type specific actions
-specificactions($device, $requesttype, $returnstack);
 
 $returnstack["requesttimeout"] = gettimeout($device);
 

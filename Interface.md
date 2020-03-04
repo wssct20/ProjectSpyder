@@ -21,9 +21,11 @@ then POST parameters are preferred.
 Before first interaction, a client needs to be paired.
 For this, the client needs to talk to `pair.php`.
 
-As parameters, you only need to send the client's type.
+As parameters, you only need to send the client's `type`.
+You can however send `data`,
+if you don't want to upload it directly after pairing.
 
-The server will then supply you with the authcode, 
+The server will then supply you with the `authcode`,
 which you can use to interact with the server.
 
 ## Interact with the server
@@ -32,10 +34,10 @@ which you can use to interact with the server.
 This can be used to send and to retrieve data.
 
 The parameters are the following:
-You need to send your authcode, your client's type and your requesttype.
-Depending on your requesttype, you will need to send additional data.
+You need to send your `authcode`, your client's type and your requesttype.
+Depending on your requesttype, you will need to send additional parameters.
 
-Currently there are 2 requesttypes:
+We currently support these requesttypes:
 
 requesttype | Description
 ----------- | -----------
