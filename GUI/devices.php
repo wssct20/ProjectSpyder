@@ -66,7 +66,8 @@ if ($action == "details") {
 	if ($id == "") die("INVALIDID");
 	$id = intval($id);
 	$device = getdevicebyid($id);
-	$friendlytype = ($friendlytypenames[$device["type"]] ?? $device["type"]);
+	$data = getdata($device);
+	$friendlytype = ($data["friendly"]["type"] ?? $device["type"]);
 	?>
 	
 	<!DOCTYPE html>
@@ -102,7 +103,6 @@ if ($action == "details") {
 				-->
 				<h3>Data</h3>
 				<?php 
-					$data = getdata($device);
 					foreach ($data["usermodifiabledata"] as $usermodifiabledatafield) {
 						?>
 							<form method=post>
