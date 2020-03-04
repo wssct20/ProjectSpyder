@@ -104,7 +104,7 @@ function jsonencode($data) {
 
 function getdata($device) {
 	global $basestructure;
-	return array_merge($basestructure ,jsondecode($device["data"]));
+	return array_merge($basestructure, jsondecode($device["data"]));
 }
 
 function updatedata($id, $data) {

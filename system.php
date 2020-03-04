@@ -1,5 +1,5 @@
 <?php
-global $devicehashalgo, $userhashalgo, $hashprefix, $updatetime, $types, $db, $systemname;
+global $devicehashalgo, $userhashalgo, $hashprefix, $updatetime, $types, $db, $systemname, $basestructure;
 //systemname: The Name of this system, displayed in GUI, default is ProjectSpyder
 $systemname = "ProjectSpyder";
 //devicehashalgo: algoryhthm used for computing hash for device authentication purposes
@@ -17,8 +17,11 @@ $hashprefix = "WSS";
 //system is optimized for 10 seconds, only increase when needed, never decrease below 10
 $updatetime = 10;
 
+require_once("functions.php");
+require_once("credentials.php");
+
 // JSON basic structure to merge data with, to prevent errors due to missing parts
-$basestructure = "{
+$basestructure = jsondecode("{
 	\"settings\": {
 	},
 	\"data\": {
@@ -32,12 +35,7 @@ $basestructure = "{
 		\"datavalue\": {
 		},
 	},
-}";
-
-require_once("functions.php");
-require_once("credentials.php");
-
-$basestructure = jsondecode($basestructure);
+}");
 
 //connect to mysql database
 $db = new mysqli($sqlhost, $sqluser, $sqlpass, $sqldbname);
