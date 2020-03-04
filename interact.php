@@ -58,7 +58,7 @@ switch ($requesttype) {
 		break;
 	default:
 		// requesttype not recognized: return error to client
-		dieerror("REQUESTTYPEINVALID");
+		dieerror("REQUESTTYPEINVALID", "");
 		break;
 }
 
