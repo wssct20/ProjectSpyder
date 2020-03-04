@@ -4,7 +4,8 @@ require_once("sqlfunctions.php"); //sql specific stuff
 function calculateauthcode($type, $ipaddress, $pairtime) {
 	global $hashprefix, $devicehashalgo;
 	$data = $hashprefix . $type . $ipaddress . $pairtime;
-	return hash($devicehashalgo, $data, false);
+	$hash = hash($devicehashalgo, $data, false);
+	return strtolower($hash);
 }
 
 function calculateuserhash($username, $password) {

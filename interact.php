@@ -3,7 +3,7 @@ $now = time();
 require_once("system.php");
 $PARAM = getparameters();
 
-$authcode = $PARAM["authcode"] ?? "";
+$authcode = strtolower($PARAM["authcode"] ?? "");
 $data = $PARAM["data"] ?? "";
 $requesttype = $PARAM["requesttype"] ?? "";
 $type = $PARAM["type"] ?? "";
