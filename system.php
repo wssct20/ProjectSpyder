@@ -33,8 +33,8 @@ $basestructure = jsondecode("{
 		\"datavar\": {
 		},
 		\"datavalue\": {
-		},
-	},
+		}
+	}
 }");
 
 //connect to mysql database
