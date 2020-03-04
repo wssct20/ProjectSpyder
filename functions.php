@@ -111,6 +111,7 @@ function updatedata($id, $data) {
 
 function collectdeviceproperties($device) {
 	$deviceprops = array();
+	$deviceprops["id"] = $device["id"];
 	$deviceprops["name"] = $device["name"];
 	$deviceprops["type"] = $device["type"];
 	return $deviceprops;
