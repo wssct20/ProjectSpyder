@@ -40,6 +40,7 @@ if ($action == "overwritefield") {
 	$category = $_POST["category"] ?? "";
 	switch ($category) {
 		case "data":
+		case "settings":
 		break;
 		default:
 		die("INVALIDCATEGORY");
@@ -111,6 +112,21 @@ if ($action == "details") {
 								<input type=text name=category value=data style="display: none;">
 								<input type=text name=var value="<?php echo ($data["friendly"]["datavar"][$usermodifiabledatafield] ?? $usermodifiabledatafield); ?>" style="display: none;">
 								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatafield]; ?>">
+								<input type=submit name=submit value="Overwrite">
+							</form>
+						<?
+					}
+				?>
+				<h3>Settings</h3>
+				<?php 
+					foreach ($data["settings"] as $settingsfield) {
+						?>
+							<form method=post>
+								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
+								<input type=text name=action value=overwritesettingsfield style="display: none;">
+								<input type=text name=category value=settings style="display: none;">
+								<input type=text name=var value="<?php echo ($data["friendly"]["settingsvar"][$settingsfield] ?? $settingsfield); ?>" style="display: none;">
+								<input type=text name=value value="<?php echo $data["settings"][$settingsfield]; ?>">
 								<input type=submit name=submit value="Overwrite">
 							</form>
 						<?
