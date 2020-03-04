@@ -121,7 +121,7 @@ if ($action == "details") {
 								<input type=text name=value value="<?php echo $data["settings"][$settingsfield]; ?>">
 								<input type=submit name=submit value="Overwrite">
 							</form>
-						<?
+						<?php
 					}
 				?>
 				<h3>Manage</h3>
