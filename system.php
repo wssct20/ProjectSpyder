@@ -17,8 +17,27 @@ $hashprefix = "WSS";
 //system is optimized for 10 seconds, only increase when needed, never decrease below 10
 $updatetime = 10;
 
+// JSON basic structure to merge data with, to prevent errors due to missing parts
+$basestructure = "{
+	\"settings\": {
+	},
+	\"data\": {
+	},
+	\"usermodifiabledata\": [],
+	\"friendly\": {
+		\"settingsvar\": {
+		},
+		\"datavar\": {
+		},
+		\"datavalue\": {
+		},
+	},
+}";
+
 require_once("functions.php");
 require_once("credentials.php");
+
+$basestructure = jsondecode($basestructure);
 
 //connect to mysql database
 $db = new mysqli($sqlhost, $sqluser, $sqlpass, $sqldbname);
