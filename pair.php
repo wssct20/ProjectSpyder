@@ -3,8 +3,8 @@ $now = time();
 require_once("system.php");
 $PARAM = getparameters();
 
-$type = $PARAM["type"];
-$data = $PARAM["data"];
+$type = $PARAM["type"] ?? "";
+$data = $PARAM["data"] ?? "";
 
 //return array
 $returnstack = array();
