@@ -39,8 +39,6 @@ switch ($requesttype) {
 		break;
 	case "PUT":
 		// requesttype PUT: place new data into table
-		//check for previuos data and only update table and conditions if state changed
-		//if (!checkstate($data, $device["type"])) dieerror("DATAINVALID", "Data is invalid, wrong type or old authcode?");
 		$previousdata = getdata($device["id"]);
 		if ($previousdata != $data) {
 			updatedata($device["id"], $data);
