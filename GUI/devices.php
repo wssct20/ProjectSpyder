@@ -31,18 +31,24 @@ if ($action == "rename") {
 	die();
 }
 
-if ($action == "overwritestate") {
+if ($action == "overwritedatafield") {
 	//TODO: check for user permission
 	$id = $_POST["id"] ?? "";
 	if ($id == "") die("INVALIDID");
-	$state = $_POST["state"] ?? "";
+	$device = getdevicebyid($id);
+	$data = getdata($device);
+	$var = $_POST["var"] ?? "";
+	if ($var == "") die("INVALIDVAR");
+	$value = $_POST["value"] ?? "";
+	$data["data"][$var] = $value;
+	/* check on client side
 	if (!checkstate($state, getdevicebyid($id)["type"])) {
 		header("DEBUG: devices.php overwritestate failed due to invalid state");
 		$_POST["action"] = "";
 		header("Location: devices.php",true,307);
 		die();
-	}
-	updatedata($id, $state);
+	}*/
+	updatedata($id, $data);
 	header("DEBUG: devices.php overwritestate successful");
 	header("Location: devices.php",true,303);
 	die();
@@ -87,6 +93,21 @@ if ($action == "details") {
 				</form>
 				<br>
 				-->
+				<h3>Data</h3>
+				<?php 
+					$data = getdata($device);
+					foreach ($data["usermodifiabledata"] as $usermodifiabledatafield) {
+						?>
+							<form method=post>
+								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
+								<input type=text name=action value=overwritedatafield style="display: none;">
+								<input type=text name=var value="<?php echo ($data["friendly"]["datavar"][$usermodifiabledatafield] ?? $usermodifiabledatafield); ?>" style="display: none;">
+								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatafield]; ?>">
+								<input type=submit name=submit value="Overwrite">
+							</form>
+						<?
+					}
+				?>
 				<h3>Manage</h3>
 				<form method=post>
 					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
