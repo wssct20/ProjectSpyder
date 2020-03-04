@@ -62,9 +62,6 @@ switch ($requesttype) {
 		break;
 }
 
-// run type specific actions
-specificactions($device, $requesttype, $returnstack);
-
 $returnstack["requesttimeout"] = gettimeout($device);
 
 echo formatreturnvalues($returnstack, $debugstring);

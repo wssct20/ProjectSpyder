@@ -199,10 +199,11 @@ if ($action == "details") {
 					echo "<th>" . "" . "</th>"; //line with edit/delete buttons
 					echo "</tr>";
 					foreach ($devices as $device) {
+						$data = getdata($device);
 						echo "<tr>";
 						echo "<td>" . $device["id"] . "</td>";
-						echo "<td>" . (empty($device["name"]) ? ($friendlytypenames[$device["type"]] ?? $device["type"])." ".$device["id"] : $device["name"]) . "</td>";
-						echo "<td>" . ($friendlytypenames[$device["type"]] ?? $device["type"]) . "</td>";
+						echo "<td>" . (empty($device["name"]) ? ($data["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]) . "</td>";
+						echo "<td>" . ($data["friendly"]["type"] ?? $device["type"]) . "</td>";
 						echo "<td>" . $device["ipaddress"] . "</td>";
 						?>
 						<td>
