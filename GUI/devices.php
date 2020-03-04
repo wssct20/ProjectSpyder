@@ -106,7 +106,7 @@ if ($action == "details") {
 								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatafield]; ?>">
 								<input type=submit name=submit value="Overwrite">
 							</form>
-						<?
+						<?php
 					}
 				?>
 				<h3>Settings</h3>
