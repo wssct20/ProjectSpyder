@@ -158,7 +158,8 @@ function updatedevicename($id, $name) {
 	return $result->fetch_array()["data"];
 }*/
 
-function updatedata($id, $data) {
+function sqlupdatedata($id, $data) {
+	//added sql in front because updatedata in functions needs to encode json string first
 	//updatedata: set data of a device in the according type table
 	global $db;
 	// Stage 1: prepare

@@ -1,6 +1,5 @@
 <?php
 require_once("system.php");
-require_once(__DIR__."/../specific.php"); //idk why but this is needed although imported though system.php > system.php > functions.php > specific.php
 global $systemname;
 checksession();
 
@@ -31,19 +30,26 @@ if ($action == "rename") {
 	die();
 }
 
-if ($action == "overwritestate") {
+if ($action == "overwritefield") {
 	//TODO: check for user permission
 	$id = $_POST["id"] ?? "";
 	if ($id == "") die("INVALIDID");
-	$state = $_POST["state"] ?? "";
-	if (!checkstate($state, getdevicebyid($id)["type"])) {
-		header("DEBUG: devices.php overwritestate failed due to invalid state");
-		$_POST["action"] = "";
-		header("Location: devices.php",true,307);
-		die();
+	$device = getdevicebyid($id);
+	$data = getdata($device);
+	$category = $_POST["category"] ?? "";
+	switch ($category) {
+		case "data":
+		case "settings":
+		break;
+		default:
+		die("INVALIDCATEGORY");
 	}
-	updatedata($id, $state);
-	header("DEBUG: devices.php overwritestate successful");
+	$var = $_POST["var"] ?? "";
+	if ($var == "") die("INVALIDVAR");
+	$value = $_POST["value"] ?? "";
+	$data[$category][$var] = $value;
+	updatedata($id, $data);
+	header("DEBUG: devices.php overwritefield successful");
 	header("Location: devices.php",true,303);
 	die();
 }
@@ -53,7 +59,8 @@ if ($action == "details") {
 	if ($id == "") die("INVALIDID");
 	$id = intval($id);
 	$device = getdevicebyid($id);
-	$friendlytype = ($friendlytypenames[$device["type"]] ?? $device["type"]);
+	$data = getdata($device);
+	$friendlytype = ($data["friendly"]["type"] ?? $device["type"]);
 	?>
 	
 	<!DOCTYPE html>
@@ -87,6 +94,36 @@ if ($action == "details") {
 				</form>
 				<br>
 				-->
+				<h3>Data</h3>
+				<?php 
+					foreach ($data["usermodifiabledata"] as $usermodifiabledatafield) {
+						?>
+							<form method=post>
+								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
+								<input type=text name=action value=overwritefield style="display: none;">
+								<input type=text name=category value=data style="display: none;">
+								<input type=text name=var value="<?php echo ($data["friendly"]["datavar"][$usermodifiabledatafield] ?? $usermodifiabledatafield); ?>" style="display: none;">
+								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatafield]; ?>">
+								<input type=submit name=submit value="Overwrite">
+							</form>
+						<?
+					}
+				?>
+				<h3>Settings</h3>
+				<?php 
+					foreach ($data["settings"] as $settingsfield) {
+						?>
+							<form method=post>
+								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
+								<input type=text name=action value=overwritesettingsfield style="display: none;">
+								<input type=text name=category value=settings style="display: none;">
+								<input type=text name=var value="<?php echo ($data["friendly"]["settingsvar"][$settingsfield] ?? $settingsfield); ?>" style="display: none;">
+								<input type=text name=value value="<?php echo $data["settings"][$settingsfield]; ?>">
+								<input type=submit name=submit value="Overwrite">
+							</form>
+						<?
+					}
+				?>
 				<h3>Manage</h3>
 				<form method=post>
 					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
@@ -162,10 +199,11 @@ if ($action == "details") {
 					echo "<th>" . "" . "</th>"; //line with edit/delete buttons
 					echo "</tr>";
 					foreach ($devices as $device) {
+						$data = getdata($device);
 						echo "<tr>";
 						echo "<td>" . $device["id"] . "</td>";
-						echo "<td>" . (empty($device["name"]) ? ($friendlytypenames[$device["type"]] ?? $device["type"])." ".$device["id"] : $device["name"]) . "</td>";
-						echo "<td>" . ($friendlytypenames[$device["type"]] ?? $device["type"]) . "</td>";
+						echo "<td>" . (empty($device["name"]) ? ($data["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]) . "</td>";
+						echo "<td>" . ($data["friendly"]["type"] ?? $device["type"]) . "</td>";
 						echo "<td>" . $device["ipaddress"] . "</td>";
 						?>
 						<td>

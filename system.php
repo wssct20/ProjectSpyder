@@ -16,26 +16,8 @@ $hashprefix = "WSS";
 //updatetime defines how long a client should wait until next update push/request in seconds
 //system is optimized for 10 seconds, only increase when needed, never decrease below 10
 $updatetime = 10;
-//types: defines which client types this system is compatible with
-$types = array(
-	//actuators:
-		//"motor",
-		"digitaloutput",
-		"addressablergbledstrip",
-		"rgbled",
-		"led",
-		//"epaper",
-	//sensors:
-		"button",
-		//"finger",
-		"temperature",
-		"rotation",
-		"rgbdetect",
-	//raw data:
-		"raw",
-);
 
-require_once ("functions.php");
+require_once("functions.php");
 require_once("credentials.php");
 
 //connect to mysql database
