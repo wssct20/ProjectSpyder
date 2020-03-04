@@ -92,9 +92,9 @@ void rgbdetectloop() {
   JsonObject friendly = datadoc.createNestedObject("friendly");
   JsonObject datavalue = friendly.createNestedObject("datavalue");
   String friendlycolortemp = String(colortemp);
-  friendlycolortemp.concat(" K");
+  friendlycolortemp.concat("K");
   String friendlybrightness = String(lux);
-  friendlybrightness.concat(" lx");
+  friendlybrightness.concat("lx");
   datavalue["colortemp"] = friendlycolortemp;
   datavalue["brightness"] = friendlybrightness;
   const String friendlyled[] = {
