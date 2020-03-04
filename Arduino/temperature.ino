@@ -20,26 +20,26 @@ void temperaturesetup() {
   //initialize temperature sensor
   dht.setup(datapin, DHTesp::DHT22);
 
-  jsonstructure = "{                                                          \
-                    \"data\":{                                                \
-                      \"data\":{                                              \
-                        \"temperature\":0,                                    \
-                        \"humidity\":0                                        \
-                      },                                                      \
-                      \"friendly\":{                                          \
-                        \"datavar\":{                                         \
-                          \"temperature\":\"Temperature\",                    \
-                          \"humidity\":\"Humidity\"                           \
-                        },                                                    \
-                        \"datavalues\":{                                      \
-                          \"temperature\":\"0°C\",                            \
-                          \"humidity\":\"0%\"                                 \
-                        },                                                    \
-                        \"temperature\":\"Temperature and Humidity Sensor\"   \
-                      },                                                      \
-                      \"preferredupdatetime\":20                              \
-                    }                                                         \
-                  }";
+  jsonstructure = "{\
+\"data\":{\
+\"data\":{\
+\"temperature\":0,\
+\"humidity\":0\
+},\
+\"friendly\":{\
+\"datavar\":{\
+\"temperature\":\"Temperature\",\
+\"humidity\":\"Humidity\"\
+},\
+\"datavalues\":{\
+\"temperature\":\"0°C\",\
+\"humidity\":\"0%\"\
+},\
+\"temperature\":\"Temperature and Humidity Sensor\"\
+},\
+\"preferredupdatetime\":20\
+}\
+}";
   
 }
 

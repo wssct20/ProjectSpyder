@@ -6,23 +6,23 @@ void buttonsetup() {
   
   pinMode(buttonPin, INPUT_PULLUP);
 
-  jsonstructure = "{                                    \
-                    \"data\":{                          \
-                      \"data\":{                        \
-                        \"state\":0                     \
-                      },                                \
-                      \"friendly\":{                    \
-                        \"datavar\":{                   \
-                          \"state\":\"button state\"    \
-                        },                              \
-                        \"datavalue\":{                 \
-                          \"state\":\"Released\"        \
-                        },                              \
-                        \"button\":\"Button\"           \
-                      },                                \
-                      \"preferredupdatetime\":120       \
-                    }                                   \
-                  }";
+  jsonstructure = "{\
+\"data\":{\
+\"data\":{\
+\"state\":0\
+},\
+\"friendly\":{\
+\"datavar\":{\
+\"state\":\"button state\"\
+},\
+\"datavalue\":{\
+\"state\":\"Released\"\
+},\
+\"button\":\"Button\"\
+},\
+\"preferredupdatetime\":120\
+}\
+}";
 
 }
 

@@ -33,38 +33,38 @@ void rgbdetectsetup() {
   pinMode(detectledpin, OUTPUT);
   digitalWrite(detectledpin, LOW);
 
-  jsonstructure = "{                                              \
-                    \"data\":{                                    \
-                      \"data\":{                                  \
-                        \"red\":0,                                \
-                        \"green\":0,                              \
-                        \"blue\":0,                               \
-                        \"clear\":0,                              \
-                        \"colortemp\":0,                          \
-                        \"brightness\":0,                         \
-                        \"led\":0                                 \
-                      },                                          \
-                      \"usermodifiabledata\":[\"led\"],           \
-                      \"friendly\":{                              \
-                        \"datavar\":{                             \
-                          \"red\":\"Red\",                        \
-                          \"green\":\"Green\",                    \
-                          \"blue\":\"Blue\",                      \
-                          \"clear\":\"White\",                    \
-                          \"colortemp\":\"Color Temperature\",    \
-                          \"brightness\":\"Brightness\",          \
-                          \"led\":\"Lighting\"                    \
-                        },                                        \
-                        \"datavalue\":{                           \
-                          \"colortemp\":\"0 K\",                  \
-                          \"brightness\":\"0 lx\",                \
-                          \"led\":\"off\"                         \
-                        },                                        \
-                        \"rgbdetect\":\"Color Sensor\"            \
-                      },                                          \
-                      \"preferredupdatetime\":20                  \
-                    }                                             \
-                  }";
+  jsonstructure = "{\
+\"data\":{\
+\"data\":{\
+\"red\":0,\
+\"green\":0,\
+\"blue\":0,\
+\"clear\":0,\
+\"colortemp\":0,\
+\"brightness\":0,\
+\"led\":0\
+},\
+\"usermodifiabledata\":[\"led\"],\
+\"friendly\":{\
+\"datavar\":{\
+\"red\":\"Red\",\
+\"green\":\"Green\",\
+\"blue\":\"Blue\",\
+\"clear\":\"White\",\
+\"colortemp\":\"Color Temperature\",\
+\"brightness\":\"Brightness\",\
+\"led\":\"Lighting\"\
+},\
+\"datavalue\":{\
+\"colortemp\":\"0 K\",\
+\"brightness\":\"0 lx\",\
+\"led\":\"off\"\
+},\
+\"rgbdetect\":\"Color Sensor\"\
+},\
+\"preferredupdatetime\":20\
+}\
+}";
   
 }
 

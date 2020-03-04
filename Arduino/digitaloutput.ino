@@ -5,24 +5,24 @@ void digitaloutputsetup() {
 
   digitalWrite(output_pin, LOW);
   
-  jsonstructure = "{                                            \
-                    \"data\":{                                  \
-                      \"data\":{                                \
-                        \"state\":0                             \
-                      },                                        \
-                      \"usermodifiabledata\":[\"state\"],       \
-                      \"friendly\":{                            \
-                        \"datavar\":{                           \
-                          \"state\":\"Output State\"            \
-                        },                                      \
-                        \"datavalues\":{                        \
-                          \"state\":\"off\"                     \
-                        },                                      \
-                        \"digitaloutput\":\"Digital Output\"    \
-                      },                                        \
-                      \"preferredupdatetime\":10                \
-                    }                                           \
-                  }";
+  jsonstructure = "{\
+\"data\":{\
+\"data\":{\
+\"state\":0\
+},\
+\"usermodifiabledata\":[\"state\"],\
+\"friendly\":{\
+\"datavar\":{\
+\"state\":\"Output State\"\
+},\
+\"datavalues\":{\
+\"state\":\"off\"\
+},\
+\"digitaloutput\":\"Digital Output\"\
+},\
+\"preferredupdatetime\":10\
+}\
+}";
   
 }
 

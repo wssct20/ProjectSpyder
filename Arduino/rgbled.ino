@@ -17,25 +17,25 @@ void rgbledsetup() {
     ledcAttachPin(pins[i], rgbled_pwmchannel[i]);
   }
 
-  jsonstructure = "{                                                          \
-                    \"data\":{                                                \
-                      \"data\":{                                              \
-                        \"red\":0,                                            \
-                        \"green\":0,                                          \
-                        \"blue\":0                                            \
-                      },                                                      \
-                      \"usermodifiabledata\":[\"red\",\"green\",\"blue\"],    \
-                      \"friendly\":{                                          \
-                        \"datavar\":{                                         \
-                          \"red\":\"Red\",                                    \
-                          \"green\":\"Green\",                                \
-                          \"blue\":\"Blue\"                                   \
-                        },                                                    \
-                        \"rgbled\":\"RGB-LED\"                                \
-                      },                                                      \
-                      \"preferredupdatetime\":2                               \
-                    }                                                         \
-                  }";
+  jsonstructure = "{\
+\"data\":{\
+\"data\":{\
+\"red\":0,\
+\"green\":0,\
+\"blue\":0\
+},\
+\"usermodifiabledata\":[\"red\",\"green\",\"blue\"],\
+\"friendly\":{\
+\"datavar\":{\
+\"red\":\"Red\",\
+\"green\":\"Green\",\
+\"blue\":\"Blue\"\
+},\
+\"rgbled\":\"RGB-LED\"\
+},\
+\"preferredupdatetime\":2\
+}\
+}";
   
 }
 
