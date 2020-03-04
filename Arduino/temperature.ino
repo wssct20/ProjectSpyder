@@ -19,10 +19,14 @@ void temperaturesetup() {
 
   //initialize temperature sensor
   dht.setup(datapin, DHTesp::DHT22);
+
+  jsonstructure = "{\"data\":{\"data\":{\"temperature\":0,\"humidity\":0},\"friendly\":{\"datavar\":{\"temperature\":\"Temperature\",\"humidity\":\"Humidity\"},\"datavalues\":{\"temperature\":\"0°C\",\"humidity\":\"0%\"},\"temperature\":\"Temperature and Humidity Sensor\"},\"preferredupdatetime\":20}}";
   
 }
 
 void temperatureloop() {
+
+  String temperaturedata;
 
   TempAndHumidity lastValues = dht.getTempAndHumidity();
 
@@ -31,16 +35,29 @@ void temperatureloop() {
     Serial.println("Humidity: " + String(lastValues.humidity, 1));
   #endif
 
-  String state = String(lastValues.temperature);
-  state.concat(":");
-  state.concat(lastValues.humidity);
+  DynamicJsonDocument datadoc(JSONCAPACITY);
+  
+  JsonObject data = datadoc.createNestedObject("data");
+  data["temperature"] = lastValues.temperature;
+  data["humidity"] = lastValues.humidity;
+
+  JsonObject friendly = datadoc.createNestedObject("friendly");
+  JsonObject datavalue = friendly.createNestedObject("datavalue");
+  String friendlytemperature = String(lastValues.temperature);
+  friendlytemperature.concat("°C");
+  datavalue["temperature"] = friendlytemperature;
+  String friendlyhumidity = String(lastValues.humidity);
+  friendlyhumidity.concat("%");
+  datavalue["humidity"] = friendlyhumidity;
+  
+  serializeJson(datadoc, temperaturedata);
 
   #ifdef debugmode
-    Serial.println("state: " + String(state));
+    Serial.println("JSON: " + String(temperaturedata));
   #endif
   
   //send the values to the server
-  putstate(state);
+  updatedata(temperaturedata);
   
   lightsleep(requesttimeout);
   
