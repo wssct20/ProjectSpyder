@@ -104,15 +104,21 @@ function gettimeout($device) {
 }
 
 function jsondecode($json) {
+	//decodes a JSON string to an associative array
 	return json_decode($json, true);
 }
 
 function jsonencode($data) {
+	//encodes an associative array to a JSON string
 	return json_encode($data);
 }
 
 function getdata($device) {
 	return jsondecode($device["data"]);
+}
+
+function updatedata($id, $data) {
+	sqlupdatedata($id, jsonencode($data));
 }
 
 function collectdeviceproperties($device) {
