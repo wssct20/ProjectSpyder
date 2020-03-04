@@ -11,7 +11,33 @@ void addressablergbledstripsetup() {
   ledstrip.Begin();             //starts the connection to the led strip
   ledstrip.SetBrightness(50);   //sets the maximum brightness
 
-  jsonstructure = "{\"data\":{\"settings\":{\"mode\":0,\"brightness\":50},\"data\":{\"red\":0,\"green\":0,\"blue\":0},\"usermodifiabledata\":[\"red\",\"green\",\"blue\"],\"friendly\":{\"settingsvar\":{\"mode\":\"Mode\",\"brightness\":\"Brightness\"},\"datavar\":{\"red\":\"Red\",\"green\":\"Green\",\"blue\":\"Blue\"},\"addressablergbledstrip\":\"Addressable RGB-LED Strip\"},\"preferredupdatetime\":5}}";
+  jsonstructure = "{                                                                \
+                    \"data\":{                                                      \
+                      \"settings\":{                                                \
+                        \"mode\":0,                                                 \
+                        \"brightness\":50                                           \
+                      },                                                            \
+                      \"data\":{                                                    \
+                        \"red\":0,                                                  \
+                        \"green\":0,                                                \
+                        \"blue\":0                                                  \
+                      },                                                            \
+                      \"usermodifiabledata\":[\"red\",\"green\",\"blue\"],          \
+                      \"friendly\":{                                                \
+                        \"settingsvar\":{                                           \
+                          \"mode\":\"Mode\",                                        \
+                          \"brightness\":\"Brightness\"                             \
+                        },                                                          \
+                        \"datavar\":{                                               \
+                          \"red\":\"Red\",                                          \
+                          \"green\":\"Green\",                                      \
+                          \"blue\":\"Blue\"                                         \
+                        },                                                          \
+                        \"addressablergbledstrip\":\"Addressable RGB-LED Strip\"    \
+                      },                                                            \
+                      \"preferredupdatetime\":5                                     \
+                    }                                                               \
+                  }";
   
 }
 
