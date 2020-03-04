@@ -1,6 +1,5 @@
 <?php
 require_once("system.php");
-require_once(__DIR__."/../specific.php"); //idk why but this is needed although imported though system.php > system.php > functions.php > specific.php
 global $systemname;
 checksession();
 
@@ -49,15 +48,8 @@ if ($action == "overwritefield") {
 	if ($var == "") die("INVALIDVAR");
 	$value = $_POST["value"] ?? "";
 	$data[$category][$var] = $value;
-	/* check on client side
-	if (!checkstate($state, getdevicebyid($id)["type"])) {
-		header("DEBUG: devices.php overwritestate failed due to invalid state");
-		$_POST["action"] = "";
-		header("Location: devices.php",true,307);
-		die();
-	}*/
 	updatedata($id, $data);
-	header("DEBUG: devices.php overwritestate successful");
+	header("DEBUG: devices.php overwritefield successful");
 	header("Location: devices.php",true,303);
 	die();
 }
