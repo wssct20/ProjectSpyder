@@ -13,36 +13,32 @@ void ledsetup() {
   ledcSetup(led_pwmchannel, led_frequency, led_resolution);
   ledcAttachPin(led_pin, led_pwmchannel);
 
-  putstate("150");    //only a test state.
+  jsonstructure = "{\"data\":{\"data\":{\"brightness\":0},\"usermodifiabledata\":[\"brightness\"],\"friendly\":{\"datavar\":{\"brightness\":\"Brightness\"},\"led\":\"LED\"},\"preferredupdatetime\":2}}";
   
 }
 
 void ledloop() {
 
   #ifdef debugmode
-    Serial.println("led() look for state");
+    Serial.println("led() look for data");
   #endif
 
-  //get state from system
-  String rawstate = getstate();
-  #ifdef debugmode
-    Serial.println("rawstate: " + String(rawstate));
-  #endif
-  
-  //extract state
-  int state = rawstate.toInt();
-  
-  //check state
-  if ((state < 0) | (state > 255)) state = 0;
+  //get data from system
+  DynamicJsonDocument data(JSONCAPACITY);
+  deserializeJson(data, getdata());
+
+  int brightness = data["data"]["brightness"].as<int>();
+
+  //check data
+  if ((brightness < 0) || (brightness > 255)) brightness = 0;
 
   #ifdef debugmode
-    Serial.println("state: " + String(state));
+    Serial.println("brightness: " + String(brightness));
   #endif
   
   //set pin
-  ledcWrite(led_pwmchannel, state);
+  ledcWrite(led_pwmchannel, brightness);
 
-    
   //go to lightsleep
   lightsleep(requesttimeout);
   

@@ -32,27 +32,46 @@ void rgbdetectsetup() {
   //initialise the sensor led
   pinMode(detectledpin, OUTPUT);
   digitalWrite(detectledpin, LOW);
+
+  jsonstructure = "{\"data\":{\"data\":{\"red\":0,\"green\":0,\"blue\":0,\"clear\":0,\"colortemp\":0,\"brightness\":0,\"led\":0},\"usermodifiabledata\":[\"led\"],\"friendly\":{\"datavar\":{\"red\":\"Red\",\"green\":\"Green\",\"blue\":\"Blue\",\"clear\":\"White\",\"colortemp\":\"Color Temperature\",\"brightness\":\"Brightness\",\"led\":\"Lighting\"},\"datavalue\":{\"colortemp\":\"0 K\",\"brightness\":\"0 lx\",\"led\":\"off\"},\"rgbdetect\":\"Color Sensor\"},\"preferredupdatetime\":20}}";
   
 }
 
 void rgbdetectloop() {
 
-  uint16_t r, g, b, c, colorTemp, lux;
+  String rgbdetectdata;
+  
+  DynamicJsonDocument receiveddata(JSONCAPACITY);
+  deserializeJson(receiveddata, getdata());
 
-  //turn on the sensor led
-  digitalWrite(detectledpin, HIGH);
-  delay(250);
+  uint8_t ledstate = receiveddata["data"]["led"].as<int>();
+  if ((ledstate < 0) || (ledstate > 2)) ledstate = 0;
+  if (ledstate == 0) {
+    //turn off the sensor led
+    digitalWrite(detectledpin, LOW);
+    delay(250);
+  }
+  else {
+    //turn on the sensor led
+    digitalWrite(detectledpin, HIGH);
+    delay(250);
+  }
+  
+  uint16_t r, g, b, c, colortemp, lux;
+  DynamicJsonDocument datadoc(JSONCAPACITY);
 
   //measure the rgb values and calculate the themperature and brightness
   rgbdetect.getRawData(&r, &g, &b, &c);
-  colorTemp = rgbdetect.calculateColorTemperature_dn40(r, g, b, c);
+  colortemp = rgbdetect.calculateColorTemperature_dn40(r, g, b, c);
   lux = rgbdetect.calculateLux(r, g, b);
 
-  //turn off the sensor led
-  digitalWrite(detectledpin, LOW);
+  if (ledstate != 1) {
+    //turn off the sensor led
+    digitalWrite(detectledpin, LOW);
+  }
 
   #ifdef debugmode
-    Serial.print("Color Temp: "); Serial.print(colorTemp, DEC); Serial.print(" K - ");
+    Serial.print("Color Temp: "); Serial.print(colortemp, DEC); Serial.print(" K - ");
     Serial.print("Lux: "); Serial.print(lux, DEC); Serial.print(" - ");
     Serial.print("R: "); Serial.print(r, DEC); Serial.print(" ");
     Serial.print("G: "); Serial.print(g, DEC); Serial.print(" ");
@@ -61,24 +80,38 @@ void rgbdetectloop() {
     Serial.println(" ");
   #endif
 
-  String state = String(r);
-  state.concat(":");
-  state.concat(g);
-  state.concat(":");
-  state.concat(b);
-  state.concat(":");
-  state.concat(c);
-  state.concat(":");
-  state.concat(colorTemp);
-  state.concat(":");
-  state.concat(lux);
+  JsonObject data = datadoc.createNestedObject("data");
+  data["red"] = r;
+  data["green"] = g;
+  data["blue"] = b;
+  data["clear"] = c;
+  data["colortemp"] = colortemp;
+  data["brightness"] = lux;
+  data["led"] = ledstate;
+
+  JsonObject friendly = datadoc.createNestedObject("friendly");
+  JsonObject datavalue = friendly.createNestedObject("datavalue");
+  String friendlycolortemp = String(colortemp);
+  friendlycolortemp.concat(" K");
+  String friendlybrightness = String(lux);
+  friendlybrightness.concat(" lx");
+  datavalue["colortemp"] = friendlycolortemp;
+  datavalue["brightness"] = friendlybrightness;
+  const String friendlyled[] = {
+    "off",
+    "on",
+    "auto",
+  };
+  datavalue["led"] = friendlyled[ledstate];
+
+  serializeJson(datadoc, rgbdetectdata);
 
   #ifdef debugmode
-    Serial.println("state: " + String(state));
+    Serial.println("JSON: " + String(rgbdetectdata));
   #endif
   
   //send the values to the server
-  putstate(state);
+  updatedata(rgbdetectdata);
 
   lightsleep(requesttimeout);
   

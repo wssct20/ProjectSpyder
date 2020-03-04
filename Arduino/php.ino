@@ -1,17 +1,24 @@
 #include "WiFi.h"
 
-//TODO: delete if interact is changed
-#define authcodeindex "authcode"
-#define stateindex "state"
-#define requesttimeoutindex "requesttimeout"
-#define errorindex "error"
-
 #define authcodeaddress 0
 #define authcodelength 128
 
 #define defaulterrordelay 60      //in seconds
 #define fatalerrordelay 60*30     //in seconds
 #define defaultdelay 60           //in seconds
+
+
+enum REQEUSTTYPES {
+  REQUESTTYPE_GET,
+  REQUESTTYPE_PUT,
+  REQUESTTYPE_UPDATE,
+};
+const String requesttypes[] = {
+  "GET",
+  "PUT",
+  "UPDATE",
+};
+
 
 
 void pair() {
@@ -26,8 +33,8 @@ void pair() {
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
-    #ifdef debugmode
       Serial.println("php connection failed");
+    #ifdef debugmode
       Serial.println("_________________________________");
     #endif
     return;
@@ -65,10 +72,7 @@ void pair() {
   #endif
 
   if (answer.indexOf("#START") == -1) {
-    #ifdef debugmode
-      Serial.println("#START not found");
-    #endif
-
+    Serial.println("#START not found");
     hibernate(fatalerrordelay);
   }
   else {
@@ -79,10 +83,10 @@ void pair() {
 
 ////////////////////////////////////////
 //#DEBUG
-  String debugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
+  String answerdebugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
   #ifdef debugmode
     Serial.println("DEBUG:");
-    Serial.println(debugsubstring);
+    Serial.println(answerdebugsubstring);
   #endif
 
 ////////////////////////////////////////
@@ -100,15 +104,13 @@ void pair() {
   #endif
 
 
-  DynamicJsonDocument pairdata(2500);
+  DynamicJsonDocument pairdata(JSONCAPACITY);
   deserializeJson(pairdata, answerdatasubstring);
   
 //////////////error//////////////
   String answererror = pairdata["error"];
   if (answererror != NULL) {
-    #ifdef debugmode
-      Serial.println("ERROR: " + String(answererror));
-    #endif
+    Serial.println("ERROR: " + String(answererror));
   }
   else {
     #ifdef debugmode
@@ -122,35 +124,34 @@ void pair() {
     writeEEPROM(authcodeaddress, authcodelength, answerauthcode);
   }
   else {
-    #ifdef debugmode
-      Serial.println("ERROR: authcode not found");
-    #endif
+    Serial.println("ERROR: authcode not found");
     hibernate(fatalerrordelay);
   }
 
 //////////////requesttimeout//////////////
   int answerrequesttimeout = pairdata["requesttimeout"].as<int>();
-  //TODO: error if no requesttimeout & print requesttimeout
   if (answerrequesttimeout != NULL) {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
+    #ifdef debugmode
+      Serial.println("new requesttimeout: " + String(requesttimeout));
+    #endif
   }
   else {
-    #ifdef debugmode
-      Serial.println("ERROR: requesttimeout not found");
-    #endif
+    Serial.println("ERROR: requesttimeout not found");
     requesttimeout = defaultdelay;
   }
 
+////////////////////////////////////////
+
   #ifdef debugmode
     Serial.println("---");
-  
+
+    //print all data
     Serial.println("error:" + String("\t") + String(answererror));
     Serial.println("authcode:" + String("\t") + String(answerauthcode));
     Serial.println("requesttimeout:" + String("\t") + String(answerrequesttimeout));
-  #endif
-
-  #ifdef debugmode
+    
     Serial.println("---");
   #endif
 
@@ -159,20 +160,38 @@ void pair() {
     Serial.println("closing pair() connection");
     Serial.println("_________________________________");
   #endif
+
+////////////////////////////////////////
+//send jsonstructure
+  putdata(jsonstructure);
+}
+
+
+/**///////////////////////////////////
+/**/String getstate() {           /**/
+/**/  return getdata();           /**/
+/**/}                             /**/
+/**/                              /**///only to be able to compile
+/**/void putstate(String data) {  /**/
+/**/  putdata(data);              /**/
+/**/}                             /**/
+/**////////////////////////////////**/
+
+String getdata() {
+  return interact(REQUESTTYPE_GET, "");
+}
+
+void putdata(String data) {
+  interact(REQUESTTYPE_PUT, data);
+}
+
+void updatedata(String data) {
+  interact(REQUESTTYPE_UPDATE, data);
 }
 
 
 
-String getstate() {
-  return interact(0, ""); //returns "" on failure
-}
-
-void putstate(String state) {
-  interact(1, state);
-}
-
-
-String interact(int requesttype, String state) {
+String interact(int requesttype, String data) {
 
   String answer;
   
@@ -184,8 +203,8 @@ String interact(int requesttype, String state) {
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
+    Serial.println("php connection failed");
     #ifdef debugmode
-      Serial.println("php connection failed");
       Serial.println("_________________________________");
     #endif
     return "";
@@ -195,14 +214,10 @@ String interact(int requesttype, String state) {
   url += "?authcode=";
   String authtoken = readEEPROM(authcodeaddress, authcodelength);
   url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM why we get 3 unknown chars at the end of the read string
-  if (requesttype == 1) {
-    url += "&state=";
-    url += state;
+  if (!data.equals("")) {
+    url += "&data=";
+    url += data;
   }
-  String requesttypes[] = {
-    "GET",
-    "PUT",
-  };
   url += "&requesttype=";
   url += requesttypes[requesttype];
   url += "&type=";
@@ -236,10 +251,7 @@ String interact(int requesttype, String state) {
   #endif
 
   if (answer.indexOf("#START") == -1) {
-    #ifdef debugmode
-      Serial.println("#START not found");
-    #endif
-
+    Serial.println("#START not found");
     hibernate(defaulterrordelay);
   }
   else {
@@ -249,8 +261,17 @@ String interact(int requesttype, String state) {
   }
 
 ////////////////////////////////////////
-//processing answer
+//#DEBUG
+  String answerdebugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
   #ifdef debugmode
+    Serial.println("DEBUG:");
+    Serial.println(answerdebugsubstring);
+  #endif
+
+////////////////////////////////////////
+//#DATA
+  #ifdef debugmode
+    Serial.println("DATA:");
     Serial.println("split:");
   #endif
   
@@ -261,140 +282,87 @@ String interact(int requesttype, String state) {
     Serial.println("---");
   #endif
 
-  int lastindex = 0;
-  int count = 0;
-  while(true) {
-    int currentindex = answerdatasubstring.indexOf("=>", lastindex);
-    if (currentindex == -1) break;
-    lastindex = currentindex + 1;
-    count++;
-  }
-  #ifdef debugmode
-    Serial.println("Count: " + String(count));
-  #endif
-  String answerdata[count][2];
 
-  lastindex = 0;
-  count = 0;
-  while(true) {
-    int currentindex = answerdatasubstring.indexOf("[", lastindex);
-    if (currentindex == -1) break;
-    answerdata[count][0] = answerdatasubstring.substring(
-      currentindex + 1,
-      answerdatasubstring.indexOf("]", currentindex)
-    );
-    answerdata[count][1] = answerdatasubstring.substring(
-      answerdatasubstring.indexOf("=>", currentindex) + 2, 
-      answerdatasubstring.indexOf("\n", currentindex)
-    );
-    lastindex = currentindex + 1;
-    count++;
-  }
-  #ifdef debugmode
-    Serial.println("Sizeof: " + String(sizeof(answerdata)));
-    Serial.println("---");
-  #endif
-
-////////////////////////////////////////
-// search for error
-  for (int i = 0; i < count; i++) {
-    if (answerdata[i][0] == errorindex) {
-      #ifdef debugmode
-        Serial.println("ERROR: " + String(answerdata[i][1]));
-      #endif
-
-      String errorsstring = "default             AUTHFAILED          REQUESTTYPEINVALID  TYPEMISMATCH        ";    // error every 20 chars
-      int e = errorsstring.indexOf(answerdata[i][1]);
-      if (e == -1) {
-        //unrecognized error
-        e = 0;
-      }
-      switch (e / 20) {
+  DynamicJsonDocument interactdata(JSONCAPACITY);
+  deserializeJson(interactdata, answerdatasubstring);
+  
+//////////////error//////////////
+  String answererror = interactdata["error"];
+  if (answererror != NULL) {
+    String errors = "default             AUTHFAILED          TYPEMISMATCH        JSONINVALID         REQUESTTYPEINVALID  ";  //error every 20 chars
+    int e = errors.indexOf(answererror);
+    if (e == -1) e = 0; //unrecognized error
+    switch (e / 20) {
         case 1:
           #ifdef debugmode
-            Serial.println("Authentication failed, requesting new authcode.");
+            Serial.println("ERROR: Authentication failed, requesting new authcode.");
           #endif
           pair();
-          lightsleep(requesttimeout);
-          return interact(requesttype, state);
-        case 3:
-          #ifdef debugmode
-            Serial.println("Type mismatch, requesting new authcode.");
-          #endif
-          pair();
-          lightsleep(requesttimeout);
-          return interact(requesttype, state);
+          return interact(requesttype, data);
         case 2:
           #ifdef debugmode
-            Serial.println("FATALERROR: requesttype invalid");
+            Serial.println("ERROR: Type mismatch, requesting new authcode.");
           #endif
+          pair();
+          return interact(requesttype, data);
+        case 3:
+          Serial.println("ERROR: JSON isn´t deserializable, check the JSON formatting.");
+          #ifdef debugmode
+            Serial.println("Your JSON:");
+            Serial.println(answerdatasubstring);
+          #endif
+          hibernate(fatalerrordelay);
+          break;
+        case 4:
+          Serial.println("ERROR: Requesttype invalid");
+          hibernate(fatalerrordelay);
+          break;
         case 0:
         default:
           hibernate(fatalerrordelay);
-      }
-    }
-    else {
-      #ifdef debugmode
-        Serial.println("No ERROR");
-      #endif
     }
   }
-
-////////////////////////////////////////
-// search for state
-  String returnstate = "";
-  if (requesttype == 0) {
-    bool statefound = false;
-    for (int i = 0; i < count; i++) {
-      if (answerdata[i][0] == stateindex) {
-        returnstate = answerdata[i][1];
-        statefound = true;
-        break;
-      }
-    }
-    if (!statefound) {
-      #ifdef debugmode
-        Serial.println("ERROR: state not found");
-      #endif
-      hibernate(fatalerrordelay);
-    }
-  }
-
-////////////////////////////////////////
-// search for requesttimeout
-  bool requesttimeoutfound = false;
-  for (int i = 0; i < count; i++) {
-    if (answerdata[i][0] == requesttimeoutindex) {
-      requesttimeout = answerdata[i][1].toInt();
-      if (requesttimeout == 0) requesttimeout = defaultdelay;
-      requesttimeoutfound = true;
-      break;
-    }
-  }
-  if (!requesttimeoutfound) {
+  else {
     #ifdef debugmode
-      Serial.println("ERROR: requesttimeout not found");
+      Serial.println("No ERROR");
     #endif
+  }
+
+//////////////data//////////////
+  String returndata = interactdata["data"];
+
+//////////////requesttimeout//////////////
+  int answerrequesttimeout = interactdata["requesttimeout"].as<int>();
+  if (answerrequesttimeout != NULL) {
+    requesttimeout = answerrequesttimeout;
+    if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
+    #ifdef debugmode
+      Serial.println("new requesttimeout: " + String(requesttimeout));
+    #endif
+  }
+  else {
+    Serial.println("ERROR: requesttimeout not found");
     requesttimeout = defaultdelay;
   }
 
-  
-  for (int i = 0; i < count; i++) {
-    #ifdef debugmode
-      Serial.println(answerdata[i][0] + String("\t") + String(answerdata[i][1]));
-    #endif
-  }
+////////////////////////////////////////
 
   #ifdef debugmode
     Serial.println("---");
+
+    //TODO: perhaps print all data
+  
+    Serial.println("---");  
   #endif
 ////////////////////////////////////////
   #ifdef debugmode
     Serial.println("closing interact() connection");
     Serial.println("_________________________________");
   #endif
-  return returnstate;
+  return returndata;  //returns the data for client
 }
+
+
 
 void resetauthcode() {
   String empty = "";

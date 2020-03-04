@@ -1,40 +1,36 @@
 
-#define output_pin 5
+#define output_pin 5    //Enter the pin of your output here
 
 void digitaloutputsetup() {
 
   digitalWrite(output_pin, LOW);
   
-  putstate("1");    //only a test state
+  jsonstructure = "{\"data\":{\"data\":{\"state\":0},\"usermodifiabledata\":[\"state\"],\"friendly\":{\"datavar\":{\"state\":\"Output State\"},\"datavalues\":{\"state\":\"off\"},\"digitaloutput\":\"Digital Output\"},\"preferredupdatetime\":10}}";
   
 }
 
 void digitaloutputloop() {
 
   #ifdef debugmode
-    Serial.println("digitaloutput() look for state");
+    Serial.println("digitaloutput() look for data");
   #endif
 
-  //get state from system
-  String rawstate = getstate();
-  #ifdef debugmode
-    Serial.println("rawstate: " + String(rawstate));
-  #endif
-  
-  //extract state
-  int state = rawstate.toInt();
-  
-  //check state
-  if (state != 1) state = 0;
+  //get data from system
+  DynamicJsonDocument data(JSONCAPACITY);
+  deserializeJson(data, getdata());
+
+  int outputstate = data["data"]["state"].as<int>();
+
+  //check data
+  if (outputstate != 1) outputstate = 0;
 
   #ifdef debugmode
-    Serial.println("state: " + String(state));
+    Serial.println("outputstate: " + String(outputstate));
   #endif
-  
-  //set pin
-  digitalWrite(output_pin, state);
 
-    
+  //set output
+  digitalWrite(output_pin, outputstate);
+
   //go to lightsleep
   lightsleep(requesttimeout);
   
