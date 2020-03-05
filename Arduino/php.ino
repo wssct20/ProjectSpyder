@@ -335,6 +335,7 @@ String interact(int requesttype, String data) {
           break;
         case 0:
         default:
+          Serial.println("ERROR: unknown error");
           hibernate(fatalerrordelay);
     }
   }
