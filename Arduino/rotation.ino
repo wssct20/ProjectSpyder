@@ -27,10 +27,60 @@ void rotationsetup() {
   }
 
   rotation.setExtCrystalUse(true);
+
+  jsonstructure = "{\
+\"data\":{\
+\"settings\":{\
+\"calibration\":0\
+},\
+\"data\":{\
+\"temperature\":0,\
+\"x-rotation\":0,\
+\"y-rotation\":0,\
+\"z-rotation\":0,\
+\"magnetvalue\":0\
+},\
+\"friendly\":{\
+\"settingsvar\":{\
+\"calibration\":\"Calibration\"\
+},\
+\"datavar\":{\
+\"temperature\":\"Temperature\",\
+\"x-rotation\":\"x-Rotation\",\
+\"y-rotation\":\"y-Rotation\",\
+\"z-rotation\":\"z-Rotation\",\
+\"magnetvalue\":\"Magnetvalue\"\
+},\
+\"datavalue\":{\
+\"temperature\":\"0°C\",\
+\"x-rotation\":\"0°\",\
+\"y-rotation\":\"0°\",\
+\"z-rotation\":\"0°\",\
+\"magnetvalue\":\"0?\"\
+},\
+\"rotation\":\"Rotation Sensor\"},\
+\"preferredupdatetime\":5\
+}\
+}";
+
+  //TODO: find magnetvalue unit
   
 }
 
 void rotationloop() {
+
+  String rotationdata;
+
+  DynamicJsonDocument receiveddata(JSONCAPACITY);
+  deserializeJson(receiveddata, getdata());
+
+  bool calibration = receiveddata["settings"]["calibration"];
+
+  if (calibration != true) calibration = false;
+
+  if (calibration == true) {
+    //TODO: add calibration
+  }
 
   int8_t temp;                        //temperature
   uint16_t x, y, z, m, mx, my, mz;    //gyroskop and magnetometer values
@@ -39,9 +89,13 @@ void rotationloop() {
   imu::Vector<3> euler = rotation.getVector(Adafruit_BNO055::VECTOR_EULER);
   imu::Vector<3> magnetic = rotation.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
 
+  DynamicJsonDocument datadoc(JSONCAPACITY);
+  JsonObject data = datadoc.createNestedObject("data");
+
 //////////temperature//////////
 
   temp = rotation.getTemp();
+  data["temperature"] = temp;
   #ifdef debugmode
     Serial.println("Current temperature: " + String(temp));
   #endif
@@ -49,16 +103,19 @@ void rotationloop() {
 //////////gyroskop//////////
 
   x = (int) (euler.x() + 0.5);
+  data["x-rotation"] = x;
   #ifdef debugmode
     Serial.println("x: " + String(x));
   #endif
 
   y = (int) (euler.y() + 0.5);
+  data["y-rotation"] = y;
   #ifdef debugmode
     Serial.println("y: " + String(y));
   #endif
 
   z = (int) (euler.z() + 0.5);
+  data["z-rotation"] = z;
   #ifdef debugmode
     Serial.println("z: " + String(z));
   #endif
@@ -81,6 +138,7 @@ void rotationloop() {
   #endif
 
   m = max(mx, max(my, mz));
+  data["magnetvalue"] = m;
   #ifdef debugmode
     Serial.println("m: " + String(m));
   #endif
@@ -93,21 +151,30 @@ void rotationloop() {
     Serial.println("magnet calibration: " + String(mc));
   #endif
 
-  String state = String(temp);
-  state.concat(":");
-  state.concat(x);
-  state.concat(":");
-  state.concat(y);
-  state.concat(":");
-  state.concat(z);
-  state.concat(":");
-  state.concat(m);
+  JsonObject friendly = datadoc.createNestedObject("friedly");
+  JsonObject datavalue = friendly.createNestedObject("datavalue");
+  String friendlytemp = String(temp);
+  friendlytemp.concat("°C");
+  datavalue["temperature"] = friendlytemp;
+  String friendlyx = String(x);
+  friendlyx.concat("°");
+  datavalue["x-rotation"] = friendlyx;
+  String friendlyy = String(y);
+  friendlyy.concat("°");
+  datavalue["y-rotation"] = friendlyy;
+  String friendlyz = String(z);
+  friendlyz.concat("°");
+  datavalue["z-rotation"] = friendlyz;
+  String friendlym = String(m);
+  friendlym.concat("?");  //TODO: find unit
+  datavalue["magnetvalue"] = friendlym;
 
+  serializeJson(datadoc, rotationdata);
   #ifdef debugmode
-    Serial.println("state: " + String(state));
+    Serial.println("JSON: " + String(rotationdata));
   #endif
 
-  putstate(state);
+  updatedata(rotationdata);
 
   lightsleep(requesttimeout);
 }
