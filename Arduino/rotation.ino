@@ -56,14 +56,12 @@ void rotationsetup() {
 \"x-rotation\":\"0°\",\
 \"y-rotation\":\"0°\",\
 \"z-rotation\":\"0°\",\
-\"magnetvalue\":\"0?\"\
+\"magnetvalue\":\"0µT\"\
 },\
 \"rotation\":\"Rotation Sensor\"},\
 \"preferredupdatetime\":5\
 }\
 }";
-
-  //TODO: find magnetvalue unit
   
 }
 
@@ -166,7 +164,7 @@ void rotationloop() {
   friendlyz.concat("°");
   datavalue["z-rotation"] = friendlyz;
   String friendlym = String(m);
-  friendlym.concat("?");  //TODO: find unit
+  friendlym.concat("µT");
   datavalue["magnetvalue"] = friendlym;
 
   serializeJson(datadoc, rotationdata);
