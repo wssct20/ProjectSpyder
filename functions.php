@@ -18,7 +18,7 @@ function calculateuserhash($username, $password) {
 function formatreturnvalues($data, $debug) {
 	$returntext = "";
 	$returntext = $returntext . "#START" . "\n";
-	if (isset($debug)) {
+	if (!empty($debug)) {
 		$returntext = $returntext . "#DEBUG" . "\n";
 		$returntext = $returntext . $debug . "\n";
 	}
