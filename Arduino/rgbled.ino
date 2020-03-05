@@ -19,7 +19,6 @@ void rgbledsetup() {
 
   jsonstructure = "{\
 \"data\":{\
-\"data\":{\
 \"red\":0,\
 \"green\":0,\
 \"blue\":0\
@@ -34,7 +33,6 @@ void rgbledsetup() {
 \"rgbled\":\"RGB-LED\"\
 },\
 \"preferredupdatetime\":2\
-}\
 }";
   
 }

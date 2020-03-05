@@ -8,7 +8,6 @@ void buttonsetup() {
 
   jsonstructure = "{\
 \"data\":{\
-\"data\":{\
 \"state\":0\
 },\
 \"friendly\":{\
@@ -21,7 +20,6 @@ void buttonsetup() {
 \"button\":\"Button\"\
 },\
 \"preferredupdatetime\":120\
-}\
 }";
 
 }

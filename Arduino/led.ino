@@ -15,7 +15,6 @@ void ledsetup() {
 
   jsonstructure = "{\
 \"data\":{\
-\"data\":{\
 \"brightness\":0\
 },\
 \"usermodifiabledata\":[\"brightness\"],\
@@ -26,7 +25,6 @@ void ledsetup() {
 \"led\":\"LED\"\
 },\
 \"preferredupdatetime\":2\
-}\
 }";
   
 }

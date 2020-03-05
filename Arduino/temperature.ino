@@ -22,7 +22,6 @@ void temperaturesetup() {
 
   jsonstructure = "{\
 \"data\":{\
-\"data\":{\
 \"temperature\":0,\
 \"humidity\":0\
 },\
@@ -38,7 +37,6 @@ void temperaturesetup() {
 \"temperature\":\"Temperature and Humidity Sensor\"\
 },\
 \"preferredupdatetime\":20\
-}\
 }";
   
 }
