@@ -41,10 +41,7 @@ void ledloop() {
   DynamicJsonDocument data(JSONCAPACITY);
   deserializeJson(data, getdata());
 
-  int brightness = data["data"]["brightness"].as<int>();
-
-  //check data
-  if ((brightness < 0) || (brightness > 255)) brightness = 0;
+  uint8_t brightness = data["data"]["brightness"].as<uint8_t>();
 
   #ifdef debugmode
     Serial.println("brightness: " + String(brightness));

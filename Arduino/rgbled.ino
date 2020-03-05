@@ -49,16 +49,11 @@ void rgbledloop() {
   DynamicJsonDocument data(JSONCAPACITY);
   deserializeJson(data, getdata());
 
-  int pindata[] = {
-    data["data"]["red"].as<int>(),
-    data["data"]["green"].as<int>(),
-    data["data"]["blue"].as<int>(),
+  uint8_t pindata[] = {
+    data["data"]["red"].as<uint8_t>(),
+    data["data"]["green"].as<uint8_t>(),
+    data["data"]["blue"].as<uint8_t>(),
   };
-
-  //chack data
-  for (int i = 0; i < pincount; i++) {
-    if ((pindata[i] < 0) || (pindata[i] > 255)) pindata[i] = 0;
-  }
   
   //set pins
   for (int i = 0; i < pincount; i++) {

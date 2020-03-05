@@ -75,8 +75,8 @@ void rgbdetectloop() {
   DynamicJsonDocument receiveddata(JSONCAPACITY);
   deserializeJson(receiveddata, getdata());
 
-  uint8_t ledstate = receiveddata["data"]["led"].as<int>();
-  if ((ledstate < 0) || (ledstate > 2)) ledstate = 0;
+  uint8_t ledstate = receiveddata["data"]["led"].as<uint8_t>();
+  if (ledstate > 2) ledstate = 0;
   if (ledstate == 0) {
     //turn off the sensor led
     digitalWrite(detectledpin, LOW);

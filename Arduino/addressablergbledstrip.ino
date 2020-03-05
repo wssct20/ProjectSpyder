@@ -60,14 +60,10 @@ void addressablergbledstriploop() {
       {
         //read data
         int color[] = {
-          data["data"]["red"].as<int>(),
-          data["data"]["green"].as<int>(),
-          data["data"]["blue"].as<int>(),
+          data["data"]["red"].as<uint8_t>(),
+          data["data"]["green"].as<uint8_t>(),
+          data["data"]["blue"].as<uint8_t>(),
         };
-        //check data
-        for (int i = 0; i < 3; i++) {
-          if ((color[i] < 0) || (color[i] > 255)) color[i] = 0;
-        }
         for (int i = 0; i < ledcount; i++) {
           ledstrip.SetPixelColor(i, RgbColor(color[0], color[1], color[2]));  //set the led state
         }
