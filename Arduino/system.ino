@@ -191,3 +191,23 @@ String dectohex(uint32_t dec) {
   }
   return hex;
 }
+
+
+//////////////color management//////////////
+
+//color_t includes the rgb colortdata
+typedef struct {
+  uint8_t red;
+  uint8_t green;
+  uint8_t blue;
+} color_t;
+color_t color;
+
+//hextorgb() converts hex colordata to rgb colordata
+color_t hextorgb(uint32_t hex) {
+  color_t color;
+  color.red = (hex & 0xFF0000) >> 16;
+  color.green = (hex & 0xFF00) >> 8;
+  color.blue = hex & 0xFF;
+  return color;
+}
