@@ -31,7 +31,7 @@ void rotationsetup() {
   jsonstructure = "{\
 \"data\":{\
 \"settings\":{\
-\"calibration\":0\
+\"resetreferenceposition\":0\
 },\
 \"data\":{\
 \"temperature\":0,\
@@ -42,7 +42,7 @@ void rotationsetup() {
 },\
 \"friendly\":{\
 \"settingsvar\":{\
-\"calibration\":\"Calibration\"\
+\"resetreferenceposition\":\"Reset reference position\"\
 },\
 \"datavar\":{\
 \"temperature\":\"Temperature\",\
@@ -72,12 +72,19 @@ void rotationloop() {
   DynamicJsonDocument receiveddata(JSONCAPACITY);
   deserializeJson(receiveddata, getdata());
 
-  bool calibration = receiveddata["settings"]["calibration"];
+  DynamicJsonDocument datadoc(JSONCAPACITY);
+  JsonObject settings = datadoc.createNestedObject("settings");
 
-  if (calibration != true) calibration = false;
+  bool resetreferenceposition = receiveddata["settings"]["resetreferenceposition"];
 
-  if (calibration == true) {
-    //TODO: add calibration
+  if (resetreferenceposition != true) {
+    resetreferenceposition = false;
+    settings["resetreferenceposition"] = false;
+  }
+
+  else {
+    //TODO: add resetreferenceposition
+    settings["resetreferenceposition"] = false;
   }
 
   int8_t temp;                        //temperature
@@ -87,7 +94,6 @@ void rotationloop() {
   imu::Vector<3> euler = rotation.getVector(Adafruit_BNO055::VECTOR_EULER);
   imu::Vector<3> magnetic = rotation.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
 
-  DynamicJsonDocument datadoc(JSONCAPACITY);
   JsonObject data = datadoc.createNestedObject("data");
 
 //////////temperature//////////
@@ -98,7 +104,7 @@ void rotationloop() {
     Serial.println("Current temperature: " + String(temp));
   #endif
 
-//////////gyroskop//////////
+//////////location//////////
 
   x = (int) (euler.x() + 0.5);
   data["x-rotation"] = x;
