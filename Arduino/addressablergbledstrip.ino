@@ -81,7 +81,13 @@ void addressablergbledstriploop() {
       //
       break;
     default:
-      //
+      {
+        //switch all leds off
+        for (int i = 0; i < ledcount; i++) {
+          ledstrip.SetPixelColor(i, RgbColor(0, 0, 0));
+        }
+        ledstrip.Show();
+      }
       break;
   }
 
