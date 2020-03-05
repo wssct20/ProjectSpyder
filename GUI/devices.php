@@ -111,7 +111,7 @@ if ($action == "details") {
 				?>
 				<h3>Settings</h3>
 				<?php 
-					foreach ($data["settings"] as $settingsfield) {
+					foreach ($data["settings"] as $settingsfield => $settingsvalue) {
 						?>
 							<form method=post>
 								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
@@ -140,7 +140,6 @@ if ($action == "details") {
 					<input type=submit name=submit value="Delete">
 				</form>
 				<h4>Debug</h4>
-				<p>JSON data</p>
 				<p><?php echo jsonencode($data); ?></p>
 			</div>
 		</body>
