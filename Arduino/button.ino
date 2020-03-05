@@ -17,7 +17,7 @@ void buttonsetup() {
 \"datavalue\":{\
 \"state\":\"Released\"\
 },\
-\"button\":\"Button\"\
+\"type\":\"Button\"\
 },\
 \"preferredupdatetime\":120\
 }";

@@ -32,7 +32,7 @@ void addressablergbledstripsetup() {
 \"green\":\"Green\",\
 \"blue\":\"Blue\"\
 },\
-\"addressablergbledstrip\":\"Addressable RGB-LED Strip\"\
+\"type\":\"Addressable RGB-LED Strip\"\
 },\
 \"preferredupdatetime\":5\
 }";

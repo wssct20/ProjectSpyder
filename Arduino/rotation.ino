@@ -57,7 +57,7 @@ void rotationsetup() {
 \"z-rotation\":\"0°\",\
 \"magnetvalue\":\"0µT\"\
 },\
-\"rotation\":\"Rotation Sensor\"},\
+\"type\":\"Rotation Sensor\"},\
 \"preferredupdatetime\":5\
 }";
   

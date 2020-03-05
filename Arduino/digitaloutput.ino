@@ -17,7 +17,7 @@ void digitaloutputsetup() {
 \"datavalues\":{\
 \"state\":\"off\"\
 },\
-\"digitaloutput\":\"Digital Output\"\
+\"type\":\"Digital Output\"\
 },\
 \"preferredupdatetime\":10\
 }";

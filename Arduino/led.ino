@@ -22,7 +22,7 @@ void ledsetup() {
 \"datavar\":{\
 \"brightness\":\"Brightness\"\
 },\
-\"led\":\"LED\"\
+\"type\":\"LED\"\
 },\
 \"preferredupdatetime\":2\
 }";

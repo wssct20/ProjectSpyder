@@ -30,7 +30,7 @@ void rgbledsetup() {
 \"green\":\"Green\",\
 \"blue\":\"Blue\"\
 },\
-\"rgbled\":\"RGB-LED\"\
+\"type\":\"RGB-LED\"\
 },\
 \"preferredupdatetime\":2\
 }";

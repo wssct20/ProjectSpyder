@@ -59,7 +59,7 @@ void rgbdetectsetup() {
 \"brightness\":\"0 lx\",\
 \"led\":\"off\"\
 },\
-\"rgbdetect\":\"Color Sensor\"\
+\"type\":\"Color Sensor\"\
 },\
 \"preferredupdatetime\":20\
 }";
