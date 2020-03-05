@@ -32,7 +32,7 @@ void buttonloop() {
   
   DynamicJsonDocument datadoc(JSONCAPACITY);
   JsonObject data = datadoc.createNestedObject("data");
-  JsonObject friendly = datadoc.createNestedObject("friedly");
+  JsonObject friendly = datadoc.createNestedObject("friendly");
   uint8_t buttonstate = !digitalRead(buttonPin);
   #ifdef debugmode
     Serial.println("buttonstate: " + String(buttonstate));
