@@ -35,7 +35,6 @@ void rgbdetectsetup() {
 
   jsonstructure = "{\
 \"data\":{\
-\"data\":{\
 \"red\":0,\
 \"green\":0,\
 \"blue\":0,\
@@ -63,7 +62,6 @@ void rgbdetectsetup() {
 \"rgbdetect\":\"Color Sensor\"\
 },\
 \"preferredupdatetime\":20\
-}\
 }";
   
 }

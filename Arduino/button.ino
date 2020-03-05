@@ -8,7 +8,6 @@ void buttonsetup() {
 
   jsonstructure = "{\
 \"data\":{\
-\"data\":{\
 \"state\":0\
 },\
 \"friendly\":{\
@@ -21,7 +20,6 @@ void buttonsetup() {
 \"button\":\"Button\"\
 },\
 \"preferredupdatetime\":120\
-}\
 }";
 
 }
@@ -33,6 +31,7 @@ void buttonloop() {
   DynamicJsonDocument datadoc(JSONCAPACITY);
   JsonObject data = datadoc.createNestedObject("data");
   JsonObject friendly = datadoc.createNestedObject("friendly");
+  JsonObject datavalue = friendly.createNestedObject("datavalue");
   uint8_t buttonstate = !digitalRead(buttonPin);
   #ifdef debugmode
     Serial.println("buttonstate: " + String(buttonstate));
@@ -42,7 +41,7 @@ void buttonloop() {
     "Released",
     "Pressed",
   };
-  friendly["datavalue"] = friendlybuttonstate[buttonstate];
+  datavalue["state"] = friendlybuttonstate[buttonstate];
   serializeJson(datadoc, buttondata);
   #ifdef debugmode
     Serial.println("JSON: " + String(buttondata));

@@ -29,7 +29,6 @@ void rotationsetup() {
   rotation.setExtCrystalUse(true);
 
   jsonstructure = "{\
-\"data\":{\
 \"settings\":{\
 \"resetreferenceposition\":0\
 },\
@@ -60,7 +59,6 @@ void rotationsetup() {
 },\
 \"rotation\":\"Rotation Sensor\"},\
 \"preferredupdatetime\":5\
-}\
 }";
   
 }

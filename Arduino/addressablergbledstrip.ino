@@ -12,7 +12,6 @@ void addressablergbledstripsetup() {
   ledstrip.SetBrightness(50);   //sets the maximum brightness
 
   jsonstructure = "{\
-\"data\":{\
 \"settings\":{\
 \"mode\":0,\
 \"brightness\":50\
@@ -36,7 +35,6 @@ void addressablergbledstripsetup() {
 \"addressablergbledstrip\":\"Addressable RGB-LED Strip\"\
 },\
 \"preferredupdatetime\":5\
-}\
 }";
   
 }

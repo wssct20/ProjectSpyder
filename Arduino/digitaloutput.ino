@@ -7,7 +7,6 @@ void digitaloutputsetup() {
   
   jsonstructure = "{\
 \"data\":{\
-\"data\":{\
 \"state\":0\
 },\
 \"usermodifiabledata\":[\"state\"],\
@@ -21,7 +20,6 @@ void digitaloutputsetup() {
 \"digitaloutput\":\"Digital Output\"\
 },\
 \"preferredupdatetime\":10\
-}\
 }";
   
 }
