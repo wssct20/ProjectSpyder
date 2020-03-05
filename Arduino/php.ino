@@ -83,11 +83,19 @@ void pair() {
 
 ////////////////////////////////////////
 //#DEBUG
-  String answerdebugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
-  #ifdef debugmode
-    Serial.println("DEBUG:");
-    Serial.println(answerdebugsubstring);
-  #endif
+  if (answer.indexOf("#DEBUG") == -1) {
+    #ifdef debugmode
+      Serial.println("DEBUG:");
+      Serial.println("no debug");
+    #endif
+  }
+  else {
+    String answerdebugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
+    #ifdef debugmode
+      Serial.println("DEBUG:");
+      Serial.println(answerdebugsubstring);
+    #endif
+  }
 
 ////////////////////////////////////////
 //#DATA
@@ -262,11 +270,19 @@ String interact(int requesttype, String data) {
 
 ////////////////////////////////////////
 //#DEBUG
-  String answerdebugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
-  #ifdef debugmode
-    Serial.println("DEBUG:");
-    Serial.println(answerdebugsubstring);
-  #endif
+  if (answer.indexOf("#DEBUG") == -1) {
+    #ifdef debugmode
+      Serial.println("DEBUG:");
+      Serial.println("no debug");
+    #endif
+  }
+  else {
+    String answerdebugsubstring = answer.substring(answer.indexOf("#DEBUG") + 7, answer.indexOf("#DATA") -1);
+    #ifdef debugmode
+      Serial.println("DEBUG:");
+      Serial.println(answerdebugsubstring);
+    #endif
+  }
 
 ////////////////////////////////////////
 //#DATA
