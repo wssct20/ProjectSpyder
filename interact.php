@@ -39,7 +39,7 @@ switch ($requesttype) {
 		break;
 	case "PUT":
 		// requesttype PUT: place new data into table
-		$previousdata = getdata($device["id"]);
+		$previousdata = getdata($device);
 		if ($previousdata != $data) {
 			updatedata($device["id"], $data);
 			updateconditions();
@@ -47,7 +47,7 @@ switch ($requesttype) {
 		break;
 	case "UPDATE":
 		// requesttype UPDATE: merge new data with already existing data
-		$previousdata = getdata($device["id"]);
+		$previousdata = getdata($device);
 		$newdata = array_merge($previousdata, $data);
 		if ($previousdata != $newdata) {
 			updatedata($device["id"], $newdata);
