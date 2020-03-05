@@ -104,7 +104,7 @@ function jsonencode($data) {
 
 function getdata($device) {
 	global $basestructure;
-	return array_merge($basestructure, jsondecode($device["data"]) ?? array());
+	return array_replace_recursive($basestructure, jsondecode($device["data"]) ?? array());
 }
 
 function updatedata($id, $data) {
@@ -122,7 +122,7 @@ function collectdeviceproperties($device) {
 function getparameters() {
 	//merges GET and POST parameters to support both methods,
 	// POST overwrites GET parameters if both are available
-	return array_merge($_REQUEST, $_POST);
+	return array_replace_recursive($_REQUEST, $_POST);
 }
 
 ?>

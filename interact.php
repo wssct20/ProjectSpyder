@@ -51,7 +51,8 @@ switch ($requesttype) {
 	case "UPDATE":
 		// requesttype UPDATE: merge new data with already existing data
 		$previousdata = getdata($device);
-		$newdata = array_merge($previousdata, $data);
+		$newdata = array_replace_recursive($previousdata, $data);
+		//TODO: array_merge deletes already exisiting subvalues e.g. deletes type in friendly
 		if ($previousdata != $newdata) {
 			updatedata($device["id"], $newdata);
 			updateconditions();
