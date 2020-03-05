@@ -139,6 +139,9 @@ if ($action == "details") {
 					<input type=text name=action value=delete style="display: none;">
 					<input type=submit name=submit value="Delete">
 				</form>
+				<h4>Debug</h4>
+				<p>JSON data</p>
+				<p><?php echo jsonencode($data); ?></p>
 			</div>
 		</body>
 	</html>
