@@ -24,7 +24,10 @@ if ($device["authcode"] != $authcode) die("AUTHCODESQLFATALERROR"); //should nev
 //check if device type matches
 if ($device["type"] != $type) dieerror("TYPEMISMATCH","Type doesn't match.");
 
-if (!empty($data)) if (jsondecode($data) == null) dieerror("DATAINVALID", "Data is invalid, maybe the JSON is not complete");
+if (!empty($data)) {
+	if (jsondecode($data) == null) dieerror("DATAINVALID", "Data is invalid, maybe the JSON is not complete");
+	$data = jsondecode($data);
+}
 
 //update device ip and lastact timestamp
 updatedevice($device["id"], $now, $ip);
