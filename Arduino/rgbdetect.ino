@@ -33,7 +33,38 @@ void rgbdetectsetup() {
   pinMode(detectledpin, OUTPUT);
   digitalWrite(detectledpin, LOW);
 
-  jsonstructure = "{\"data\":{\"data\":{\"red\":0,\"green\":0,\"blue\":0,\"clear\":0,\"colortemp\":0,\"brightness\":0,\"led\":0},\"usermodifiabledata\":[\"led\"],\"friendly\":{\"datavar\":{\"red\":\"Red\",\"green\":\"Green\",\"blue\":\"Blue\",\"clear\":\"White\",\"colortemp\":\"Color Temperature\",\"brightness\":\"Brightness\",\"led\":\"Lighting\"},\"datavalue\":{\"colortemp\":\"0 K\",\"brightness\":\"0 lx\",\"led\":\"off\"},\"rgbdetect\":\"Color Sensor\"},\"preferredupdatetime\":20}}";
+  jsonstructure = "{\
+\"data\":{\
+\"data\":{\
+\"red\":0,\
+\"green\":0,\
+\"blue\":0,\
+\"clear\":0,\
+\"colortemp\":0,\
+\"brightness\":0,\
+\"led\":0\
+},\
+\"usermodifiabledata\":[\"led\"],\
+\"friendly\":{\
+\"datavar\":{\
+\"red\":\"Red\",\
+\"green\":\"Green\",\
+\"blue\":\"Blue\",\
+\"clear\":\"White\",\
+\"colortemp\":\"Color Temperature\",\
+\"brightness\":\"Brightness\",\
+\"led\":\"Lighting\"\
+},\
+\"datavalue\":{\
+\"colortemp\":\"0 K\",\
+\"brightness\":\"0 lx\",\
+\"led\":\"off\"\
+},\
+\"rgbdetect\":\"Color Sensor\"\
+},\
+\"preferredupdatetime\":20\
+}\
+}";
   
 }
 
@@ -44,8 +75,8 @@ void rgbdetectloop() {
   DynamicJsonDocument receiveddata(JSONCAPACITY);
   deserializeJson(receiveddata, getdata());
 
-  uint8_t ledstate = receiveddata["data"]["led"].as<int>();
-  if ((ledstate < 0) || (ledstate > 2)) ledstate = 0;
+  uint8_t ledstate = receiveddata["data"]["led"].as<uint8_t>();
+  if (ledstate > 2) ledstate = 0;
   if (ledstate == 0) {
     //turn off the sensor led
     digitalWrite(detectledpin, LOW);
@@ -92,9 +123,9 @@ void rgbdetectloop() {
   JsonObject friendly = datadoc.createNestedObject("friendly");
   JsonObject datavalue = friendly.createNestedObject("datavalue");
   String friendlycolortemp = String(colortemp);
-  friendlycolortemp.concat(" K");
+  friendlycolortemp.concat("K");
   String friendlybrightness = String(lux);
-  friendlybrightness.concat(" lx");
+  friendlybrightness.concat("lx");
   datavalue["colortemp"] = friendlycolortemp;
   datavalue["brightness"] = friendlybrightness;
   const String friendlyled[] = {

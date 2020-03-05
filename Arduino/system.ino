@@ -158,7 +158,7 @@ void hibernate(int seconds) {
 
 
 //////////////converter//////////////
-
+/*
 //hextodec() converts hex numbers to dec numbers (max. 8 bytes)
 uint32_t hextodec(String hex) {
   String hexnumbers = "0123456789ABCDEF";
@@ -190,4 +190,4 @@ String dectohex(uint32_t dec) {
     hex = hex.substring(1);
   }
   return hex;
-}
+}*/

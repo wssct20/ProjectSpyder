@@ -13,7 +13,21 @@ void ledsetup() {
   ledcSetup(led_pwmchannel, led_frequency, led_resolution);
   ledcAttachPin(led_pin, led_pwmchannel);
 
-  jsonstructure = "{\"data\":{\"data\":{\"brightness\":0},\"usermodifiabledata\":[\"brightness\"],\"friendly\":{\"datavar\":{\"brightness\":\"Brightness\"},\"led\":\"LED\"},\"preferredupdatetime\":2}}";
+  jsonstructure = "{\
+\"data\":{\
+\"data\":{\
+\"brightness\":0\
+},\
+\"usermodifiabledata\":[\"brightness\"],\
+\"friendly\":{\
+\"datavar\":{\
+\"brightness\":\"Brightness\"\
+},\
+\"led\":\"LED\"\
+},\
+\"preferredupdatetime\":2\
+}\
+}";
   
 }
 
@@ -27,10 +41,7 @@ void ledloop() {
   DynamicJsonDocument data(JSONCAPACITY);
   deserializeJson(data, getdata());
 
-  int brightness = data["data"]["brightness"].as<int>();
-
-  //check data
-  if ((brightness < 0) || (brightness > 255)) brightness = 0;
+  uint8_t brightness = data["data"]["brightness"].as<uint8_t>();
 
   #ifdef debugmode
     Serial.println("brightness: " + String(brightness));

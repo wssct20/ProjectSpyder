@@ -17,7 +17,25 @@ void rgbledsetup() {
     ledcAttachPin(pins[i], rgbled_pwmchannel[i]);
   }
 
-  jsonstructure = "{\"data\":{\"data\":{\"red\":0,\"green\":0,\"blue\":0},\"usermodifiabledata\":[\"red\",\"green\",\"blue\"],\"friendly\":{\"datavar\":{\"red\":\"Red\",\"green\":\"Green\",\"blue\":\"Blue\"},\"rgbled\":\"RGB-LED\"},\"preferredupdatetime\":2}}";
+  jsonstructure = "{\
+\"data\":{\
+\"data\":{\
+\"red\":0,\
+\"green\":0,\
+\"blue\":0\
+},\
+\"usermodifiabledata\":[\"red\",\"green\",\"blue\"],\
+\"friendly\":{\
+\"datavar\":{\
+\"red\":\"Red\",\
+\"green\":\"Green\",\
+\"blue\":\"Blue\"\
+},\
+\"rgbled\":\"RGB-LED\"\
+},\
+\"preferredupdatetime\":2\
+}\
+}";
   
 }
 
@@ -31,16 +49,11 @@ void rgbledloop() {
   DynamicJsonDocument data(JSONCAPACITY);
   deserializeJson(data, getdata());
 
-  int pindata[] = {
-    data["data"]["red"].as<int>(),
-    data["data"]["green"].as<int>(),
-    data["data"]["blue"].as<int>(),
+  uint8_t pindata[] = {
+    data["data"]["red"].as<uint8_t>(),
+    data["data"]["green"].as<uint8_t>(),
+    data["data"]["blue"].as<uint8_t>(),
   };
-
-  //chack data
-  for (int i = 0; i < pincount; i++) {
-    if ((pindata[i] < 0) || (pindata[i] > 255)) pindata[i] = 0;
-  }
   
   //set pins
   for (int i = 0; i < pincount; i++) {
