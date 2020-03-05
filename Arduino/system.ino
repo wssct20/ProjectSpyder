@@ -158,7 +158,7 @@ void hibernate(int seconds) {
 
 
 //////////////converter//////////////
-
+/*
 //hextodec() converts hex numbers to dec numbers (max. 8 bytes)
 uint32_t hextodec(String hex) {
   String hexnumbers = "0123456789ABCDEF";
@@ -190,16 +190,4 @@ String dectohex(uint32_t dec) {
     hex = hex.substring(1);
   }
   return hex;
-}
-
-
-//////////////color management//////////////
-
-//hextorgb() converts hex colordata to rgb colordata
-color_t hextorgb(uint32_t hex) {
-  color_t color;
-  color.red = (hex & 0xFF0000) >> 16;
-  color.green = (hex & 0xFF00) >> 8;
-  color.blue = hex & 0xFF;
-  return color;
-}
+}*/

@@ -12,12 +12,6 @@ String jsonstructure;
 
 int requesttimeout;
 
-typedef struct {    //datatype color_t for rgb colortdata
-  uint8_t red;
-  uint8_t green;
-  uint8_t blue;
-} color_t;
-
 //typesstring: defines supported types, new type every 25 chars, used for switch in setup() and loop()
 #define typesstringtypelength 25
 const String typesstring = "button                   fingerprint              temperature              rotation                 rgbdetect                addressablergbledstrip   rgbled                   epaper                   digitaloutput            led                      ";    // type every 25 chars
