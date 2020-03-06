@@ -153,11 +153,10 @@ if ($action == "details") {
 		<style>
 			td {
 				color: white;
-				border: white solid 1px;
 			}
 			th {
 				color: white;
-				border: white solid 1px;
+				border-bottom: white solid 1px;
 			}
 		</style>
 	</head>
@@ -188,7 +187,7 @@ if ($action == "details") {
 					echo "<th>" . "Name" . "</th>";
 					echo "<th>" . "Type" . "</th>";
 					echo "<th>" . "IP-Address" . "</th>";
-					echo "<th>" . "" . "</th>"; //line with edit/delete buttons
+					echo "<th>" . "" . "</th>"; //line with manage button
 					echo "</tr>";
 					foreach ($devices as $device) {
 						$data = getdata($device);

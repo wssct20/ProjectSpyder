@@ -23,11 +23,10 @@ if ($action == "details") {
 		<style>
 			td {
 				color: white;
-				border: white solid 1px;
 			}
 			th {
 				color: white;
-				border: white solid 1px;
+				border-bottom: white solid 1px;
 			}
 		</style>
 	</head>
@@ -48,12 +47,11 @@ if ($action == "details") {
 			//this generates a table of conditons
 			$conditions = getconditions();
 			if (sizeof($conditions) == 0) {
-				echo("No condtions found.");
+				echo("No conditions found.");
 			} else {
 				?>
 				<table>
 					<?php
-                    //TODO: change to display conditions
 					echo "<tr>";
                     echo "<th>" . "ID" . "</th>";
                     echo "<th>" . "Name" . "</th>";
@@ -63,7 +61,7 @@ if ($action == "details") {
 					echo "<th>" . "THEN ID" . "</th>";
 					echo "<th>" . "THEN Variable" . "</th>";
 					echo "<th>" . "THEN Value" . "</th>";
-					echo "<th>" . "" . "</th>"; //line with edit/delete buttons
+					echo "<th>" . "" . "</th>"; //line with manage button
 					echo "</tr>";
 					foreach ($conditions as $condition) {
 						echo "<tr>";
