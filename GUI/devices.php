@@ -84,18 +84,8 @@ if ($action == "details") {
 			
 			<div class="settings">
 				<h2><?php echo $friendlytype." ".$device["id"]; echo empty($device["name"]) ? "" : " - ".$device["name"]; ?></h2>
-				<!-- TODO: change to json
-				<h3>State</h3>
-				<form method=post>
-					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
-					<input type=text name=action value=overwritestate style="display: none;">
-					<input type=text name=state value="<?php echo getdata($device["id"]); ?>">
-					<input type=submit name=submit value="Overwrite">
-				</form>
-				<br>
-				-->
-				<h3>Data</h3>
 				<?php 
+					if (sizeof($data["usermodifiabledata"]) > 0) echo "<h3>Data</h3>";
 					foreach ($data["usermodifiabledata"] as $usermodifiabledatafield) {
 						?>
 							<form method=post>
@@ -109,8 +99,8 @@ if ($action == "details") {
 						<?php
 					}
 				?>
-				<h3>Settings</h3>
 				<?php 
+					if (sizeof($data["settings"]) > 0) echo "<h3>Settings</h3>";
 					foreach ($data["settings"] as $settingsfield => $settingsvalue) {
 						?>
 							<form method=post>
