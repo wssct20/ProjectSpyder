@@ -43,6 +43,8 @@ checksession();
 			<ul>
                 <div class="separator"></div>
 				<li><a href="devices.php">Devices</a></li>
+				<div class="separator"></div>
+				<li><a href="conditions.php">Conditions</a></li>
                 <div class="separator"></div>
 				<li><a href="usermanagement.php">Usermanagement</a></li>
 			</ul>

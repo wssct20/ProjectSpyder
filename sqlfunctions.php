@@ -180,7 +180,6 @@ function sqlupdatedata($id, $data) {
 
 function checktables() {
 	//checktables: check if all needed tables are available by querying a create if not exist
-	//TODO: check if tables are correct
 	global $db;
 	//unprepared query: create table devices
 	if (!$db->query("create table if not exists devices(id INT NOT NULL AUTO_INCREMENT, name TEXT, type TEXT NOT NULL, ipaddress TEXT NOT NULL, lastact BIGINT NOT NULL, pairtime BIGINT NOT NULL, authcode TEXT NOT NULL, data TEXT , PRIMARY KEY (id));")
@@ -188,7 +187,7 @@ function checktables() {
 		dieerror("ERRSQLTABLE", "checktables devices Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
 	//unprepared query: create table conditions
-	if (!$db->query("create table if not exists conditions(ifid INT NOT NULL, ifvar TEXT NOT NULL, ifvalue TEXT NOT NULL, thenid INT NOT NULL, thenvar TEXT NOT NULL, thenvalue TEXT NOT NULL);")
+	if (!$db->query("create table if not exists conditions(id INT NOT NULL AUTO_INCREMENT, name TEXT, ifid INT NOT NULL, ifvar TEXT NOT NULL, ifvalue TEXT NOT NULL, thenid INT NOT NULL, thenvar TEXT NOT NULL, thenvalue TEXT NOT NULL, PRIMARY KEY (id));")
 	) {
 		dieerror("ERRSQLTABLE", "checktables conditions Table creation failed: (" . $db->errno . ") " . $db->error);
 	}
@@ -218,6 +217,43 @@ function getconditions() {
 	}
 	// Stage 4: fetch all as array with associative names
 	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function addcondition($ifid, $ifvar, $ifvalue, $thenid, $thenvar, $thenvalue, $name) {
+	//TODO: untested code
+	//addcondition: add a condition
+	global $db;
+	// Create condition entry
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("INSERT INTO conditions(ifid, ifvar, ifvalue, thenid, thenvar, thenvalue, name) VALUES (?, ?, ?, ?, ?, ?, ?)"))) {
+		dieerror("ERRSQLTABLE", "addcondition insert conditions Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("ississs", $ifid, $ifvar, $ifvalue, $thenid, $thenvar, $thenvalue, $name)) {
+		dieerror("ERRSQLTABLE", "addcondition insert conditions Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "addcondition insert conditions Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+}
+
+function updatecondition($id, $ifid, $ifvar, $ifvalue, $thenid, $thenvar, $thenvalue, $name) {
+	//TODO: untested code
+	//updatecondition: update an existing conditon
+	global $db;
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("UPDATE conditions SET ifid=?, ifvar=?, ifvalue=?, thenid=?, thenvar=?, thenvalue=?, name=? WHERE id=?"))) {
+		dieerror("ERRSQLTABLE", "updatecondition Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("ississsi", $ifid, $ifvar, $ifvalue, $thenid, $thenvar, $thenvalue, $name, $id)) {
+		dieerror("ERRSQLTABLE", "updatecondition Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "updatecondition Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
 }
 
 // USER MANAGEMENT
