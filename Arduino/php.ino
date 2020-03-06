@@ -117,7 +117,7 @@ void pair() {
   
 //////////////error//////////////
   String answererror = pairdata["error"];
-  if (answererror != NULL) {
+  if (!answererror) {
     Serial.println("ERROR: " + String(answererror));
   }
   else {
@@ -128,7 +128,7 @@ void pair() {
 
 //////////////authcode//////////////
   String answerauthcode = pairdata["authcode"];
-  if (answerauthcode != NULL) {
+  if (!answerauthcode) {
     writeEEPROM(authcodeaddress, authcodelength, answerauthcode);
   }
   else {
@@ -138,7 +138,7 @@ void pair() {
 
 //////////////requesttimeout//////////////
   int answerrequesttimeout = pairdata["requesttimeout"].as<int>();
-  if (answerrequesttimeout != NULL) {
+  if (!answerrequesttimeout) {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
     #ifdef debugmode
@@ -304,7 +304,7 @@ String interact(int requesttype, String data) {
   
 //////////////error//////////////
   String answererror = interactdata["error"];
-  if (answererror != NULL) {
+  if (!answererror) {
     String errors = "default             AUTHFAILED          TYPEMISMATCH        JSONINVALID         REQUESTTYPEINVALID  ";  //error every 20 chars
     int e = errors.indexOf(answererror);
     if (e == -1) e = 0; //unrecognized error
@@ -350,7 +350,7 @@ String interact(int requesttype, String data) {
 
 //////////////requesttimeout//////////////
   int answerrequesttimeout = interactdata["requesttimeout"].as<int>();
-  if (answerrequesttimeout != NULL) {
+  if (!answerrequesttimeout) {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
     #ifdef debugmode
