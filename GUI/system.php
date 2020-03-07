@@ -21,4 +21,8 @@ function sanitizehtml($input) {
 	return htmlspecialchars($input, ENT_QUOTES | ENT_HTML401);
 }
 
+function getdevicename($device) {
+	return (empty($device["name"]) ? ($data["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]);
+}
+
 ?>

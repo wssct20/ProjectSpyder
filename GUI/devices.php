@@ -193,7 +193,7 @@ if ($action == "details") {
 						$data = getdata($device);
 						echo "<tr>";
 						echo "<td>" . $device["id"] . "</td>";
-						echo "<td>" . (empty($device["name"]) ? ($data["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]) . "</td>";
+						echo "<td>" . getdevicename($device) . "</td>";
 						echo "<td>" . ($data["friendly"]["type"] ?? $device["type"]) . "</td>";
 						echo "<td>" . $device["ipaddress"] . "</td>";
 						?>
