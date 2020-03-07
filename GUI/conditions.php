@@ -10,6 +10,11 @@ if ($action == "details") {
     header("Location: conditions.php",true,303);
 }
 
+if ($action == "create") {
+	//TODO: add create condition
+	header("Location: conditions.php",true,303);
+}
+
 ?>
 
 <!DOCTYPE html>
