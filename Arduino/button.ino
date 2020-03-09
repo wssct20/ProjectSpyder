@@ -33,6 +33,7 @@ void buttonloop() {
   JsonObject friendly = datadoc.createNestedObject("friendly");
   JsonObject datavalue = friendly.createNestedObject("datavalue");
   uint8_t buttonstate = !digitalRead(buttonPin);
+  //bool buttonstate = !lightsleepgpio(requesttimeout, buttonPin, 0);
   #ifdef debugmode
     Serial.println("buttonstate: " + String(buttonstate));
   #endif
