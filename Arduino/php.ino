@@ -1,4 +1,5 @@
 #include "WiFi.h"
+#include <HTTPClient.h>
 
 #define authcodeaddress 0
 #define authcodelength 128
@@ -29,7 +30,41 @@ void pair() {
     Serial.println("php pair() start");
     Serial.println("php connecting to " + String(serverhostname));
   #endif
-  
+
+/////////POST///////////
+/*
+  HTTPClient SpyderHub;
+
+  SpyderHub.begin("http://spyderhub/pair.php");
+  SpyderHub.addHeader("Content-Type", "text/plain");
+
+  String postrequest = "type=";
+  postrequest += type;
+
+  int httpResponseCode = SpyderHub.POST(postrequest);
+
+  if (httpResponseCode > 0) {
+    answer = SpyderHub.getString();
+
+    #ifdef debugmode
+      Serial.println("httpResponseCode: " + String(httpResponseCode));
+      Serial.println("___________Answer:___________");
+      Serial.println(answer);
+      Serial.println("_____________________________");
+    #endif
+  }
+  else {
+    Serial.println("ERROR: php connection failed");
+    #ifdef debugmode
+      Serial.println("_________________________________");
+    #endif
+    return;
+  }
+
+  SpyderHub.end();
+*/
+/////////////////////////
+
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
@@ -198,7 +233,52 @@ String interact(int requesttype, String data) {
     Serial.println("php interact() start");
     Serial.println("php connecting to " + String(serverhostname));
   #endif
+
+
+/////////POST///////////
+/*
+  HTTPClient SpyderHub;
+
+  //SpyderHub.begin("http://spyderhub/");
+  SpyderHub.begin("http://spyderhub/interact.php");
+  SpyderHub.addHeader("Content-Type", "text/plain");
+
+  String postrequest = "authcode=";
+  String authtoken = readEEPROM(authcodeaddress, authcodelength);
+  postrequest += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM why we get 3 unknown chars at the end of the read string
+  if (!data.equals("")) {
+    postrequest += "&data=";
+    postrequest += data;
+  }
+  postrequest += "&requesttype=";
+  postrequest += requesttypes[requesttype];
+  postrequest += "&type=";
+  postrequest += type;
   
+  int httpResponseCode = SpyderHub.POST(postrequest);
+
+  if (httpResponseCode > 0) {
+    answer = SpyderHub.getString();
+
+    #ifdef debugmode
+      Serial.println("httpResponseCode: " + String(httpResponseCode));
+      Serial.println("___________Answer:___________");
+      Serial.println(answer);
+      Serial.println("_____________________________");
+    #endif
+  }
+  else {
+    Serial.println("ERROR: php connection failed");
+    #ifdef debugmode
+      Serial.println("_________________________________");
+    #endif
+    return "";
+  }
+
+  SpyderHub.end();
+*/
+/////////////////////////
+
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
