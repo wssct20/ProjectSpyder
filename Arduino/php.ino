@@ -175,15 +175,6 @@ void pair() {
 }
 
 
-/**////////////////////////////////**/
-/**/String getstate() {           /**/
-/**/  return getdata();           /**/
-/**/}                             /**/
-/**/                              /**///only to be able to compile
-/**/void putstate(String data) {  /**/
-/**/  putdata(data);              /**/
-/**/}                             /**/
-/**////////////////////////////////**/
 
 String getdata() {
   return interact(REQUESTTYPE_GET, "");
