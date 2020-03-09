@@ -86,7 +86,7 @@ void pair() {
   if (answer.indexOf("#DEBUG") == -1) {
     #ifdef debugmode
       Serial.println("DEBUG:");
-      Serial.println("no debug");
+      Serial.println("No DEBUG");
     #endif
   }
   else {
@@ -142,7 +142,7 @@ void pair() {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
     #ifdef debugmode
-      Serial.println("new requesttimeout: " + String(requesttimeout));
+      Serial.println("New requesttimeout: " + String(requesttimeout) + String("s"));
     #endif
   }
   else {
@@ -156,9 +156,9 @@ void pair() {
     Serial.println("---");
 
     //print all data
-    Serial.println("error:" + String("\t") + String(answererror));
+    Serial.println("error:" + String("\t\t") + String(answererror));
     Serial.println("authcode:" + String("\t") + String(answerauthcode));
-    Serial.println("requesttimeout:" + String("\t") + String(answerrequesttimeout));
+    Serial.println("requesttimeout:" + String("\t") + String(answerrequesttimeout) + String("s"));
     
     Serial.println("---");
   #endif
@@ -264,7 +264,7 @@ String interact(int requesttype, String data) {
   if (answer.indexOf("#DEBUG") == -1) {
     #ifdef debugmode
       Serial.println("DEBUG:");
-      Serial.println("no debug");
+      Serial.println("No DEBUG");
     #endif
   }
   else {
@@ -327,6 +327,10 @@ String interact(int requesttype, String data) {
         case 0:
         default:
           Serial.println("ERROR: unknown error");
+          #ifdef debugmode
+            Serial.println("The ERROR:");
+            Serial.println(answererror);
+          #endif
           hibernate(fatalerrordelay);
     }
   }
@@ -345,7 +349,7 @@ String interact(int requesttype, String data) {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
     #ifdef debugmode
-      Serial.println("new requesttimeout: " + String(requesttimeout));
+      Serial.println("New requesttimeout: " + String(requesttimeout) + String("s"));
     #endif
   }
   else {
