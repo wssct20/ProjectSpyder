@@ -10,9 +10,9 @@ void writeEEPROM(int address, int length, String data) {
   EEPROM.begin(address + length);
 
   #ifdef debugmode
-    Serial.println("address: " + String(address));
-    Serial.println("length: " + String(length));
-    Serial.println("data: " + String(data));
+    Serial.println("address:" + String("\t") + String(address));
+    Serial.println("length:" + String("\t") + String(length));
+    Serial.println("data:" + String("\t") + String(data));
   #endif
 
   char dataarray[length + 1];
@@ -31,9 +31,9 @@ String readEEPROM(int address, int length) {
   EEPROM.begin(address + length);
 
   #ifdef debugmode
-    Serial.println("address: " + String(address));
-    Serial.println("length: " + String(length));
-    Serial.print("read data: ");
+    Serial.println("address:" + String("\t") + String(address));
+    Serial.println("length:" + String("\t") + String(length));
+    Serial.print("read data:" + String("\t"));
   #endif
 
   char dataarray[length];
@@ -66,9 +66,7 @@ void lightsleep(int seconds) {
   #ifdef debugmode
     Serial.println("Starting lightsleep for " + String(seconds) + String(" seconds."));
     Serial.println("------sleep------");
-  #endif
-  #ifdef debugmode
-  delay(1000);
+    delay(1000);
   #endif
   esp_wifi_disconnect();
   esp_wifi_stop();
