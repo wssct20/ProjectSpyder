@@ -6,18 +6,6 @@ void buttonsetup() {
   
   pinMode(buttonPin, INPUT_PULLUP);
 
-  enum wake_up_cause {
-    UNDEFINED,
-    ALL,
-    EXT0,
-    EXT1,
-    TIMER,
-    TOUCH,
-    ULP,
-    GPIO,
-    UART,
-  };
-
   jsonstructure = "{\
 \"data\":{\
 \"state\":0\
@@ -45,14 +33,13 @@ void buttonloop() {
   JsonObject friendly = datadoc.createNestedObject("friendly");
   JsonObject datavalue = friendly.createNestedObject("datavalue");
   uint8_t buttonstate;
-/*  if (esp_sleep_get_wakeup_cause() == GPIO) {
+  esp_sleep_wakeup_cause_t wakeupreason = esp_sleep_get_wakeup_cause();
+  if (wakeupreason == ESP_SLEEP_WAKEUP_GPIO) {
     buttonstate  = 1;
   }
   else {
     buttonstate = !digitalRead(buttonPin);
-  }*/
-  //bool buttonstate = !lightsleepgpio(requesttimeout, buttonPin, 0);
-  buttonstate = !digitalRead(buttonPin);
+  }
   #ifdef debugmode
     Serial.println("buttonstate: " + String(buttonstate));
   #endif
@@ -66,12 +53,9 @@ void buttonloop() {
   #ifdef debugmode
     Serial.println("JSON: " + String(buttondata));
   #endif
-  
-//  bool buttonstate = lightsleepgpio(requesttimeout, buttonPin, 0); TODO: add gpiowakeup
 
   updatedata(buttondata);
 
-  lightsleep(requesttimeout);
-  //lightsleepgpio(requesttimeout, buttonPin, 0);
+  lightsleepgpio(requesttimeout, buttonPin, 0);
   
 }
