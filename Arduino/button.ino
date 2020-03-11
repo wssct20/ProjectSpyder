@@ -12,7 +12,7 @@ void buttonsetup() {
 },\
 \"friendly\":{\
 \"datavar\":{\
-\"state\":\"button%20state\"\
+\"state\":\"button state\"\
 },\
 \"datavalue\":{\
 \"state\":\"Released\"\

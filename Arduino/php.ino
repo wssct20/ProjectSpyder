@@ -32,11 +32,11 @@ void pair() {
   #endif
 
 /////////POST///////////
-/*
+
   HTTPClient SpyderHub;
 
   SpyderHub.begin("http://spyderhub/pair.php");
-  SpyderHub.addHeader("Content-Type", "text/plain");
+  SpyderHub.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
   String postrequest = "type=";
   postrequest += type;
@@ -62,9 +62,9 @@ void pair() {
   }
 
   SpyderHub.end();
-*/
-/////////////////////////
 
+/////////////////////////
+/*
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
@@ -99,7 +99,7 @@ void pair() {
     Serial.println();
     Serial.println("_____________________________");
   #endif
-
+*/
 ////////////////////////////////////////
 //search for #START
   #ifdef debugmode
@@ -236,12 +236,12 @@ String interact(int requesttype, String data) {
 
 
 /////////POST///////////
-/*
+
   HTTPClient SpyderHub;
 
   //SpyderHub.begin("http://spyderhub/");
   SpyderHub.begin("http://spyderhub/interact.php");
-  SpyderHub.addHeader("Content-Type", "text/plain");
+  SpyderHub.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
   String postrequest = "authcode=";
   String authtoken = readEEPROM(authcodeaddress, authcodelength);
@@ -276,9 +276,9 @@ String interact(int requesttype, String data) {
   }
 
   SpyderHub.end();
-*/
-/////////////////////////
 
+/////////////////////////
+/*
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
@@ -322,7 +322,7 @@ String interact(int requesttype, String data) {
     Serial.println();
     Serial.println("_____________________________");
   #endif
-
+*/
 ////////////////////////////////////////
 //search for #START
   #ifdef debugmode
