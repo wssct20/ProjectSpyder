@@ -153,7 +153,7 @@ void rotationloop() {
     Serial.println("magnet calibration: " + String(mc));
   #endif
 
-  JsonObject friendly = datadoc.createNestedObject("friedly");
+  JsonObject friendly = datadoc.createNestedObject("friendly");
   JsonObject datavalue = friendly.createNestedObject("datavalue");
   String friendlytemp = String(temp);
   friendlytemp.concat("°C");

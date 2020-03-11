@@ -24,7 +24,7 @@ void ledsetup() {
 },\
 \"type\":\"LED\"\
 },\
-\"preferredupdatetime\":2\
+\"preferredupdatetime\":5\
 }";
   
 }

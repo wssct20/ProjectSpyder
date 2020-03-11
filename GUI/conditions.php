@@ -10,6 +10,11 @@ if ($action == "details") {
     header("Location: conditions.php",true,303);
 }
 
+if ($action == "create") {
+	//TODO: add create condition
+	header("Location: conditions.php",true,303);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -89,6 +94,57 @@ if ($action == "details") {
 				<?php
 			}
 			?>
+			
+			<h3>Create Condition</h3>
+			<form method="post">
+				<table>
+					<tr>
+						<td></td>
+						<td>Device</td>
+						<td>Variable</td>
+						<td>Value</td>
+					</tr>
+					<tr>
+						<td>IF</td>
+						<td>
+							<select name=ifid>
+								<?php 
+									foreach (getdevices() as $device) {
+										echo "<option value=".$device["id"].">".getdevicename($device)."</option>";
+									}
+								?>
+							</select>
+						</td>
+						<td>
+							<input name=ifvar placeholder="Variable">
+						</td>
+						<td>
+							<input name=ifvalue placeholder="Value">
+						</td>
+					</tr>
+					<tr>
+						<td>THEN</td>
+						<td>
+							<select name=thenid>
+								<?php 
+									foreach (getdevices() as $device) {
+										echo "<option value=".$device["id"].">".getdevicename($device)."</option>";
+									}
+								?>
+							</select>
+						</td>
+						<td>
+							<input name=thenvar placeholder="Variable">
+						</td>
+						<td>
+							<input name=thenvalue placeholder="Value">
+						</td>
+					</tr>
+				</table>
+				<input type=text name=name placeholder=Name>
+				<input type=text name=action value=create style="display: none;">
+				<input type=submit value="Create Condition">
+			</form>
 			
 		</div>
 	</body>

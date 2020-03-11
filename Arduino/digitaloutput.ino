@@ -14,7 +14,7 @@ void digitaloutputsetup() {
 \"datavar\":{\
 \"state\":\"Output State\"\
 },\
-\"datavalues\":{\
+\"datavalue\":{\
 \"state\":\"off\"\
 },\
 \"type\":\"Digital Output\"\
@@ -36,10 +36,16 @@ void digitaloutputloop() {
   DynamicJsonDocument receiveddata(JSONCAPACITY);
   deserializeJson(receiveddata, getdata());
 
-  int outputstate = receiveddata["data"]["state"].as<int>();
+  uint8_t outputstate = receiveddata["data"]["state"].as<uint8_t>();
 
-  //check data
   if (outputstate != 1) outputstate = 0;
+
+  DynamicJsonDocument datadoc(JSONCAPACITY);
+
+  if (receiveddata["data"]["state"].as<String>() != String(outputstate)) {
+    JsonObject data = datadoc.createNestedObject("data");
+    data["state"] = outputstate;
+  }
 
   #ifdef debugmode
     Serial.println("outputstate: " + String(outputstate));
@@ -48,7 +54,6 @@ void digitaloutputloop() {
   //set output
   digitalWrite(output_pin, outputstate);
 
-  DynamicJsonDocument datadoc(JSONCAPACITY);
   JsonObject friendly = datadoc.createNestedObject("friendly");
   JsonObject datavalue = friendly.createNestedObject("datavalue");
   const String friendlystate[] = {

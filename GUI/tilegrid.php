@@ -26,7 +26,7 @@ function gettile($device) {
 	foreach ($devices as $device) {
 		?>
 		<div class="tile">
-			<h1><?php echo (empty($device["name"]) ? (getdata($device)["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]);?></h1>
+			<h1><?php echo getdevicename($device);?></h1>
 			<?php echo gettile($device); ?>
 		</div>
 		<?php

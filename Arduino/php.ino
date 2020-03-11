@@ -1,4 +1,5 @@
 #include "WiFi.h"
+#include <HTTPClient.h>
 
 #define authcodeaddress 0
 #define authcodelength 128
@@ -29,41 +30,36 @@ void pair() {
     Serial.println("php pair() start");
     Serial.println("php connecting to " + String(serverhostname));
   #endif
-  
-  WiFiClient SpyderHub;
-  const int httpPort = 80;
-  if (!SpyderHub.connect(serverhostname, httpPort)) {
-      Serial.println("php connection failed");
+
+  HTTPClient SpyderHub;
+
+  SpyderHub.begin("http://spyderhub/pair.php");
+  SpyderHub.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  String postrequest = "type=";
+  postrequest += type;
+
+  int httpResponseCode = SpyderHub.POST(postrequest);
+
+  if (httpResponseCode > 0) {
+    answer = SpyderHub.getString();
+
+    #ifdef debugmode
+      Serial.println("httpResponseCode: " + String(httpResponseCode));
+      Serial.println("___________Answer:___________");
+      Serial.println(answer);
+      Serial.println("_____________________________");
+    #endif
+  }
+  else {
+    Serial.println("ERROR: php connection failed");
     #ifdef debugmode
       Serial.println("_________________________________");
     #endif
     return;
   }
-  
-  String url = "/pair.php";
-  url += "?type=";
-  url += type;
-  
-  #ifdef debugmode
-    Serial.println("Requesting URL: " + String(url));
-  #endif
-  
-  SpyderHub.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + serverhostname + "\r\n" + "Connection: close\r\n\r\n");
-  delay(1000);
 
-  #ifdef debugmode
-    Serial.println("___________Answer:___________");
-  #endif
-  while (SpyderHub.available()) {
-    answer = SpyderHub.readStringUntil('\r');
-    #ifdef debugmode
-      Serial.print(answer);
-    #endif
-  }
-  #ifdef debugmode
-    Serial.println();
-    Serial.println("_____________________________");
-  #endif
+  SpyderHub.end();
 
 ////////////////////////////////////////
 //search for #START
@@ -86,7 +82,7 @@ void pair() {
   if (answer.indexOf("#DEBUG") == -1) {
     #ifdef debugmode
       Serial.println("DEBUG:");
-      Serial.println("no debug");
+      Serial.println("No DEBUG");
     #endif
   }
   else {
@@ -117,7 +113,7 @@ void pair() {
   
 //////////////error//////////////
   String answererror = pairdata["error"];
-  if (answererror != NULL) {
+  if (pairdata.containsKey("error")) {
     Serial.println("ERROR: " + String(answererror));
   }
   else {
@@ -128,7 +124,7 @@ void pair() {
 
 //////////////authcode//////////////
   String answerauthcode = pairdata["authcode"];
-  if (answerauthcode != NULL) {
+  if (pairdata.containsKey("authcode")) {
     writeEEPROM(authcodeaddress, authcodelength, answerauthcode);
   }
   else {
@@ -138,11 +134,11 @@ void pair() {
 
 //////////////requesttimeout//////////////
   int answerrequesttimeout = pairdata["requesttimeout"].as<int>();
-  if (answerrequesttimeout != NULL) {
+  if (pairdata.containsKey("requesttimeout")) {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
     #ifdef debugmode
-      Serial.println("new requesttimeout: " + String(requesttimeout));
+      Serial.println("New requesttimeout: " + String(requesttimeout) + String("s"));
     #endif
   }
   else {
@@ -156,9 +152,9 @@ void pair() {
     Serial.println("---");
 
     //print all data
-    Serial.println("error:" + String("\t") + String(answererror));
+    Serial.println("error:" + String("\t\t") + String(answererror));
     Serial.println("authcode:" + String("\t") + String(answerauthcode));
-    Serial.println("requesttimeout:" + String("\t") + String(answerrequesttimeout));
+    Serial.println("requesttimeout:" + String("\t") + String(answerrequesttimeout) + String("s"));
     
     Serial.println("---");
   #endif
@@ -175,15 +171,6 @@ void pair() {
 }
 
 
-/**////////////////////////////////**/
-/**/String getstate() {           /**/
-/**/  return getdata();           /**/
-/**/}                             /**/
-/**/                              /**///only to be able to compile
-/**/void putstate(String data) {  /**/
-/**/  putdata(data);              /**/
-/**/}                             /**/
-/**////////////////////////////////**/
 
 String getdata() {
   return interact(REQUESTTYPE_GET, "");
@@ -207,7 +194,52 @@ String interact(int requesttype, String data) {
     Serial.println("php interact() start");
     Serial.println("php connecting to " + String(serverhostname));
   #endif
+
+
+/////////POST///////////
+
+  HTTPClient SpyderHub;
+
+  //SpyderHub.begin("http://spyderhub/");
+  SpyderHub.begin("http://spyderhub/interact.php");
+  SpyderHub.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  String postrequest = "authcode=";
+  String authtoken = readEEPROM(authcodeaddress, authcodelength);
+  postrequest += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM why we get 3 unknown chars at the end of the read string
+  if (!data.equals("")) {
+    postrequest += "&data=";
+    postrequest += data;
+  }
+  postrequest += "&requesttype=";
+  postrequest += requesttypes[requesttype];
+  postrequest += "&type=";
+  postrequest += type;
   
+  int httpResponseCode = SpyderHub.POST(postrequest);
+
+  if (httpResponseCode > 0) {
+    answer = SpyderHub.getString();
+
+    #ifdef debugmode
+      Serial.println("httpResponseCode: " + String(httpResponseCode));
+      Serial.println("___________Answer:___________");
+      Serial.println(answer);
+      Serial.println("_____________________________");
+    #endif
+  }
+  else {
+    Serial.println("ERROR: php connection failed");
+    #ifdef debugmode
+      Serial.println("_________________________________");
+    #endif
+    return "";
+  }
+
+  SpyderHub.end();
+
+/////////////////////////
+/*
   WiFiClient SpyderHub;
   const int httpPort = 80;
   if (!SpyderHub.connect(serverhostname, httpPort)) {
@@ -251,7 +283,7 @@ String interact(int requesttype, String data) {
     Serial.println();
     Serial.println("_____________________________");
   #endif
-
+*/
 ////////////////////////////////////////
 //search for #START
   #ifdef debugmode
@@ -273,7 +305,7 @@ String interact(int requesttype, String data) {
   if (answer.indexOf("#DEBUG") == -1) {
     #ifdef debugmode
       Serial.println("DEBUG:");
-      Serial.println("no debug");
+      Serial.println("No DEBUG");
     #endif
   }
   else {
@@ -304,7 +336,7 @@ String interact(int requesttype, String data) {
   
 //////////////error//////////////
   String answererror = interactdata["error"];
-  if (answererror != NULL) {
+  if (interactdata.containsKey("error")) {
     String errors = "default             AUTHFAILED          TYPEMISMATCH        JSONINVALID         REQUESTTYPEINVALID  ";  //error every 20 chars
     int e = errors.indexOf(answererror);
     if (e == -1) e = 0; //unrecognized error
@@ -336,6 +368,10 @@ String interact(int requesttype, String data) {
         case 0:
         default:
           Serial.println("ERROR: unknown error");
+          #ifdef debugmode
+            Serial.println("The ERROR:");
+            Serial.println(answererror);
+          #endif
           hibernate(fatalerrordelay);
     }
   }
@@ -350,11 +386,11 @@ String interact(int requesttype, String data) {
 
 //////////////requesttimeout//////////////
   int answerrequesttimeout = interactdata["requesttimeout"].as<int>();
-  if (answerrequesttimeout != NULL) {
+  if (interactdata.containsKey("requesttimeout")) {
     requesttimeout = answerrequesttimeout;
     if (answerrequesttimeout == 0) requesttimeout = defaultdelay;
     #ifdef debugmode
-      Serial.println("new requesttimeout: " + String(requesttimeout));
+      Serial.println("New requesttimeout: " + String(requesttimeout) + String("s"));
     #endif
   }
   else {
@@ -369,7 +405,7 @@ String interact(int requesttype, String data) {
 
     //TODO: perhaps print all data
   
-    Serial.println("---");  
+    //Serial.println("---");  
   #endif
 ////////////////////////////////////////
   #ifdef debugmode

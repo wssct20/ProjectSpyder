@@ -92,7 +92,7 @@ if ($action == "details") {
 								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
 								<input type=text name=action value=overwritefield style="display: none;">
 								<input type=text name=category value=data style="display: none;">
-								<input type=text name=var value="<?php echo ($data["friendly"]["datavar"][$usermodifiabledatafield] ?? $usermodifiabledatafield); ?>" style="display: none;">
+								<input type=text name=var value="<?php echo $usermodifiabledatafield; ?>" style="display: none;">
 								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatafield]; ?>">
 								<input type=submit name=submit value="Overwrite">
 							</form>
@@ -107,7 +107,7 @@ if ($action == "details") {
 								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
 								<input type=text name=action value=overwritesettingsfield style="display: none;">
 								<input type=text name=category value=settings style="display: none;">
-								<input type=text name=var value="<?php echo ($data["friendly"]["settingsvar"][$settingsfield] ?? $settingsfield); ?>" style="display: none;">
+								<input type=text name=var value="<?php echo $settingsfield; ?>" style="display: none;">
 								<input type=text name=value value="<?php echo $data["settings"][$settingsfield]; ?>">
 								<input type=submit name=submit value="Overwrite">
 							</form>
@@ -193,7 +193,7 @@ if ($action == "details") {
 						$data = getdata($device);
 						echo "<tr>";
 						echo "<td>" . $device["id"] . "</td>";
-						echo "<td>" . (empty($device["name"]) ? ($data["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]) . "</td>";
+						echo "<td>" . getdevicename($device) . "</td>";
 						echo "<td>" . ($data["friendly"]["type"] ?? $device["type"]) . "</td>";
 						echo "<td>" . $device["ipaddress"] . "</td>";
 						?>

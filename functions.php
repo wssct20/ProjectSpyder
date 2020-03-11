@@ -122,7 +122,7 @@ function collectdeviceproperties($device) {
 function getparameters() {
 	//merges GET and POST parameters to support both methods,
 	// POST overwrites GET parameters if both are available
-	return array_replace_recursive($_REQUEST, $_POST);
+	return array_replace($_REQUEST, $_POST);
 }
 
 ?>
