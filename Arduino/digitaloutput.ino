@@ -14,7 +14,7 @@ void digitaloutputsetup() {
 \"datavar\":{\
 \"state\":\"Output State\"\
 },\
-\"datavalues\":{\
+\"datavalue\":{\
 \"state\":\"off\"\
 },\
 \"type\":\"Digital Output\"\

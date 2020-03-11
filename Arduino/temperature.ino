@@ -30,7 +30,7 @@ void temperaturesetup() {
 \"temperature\":\"Temperature\",\
 \"humidity\":\"Humidity\"\
 },\
-\"datavalues\":{\
+\"datavalue\":{\
 \"temperature\":\"0°C\",\
 \"humidity\":\"0%\"\
 },\
