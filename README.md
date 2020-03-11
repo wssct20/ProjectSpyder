@@ -8,4 +8,4 @@ Also the install procedure will change, as we try to make it as simple as possib
 
 
 For installation instructions and further information, 
-please take a look at our [wiki](https://github.com/wssct20/ProjectSpyder/wiki)
+please take a look at our [wiki](https://github.com/wssct20/ProjectSpyder/wiki).
