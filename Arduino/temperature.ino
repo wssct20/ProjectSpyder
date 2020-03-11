@@ -34,7 +34,7 @@ void temperaturesetup() {
 \"temperature\":\"0°C\",\
 \"humidity\":\"0%\"\
 },\
-\"type\":\"Temperature and Humidity Sensor\"\
+\"type\":\"Temperature Sensor\"\
 },\
 \"preferredupdatetime\":30\
 }";
