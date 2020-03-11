@@ -32,7 +32,7 @@ void rgbledsetup() {
 },\
 \"type\":\"RGB-LED\"\
 },\
-\"preferredupdatetime\":2\
+\"preferredupdatetime\":5\
 }";
   
 }

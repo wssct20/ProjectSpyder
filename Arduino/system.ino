@@ -79,7 +79,7 @@ void lightsleep(int seconds) {
   wifisetup();
 }
 
-bool lightsleepgpio(int seconds, int pin, bool triggerlevel) {
+void lightsleepgpio(int seconds, int pin, bool triggerlevel) {
   esp_sleep_enable_timer_wakeup(seconds * 1000000);
   gpio_wakeup_enable((gpio_num_t)pin, triggerlevel?GPIO_INTR_HIGH_LEVEL:GPIO_INTR_LOW_LEVEL);
   esp_sleep_enable_gpio_wakeup();
@@ -94,14 +94,13 @@ bool lightsleepgpio(int seconds, int pin, bool triggerlevel) {
   esp_wifi_disconnect();
   esp_wifi_stop();
   esp_light_sleep_start();
-  bool pinstate = digitalRead(pin) == HIGH ? true : false;
   #ifdef debugmode
     Serial.println("lightsleep ended");
     Serial.println("----continue-----");
   #endif
   esp_wifi_start();
   wifisetup();
-  return pinstate;
+  return;
 }
 
 //TODO: implement lightsleep touch wakeup

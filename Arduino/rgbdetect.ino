@@ -61,7 +61,7 @@ void rgbdetectsetup() {
 },\
 \"type\":\"Color Sensor\"\
 },\
-\"preferredupdatetime\":20\
+\"preferredupdatetime\":10\
 }";
   
 }

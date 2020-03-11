@@ -14,7 +14,7 @@ void digitaloutputsetup() {
 \"datavar\":{\
 \"state\":\"Output State\"\
 },\
-\"datavalues\":{\
+\"datavalue\":{\
 \"state\":\"off\"\
 },\
 \"type\":\"Digital Output\"\
@@ -36,7 +36,7 @@ void digitaloutputloop() {
   DynamicJsonDocument receiveddata(JSONCAPACITY);
   deserializeJson(receiveddata, getdata());
 
-  int outputstate = receiveddata["data"]["state"].as<int>();
+  bool outputstate = receiveddata["data"]["state"].as<bool>();
 
   //check data
   if (outputstate != 1) outputstate = 0;
