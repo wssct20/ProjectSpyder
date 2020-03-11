@@ -22,7 +22,7 @@ function sanitizehtml($input) {
 }
 
 function getdevicename($device) {
-	return (empty($device["name"]) ? ($data["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]);
+	return (empty($device["name"]) ? (getdata($device)["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]);
 }
 
 ?>
