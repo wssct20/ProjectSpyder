@@ -32,74 +32,76 @@ void pair() {
   #endif
 
 /////////POST///////////
+  #ifdef HTTPPOST
+    HTTPClient SpyderHub;
+  
+    SpyderHub.begin("http://spyderhub/pair.php");
+    SpyderHub.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  
+    String postrequest = "type=";
+    postrequest += type;
+  
+    int httpResponseCode = SpyderHub.POST(postrequest);
+  
+    if (httpResponseCode > 0) {
+      answer = SpyderHub.getString();
+  
+      #ifdef debugmode
+        Serial.println("httpResponseCode: " + String(httpResponseCode));
+        Serial.println("___________Answer:___________");
+        Serial.println(answer);
+        Serial.println("_____________________________");
+      #endif
+    }
+    else {
+      Serial.println("ERROR: php connection failed");
+      #ifdef debugmode
+        Serial.println("_________________________________");
+      #endif
+      return;
+    }
+  
+    SpyderHub.end();
+  #endif
 
-  HTTPClient SpyderHub;
-
-  SpyderHub.begin("http://spyderhub/pair.php");
-  SpyderHub.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  String postrequest = "type=";
-  postrequest += type;
-
-  int httpResponseCode = SpyderHub.POST(postrequest);
-
-  if (httpResponseCode > 0) {
-    answer = SpyderHub.getString();
-
+/////////GET///////////
+  #ifdef HTTPGET
+    WiFiClient SpyderHub;
+    const int httpPort = 80;
+    if (!SpyderHub.connect(serverhostname, httpPort)) {
+        Serial.println("php connection failed");
+      #ifdef debugmode
+        Serial.println("_________________________________");
+      #endif
+      return;
+    }
+    
+    String url = "/pair.php";
+    url += "?type=";
+    url += type;
+    
     #ifdef debugmode
-      Serial.println("httpResponseCode: " + String(httpResponseCode));
+      Serial.println("Requesting URL: " + String(url));
+    #endif
+    
+    SpyderHub.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + serverhostname + "\r\n" + "Connection: close\r\n\r\n");
+    delay(1000);
+  
+    #ifdef debugmode
       Serial.println("___________Answer:___________");
-      Serial.println(answer);
+    #endif
+    while (SpyderHub.available()) {
+      answer = SpyderHub.readStringUntil('\r');
+      #ifdef debugmode
+        Serial.print(answer);
+      #endif
+    }
+    #ifdef debugmode
+      Serial.println();
       Serial.println("_____________________________");
     #endif
-  }
-  else {
-    Serial.println("ERROR: php connection failed");
-    #ifdef debugmode
-      Serial.println("_________________________________");
-    #endif
-    return;
-  }
-
-  SpyderHub.end();
-
-/////////////////////////
-/*
-  WiFiClient SpyderHub;
-  const int httpPort = 80;
-  if (!SpyderHub.connect(serverhostname, httpPort)) {
-      Serial.println("php connection failed");
-    #ifdef debugmode
-      Serial.println("_________________________________");
-    #endif
-    return;
-  }
-  
-  String url = "/pair.php";
-  url += "?type=";
-  url += type;
-  
-  #ifdef debugmode
-    Serial.println("Requesting URL: " + String(url));
   #endif
-  
-  SpyderHub.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + serverhostname + "\r\n" + "Connection: close\r\n\r\n");
-  delay(1000);
 
-  #ifdef debugmode
-    Serial.println("___________Answer:___________");
-  #endif
-  while (SpyderHub.available()) {
-    answer = SpyderHub.readStringUntil('\r');
-    #ifdef debugmode
-      Serial.print(answer);
-    #endif
-  }
-  #ifdef debugmode
-    Serial.println();
-    Serial.println("_____________________________");
-  #endif
-*/
 ////////////////////////////////////////
 //search for #START
   #ifdef debugmode

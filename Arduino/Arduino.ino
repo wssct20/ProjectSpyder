@@ -6,6 +6,7 @@ const String type = "button";      //Enter the type of your client here.
 
 #define debugmode               //some more debug information
 //#define reset_authcode          //resets authcode
+#define HTTPPOST                //"HTTPPOST" uses HTTP POST request  |   "HTTPGET" uses HTTP GET request
 
 #define JSONCAPACITY 2500
 String jsonstructure;
