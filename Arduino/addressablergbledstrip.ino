@@ -34,7 +34,7 @@ void addressablergbledstripsetup() {
 },\
 \"type\":\"Addressable RGB-LED Strip\"\
 },\
-\"preferredupdatetime\":5\
+\"preferredupdatetime\":10\
 }";
   
 }

@@ -19,7 +19,7 @@ void buttonsetup() {
 },\
 \"type\":\"Button\"\
 },\
-\"preferredupdatetime\":120\
+\"preferredupdatetime\":30\
 }";
 
 }

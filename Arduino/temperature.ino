@@ -36,7 +36,7 @@ void temperaturesetup() {
 },\
 \"type\":\"Temperature and Humidity Sensor\"\
 },\
-\"preferredupdatetime\":20\
+\"preferredupdatetime\":30\
 }";
   
 }
