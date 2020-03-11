@@ -32,7 +32,7 @@ void buttonloop() {
   JsonObject data = datadoc.createNestedObject("data");
   JsonObject friendly = datadoc.createNestedObject("friendly");
   JsonObject datavalue = friendly.createNestedObject("datavalue");
-  uint8_t buttonstate;
+  bool buttonstate;
   esp_sleep_wakeup_cause_t wakeupreason = esp_sleep_get_wakeup_cause();
   if (wakeupreason == ESP_SLEEP_WAKEUP_GPIO) {
     buttonstate  = 1;
