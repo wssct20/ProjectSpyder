@@ -195,9 +195,6 @@ String interact(int requesttype, String data) {
     Serial.println("php connecting to " + String(serverhostname));
   #endif
 
-
-/////////POST///////////
-
   HTTPClient SpyderHub;
 
   //SpyderHub.begin("http://spyderhub/");
@@ -238,52 +235,6 @@ String interact(int requesttype, String data) {
 
   SpyderHub.end();
 
-/////////////////////////
-/*
-  WiFiClient SpyderHub;
-  const int httpPort = 80;
-  if (!SpyderHub.connect(serverhostname, httpPort)) {
-    Serial.println("php connection failed");
-    #ifdef debugmode
-      Serial.println("_________________________________");
-    #endif
-    return "";
-  }
-  
-  String url = "/interact.php";
-  url += "?authcode=";
-  String authtoken = readEEPROM(authcodeaddress, authcodelength);
-  url += authtoken.substring(0, authcodelength); //TODO: temporary solution, check on readEEPROM why we get 3 unknown chars at the end of the read string
-  if (!data.equals("")) {
-    url += "&data=";
-    url += data;
-  }
-  url += "&requesttype=";
-  url += requesttypes[requesttype];
-  url += "&type=";
-  url += type;
-  
-  #ifdef debugmode
-    Serial.println("Requesting URL: " + String(url));
-  #endif
-  
-  SpyderHub.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + serverhostname + "\r\n" + "Connection: close\r\n\r\n");
-  delay(1000);
-  
-  #ifdef debugmode
-    Serial.println("___________Answer:___________");
-  #endif
-  while (SpyderHub.available()) {
-    answer = SpyderHub.readStringUntil('\r');
-    #ifdef debugmode
-      Serial.print(answer);
-    #endif
-  }
-  #ifdef debugmode
-    Serial.println();
-    Serial.println("_____________________________");
-  #endif
-*/
 ////////////////////////////////////////
 //search for #START
   #ifdef debugmode
