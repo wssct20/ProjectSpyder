@@ -5,14 +5,28 @@ checksession();
 
 $action = $_POST["action"] ?? "";
 
+if ($action == "create") {
+	//TODO: check for user permission
+	//TODO: untested code
+	$ifid = $_POST["ifid"] ?? die("INVALIDIFID");
+	$ifvar = $_POST["ifvar"] ?? die("INVALIDIFVAR");
+	$ifvalue = $_POST["ifvalue"] ?? die("INVALIDIFVALUE");
+	$thenid = $_POST["thenid"] ?? die("INVALIDTHENID");
+	$thenvar = $_POST["thenvar"] ?? die("INVALIDTHENVAR");
+	$thenvalue = $_POST["thenvalue"] ?? die("INVALIDTHENVALUE");
+	$ifid = intval($ifid);
+	$thenid = intval($thenid);
+	$name = $_POST["name"] ?? "";
+	$name = sanitizehtml($name);
+	addcondition($ifid, $ifvar, $ifvalue, $thenid, $thenvar, $thenvalue, $name);
+	header("DEBUG: conditions.php create condition successful");
+	header("Location: conditions.php",true,303);
+	die();
+}
+
 if ($action == "details") {
     //TODO: add details config
     header("Location: conditions.php",true,303);
-}
-
-if ($action == "create") {
-	//TODO: add create condition
-	header("Location: conditions.php",true,303);
 }
 
 ?>
