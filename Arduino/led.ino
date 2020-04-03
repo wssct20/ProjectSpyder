@@ -32,7 +32,7 @@ void ledsetup() {
 void ledloop() {
 
   #ifdef debugmode
-    Serial.println("led() look for data");
+    Serial.println("ledloop()");
   #endif
 
   //get data from system

@@ -30,7 +30,7 @@ void setup() {
 
   #ifdef reset_authcode
     resetauthcode();
-    Serial.println("authcode has been reset!");
+    Serial.println("Authcode has been reset!");
     while(1);
   #endif
   
@@ -47,7 +47,7 @@ void setup() {
   
   int e = typesstring.indexOf(switchtype);
   if (e == -1) {
-    Serial.println("Current type invalid.");
+    Serial.println("ERROR: Current type invalid.");
     hibernate(60*60*24);
   }
   switch (e / typesstringtypelength) {
@@ -82,7 +82,7 @@ void setup() {
       ledsetup();
       break;
     default:
-      Serial.println("Current type invalid.");
+      Serial.println("ERROR: Current type invalid.");
       hibernate(60*60*24);
   }
 
@@ -92,7 +92,7 @@ void loop() {
 
   int e = typesstring.indexOf(switchtype);
   if (e == -1) {
-    Serial.println("Current type invalid.");
+    Serial.println("ERROR: Current type invalid.");
     hibernate(60*60*24);
   }
   switch (e / typesstringtypelength) {
@@ -127,7 +127,7 @@ void loop() {
       ledloop();
       break;
     default:
-      Serial.println("Current type invalid.");
+      Serial.println("ERROR: Current type invalid.");
       hibernate(60*60*24);
   }
   

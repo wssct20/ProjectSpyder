@@ -26,6 +26,10 @@ void buttonsetup() {
 
 void buttonloop() {
 
+  #ifdef debugmode
+    Serial.println("buttonloop()");
+  #endif
+
   String buttondata;
   
   DynamicJsonDocument datadoc(JSONCAPACITY);
@@ -50,9 +54,6 @@ void buttonloop() {
   };
   datavalue["state"] = friendlybuttonstate[buttonstate];
   serializeJson(datadoc, buttondata);
-  #ifdef debugmode
-    Serial.println("JSON: " + String(buttondata));
-  #endif
 
   updatedata(buttondata);
 

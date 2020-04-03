@@ -20,9 +20,7 @@ void rotationsetup() {
     #endif
   }
   else {
-    #ifdef debugmode
-      Serial.println("No rotation sensor found");
-    #endif
+    Serial.println("ERROR: No rotation sensor found");
     hibernate(60*60*24);
   }
 
@@ -172,9 +170,6 @@ void rotationloop() {
   datavalue["magnetvalue"] = friendlym;
 
   serializeJson(datadoc, rotationdata);
-  #ifdef debugmode
-    Serial.println("JSON: " + String(rotationdata));
-  #endif
 
   updatedata(rotationdata);
 

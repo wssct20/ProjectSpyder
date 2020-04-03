@@ -41,11 +41,11 @@ void addressablergbledstripsetup() {
 
 void addressablergbledstriploop() {
 
-  String addressablergbledstripdata;
-
   #ifdef debugmode
-    Serial.println("ledstrip look for data");
+    Serial.println("addressablergbledstriploop()");
   #endif
+  
+  String addressablergbledstripdata;
 
   DynamicJsonDocument data(JSONCAPACITY);
   deserializeJson(data, getdata());
@@ -53,6 +53,9 @@ void addressablergbledstriploop() {
   ledstrip.SetBrightness(data["settings"]["brightness"].as<uint8_t>());
   
   uint8_t mode = data["settings"]["mode"].as<uint8_t>();
+  #ifdef debugmode
+    Serial.println("mode: " + String(mode));
+  #endif
   switch (mode) {
     case 0:
       {

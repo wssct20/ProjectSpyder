@@ -68,7 +68,7 @@ void pair() {
   #endif
 
   if (answer.indexOf("#START") == -1) {
-    Serial.println("#START not found");
+    Serial.println("ERROR: #START not found");
     hibernate(fatalerrordelay);
   }
   else {
@@ -97,14 +97,13 @@ void pair() {
 //#DATA
   #ifdef debugmode
     Serial.println("DATA:");
-    Serial.println("split:");
   #endif
   
   String answerdatasubstring = answer.substring(answer.indexOf("#DATA") + 6, answer.indexOf("#END") - 1);
   #ifdef debugmode
     Serial.println(answerdatasubstring);
     
-    Serial.println("---");
+    Serial.println("---process data---");
   #endif
 
 
@@ -149,14 +148,12 @@ void pair() {
 ////////////////////////////////////////
 
   #ifdef debugmode
-    Serial.println("---");
-
+    Serial.println("---summary---");
     //print all data
     Serial.println("error:" + String("\t\t") + String(answererror));
     Serial.println("authcode:" + String("\t") + String(answerauthcode));
     Serial.println("requesttimeout:" + String("\t") + String(answerrequesttimeout) + String("s"));
-    
-    Serial.println("---");
+    Serial.println("------");
   #endif
 
 ////////////////////////////////////////
@@ -192,6 +189,7 @@ String interact(int requesttype, String data) {
   
   #ifdef debugmode
     Serial.println("php interact() start");
+    Serial.println("data received: " + String(data));
     Serial.println("php connecting to " + String(serverhostname));
   #endif
 
@@ -242,7 +240,7 @@ String interact(int requesttype, String data) {
   #endif
 
   if (answer.indexOf("#START") == -1) {
-    Serial.println("#START not found");
+    Serial.println("ERROR: #START not found");
     hibernate(defaulterrordelay);
   }
   else {
@@ -271,14 +269,13 @@ String interact(int requesttype, String data) {
 //#DATA
   #ifdef debugmode
     Serial.println("DATA:");
-    Serial.println("split:");
   #endif
   
   String answerdatasubstring = answer.substring(answer.indexOf("#DATA") + 6, answer.indexOf("#END") - 1);
   #ifdef debugmode
     Serial.println(answerdatasubstring);
     
-    Serial.println("---");
+    Serial.println("---process data---");
   #endif
 
 
@@ -350,13 +347,10 @@ String interact(int requesttype, String data) {
   }
 
 ////////////////////////////////////////
-
   #ifdef debugmode
-    Serial.println("---");
-
-    //TODO: perhaps print all data
-  
-    //Serial.println("---");  
+    Serial.println("---received data---");
+    Serial.println(returndata);
+    Serial.println("------");  
   #endif
 ////////////////////////////////////////
   #ifdef debugmode

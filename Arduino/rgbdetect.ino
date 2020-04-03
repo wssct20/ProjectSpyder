@@ -23,9 +23,7 @@ void rgbdetectsetup() {
     #endif
   }
   else {
-    #ifdef debugmode
-      Serial.println("No rgb sensor found");
-    #endif
+    Serial.println("ERROR: No rgb sensor found");
     hibernate(60*60*24);
   }
 
@@ -68,6 +66,10 @@ void rgbdetectsetup() {
 
 void rgbdetectloop() {
 
+  #ifdef debugmode
+    Serial.println("rgbdetectloop()");
+  #endif
+
   String rgbdetectdata;
   
   DynamicJsonDocument receiveddata(JSONCAPACITY);
@@ -100,13 +102,12 @@ void rgbdetectloop() {
   }
 
   #ifdef debugmode
-    Serial.print("Color Temp: "); Serial.print(colortemp, DEC); Serial.print(" K - ");
-    Serial.print("Lux: "); Serial.print(lux, DEC); Serial.print(" - ");
-    Serial.print("R: "); Serial.print(r, DEC); Serial.print(" ");
-    Serial.print("G: "); Serial.print(g, DEC); Serial.print(" ");
-    Serial.print("B: "); Serial.print(b, DEC); Serial.print(" ");
-    Serial.print("C: "); Serial.print(c, DEC); Serial.print(" ");
-    Serial.println(" ");
+    Serial.println("Color Temp: " + String(colortemp, DEC) + String(" K"));
+    Serial.println("Illuminance: " + String(lux, DEC) + String(" lux"));
+    Serial.println("R: " + String(r, DEC));
+    Serial.println("G: " + String(g, DEC));
+    Serial.println("B: " + String(b, DEC));
+    Serial.println("C: " + String(c, DEC));
   #endif
 
   JsonObject data = datadoc.createNestedObject("data");
@@ -134,10 +135,6 @@ void rgbdetectloop() {
   datavalue["led"] = friendlyled[ledstate];
 
   serializeJson(datadoc, rgbdetectdata);
-
-  #ifdef debugmode
-    Serial.println("JSON: " + String(rgbdetectdata));
-  #endif
   
   //send the values to the server
   updatedata(rgbdetectdata);

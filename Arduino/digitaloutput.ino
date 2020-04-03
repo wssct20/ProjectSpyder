@@ -26,11 +26,11 @@ void digitaloutputsetup() {
 
 void digitaloutputloop() {
 
-  String digitaloutputdata;
-
   #ifdef debugmode
-    Serial.println("digitaloutput() look for data");
+    Serial.println("digitaloutputloop()");
   #endif
+  
+  String digitaloutputdata;
 
   //get data from system
   DynamicJsonDocument receiveddata(JSONCAPACITY);
@@ -63,10 +63,6 @@ void digitaloutputloop() {
   datavalue["state"] = friendlystate[outputstate];
 
   serializeJson(datadoc, digitaloutputdata);
-
-  #ifdef debugmode
-    Serial.println("JSON: " + String(digitaloutputdata));
-  #endif
   
   //send the values to the server
   updatedata(digitaloutputdata);

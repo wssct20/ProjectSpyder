@@ -40,7 +40,7 @@ void rgbledsetup() {
 void rgbledloop() {
 
   #ifdef debugmode
-    Serial.println("rgbled() look for data");
+    Serial.println("rgbledloop()");
   #endif
 
   //get data from system

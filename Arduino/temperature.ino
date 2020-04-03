@@ -43,6 +43,10 @@ void temperaturesetup() {
 
 void temperatureloop() {
 
+  #ifdef debugmode
+    Serial.println("temperatureloop()");
+  #endif
+
   String temperaturedata;
 
   TempAndHumidity lastValues = dht.getTempAndHumidity();
@@ -68,10 +72,6 @@ void temperatureloop() {
   datavalue["humidity"] = friendlyhumidity;
   
   serializeJson(datadoc, temperaturedata);
-
-  #ifdef debugmode
-    Serial.println("JSON: " + String(temperaturedata));
-  #endif
   
   //send the values to the server
   updatedata(temperaturedata);
