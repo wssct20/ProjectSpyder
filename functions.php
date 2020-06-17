@@ -112,6 +112,7 @@ function updatedata($id, $data) {
 }
 
 function collectdeviceproperties($device) {
+	//filter out device props, to be sent to the client
 	$deviceprops = array();
 	$deviceprops["id"] = $device["id"];
 	$deviceprops["name"] = $device["name"];

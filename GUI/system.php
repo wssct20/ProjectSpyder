@@ -22,6 +22,7 @@ function sanitizehtml($input) {
 }
 
 function getdevicename($device) {
+	//returns device name if available and if not returns Type and ID
 	return (empty($device["name"]) ? (getdata($device)["friendly"]["type"] ?? $device["type"])." ".$device["id"] : $device["name"]);
 }
 

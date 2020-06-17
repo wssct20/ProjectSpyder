@@ -22,19 +22,22 @@ checksession();
 			    background-color: black;
 			}
 		</style>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
 		<script>
 			async function refreshmainframe() {
-				$.ajax({
+				/*$.ajax({
 					url: "tilegrid.php",
 					success: function(data) {
 						document.getElementById("mainframe").innerHTML = data;
 					},
 					dataType: "html"
-				});
+				});*/
+				fetch("tilegrid.php").then(data) {
+					document.getElementById("mainframe").innerHTML = data;
+				}.catch() {}
 			}
 			var refreshhandler = setInterval(refreshmainframe, 5000);
-			$(document).ready(refreshmainframe);
+			document.onload = refreshmainframe;
 		</script>
 	</head>
 	<body>
