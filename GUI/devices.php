@@ -86,14 +86,16 @@ if ($action == "details") {
 				<h2><?php echo $friendlytype." ".$device["id"]; echo empty($device["name"]) ? "" : " - ".$device["name"]; ?></h2>
 				<?php 
 					if (sizeof($data["usermodifiabledata"]) > 0) echo "<h3>Data</h3>";
-					foreach ($data["usermodifiabledata"] as $usermodifiabledatafield) {
+					foreach ($data["usermodifiabledata"] as $usermodifiabledatafield => $usermodifiabledatavalue) {
 						?>
 							<form method=post>
 								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
 								<input type=text name=action value=overwritefield style="display: none;">
 								<input type=text name=category value=data style="display: none;">
-								<input type=text name=var value="<?php echo $usermodifiabledatafield; ?>" style="display: none;">
-								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatafield]; ?>">
+								<input type=text name=var value="<?php echo $usermodifiabledatavalue; ?>" style="display: none;">
+								<label><?php sanitizehtml($data["friendly"]["datavar"][$usermodifiabledatafield] ?? $usermodifiabledatafield) ?>: </label>
+								<?php //TODO: add for= to label for accessablity ?>
+								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatavalue]; ?>">
 								<input type=submit name=submit value="Overwrite">
 							</form>
 						<?php
@@ -108,6 +110,8 @@ if ($action == "details") {
 								<input type=text name=action value=overwritesettingsfield style="display: none;">
 								<input type=text name=category value=settings style="display: none;">
 								<input type=text name=var value="<?php echo $settingsfield; ?>" style="display: none;">
+								<label><?php sanitizehtml($data["friendly"]["settingsvar"][$datafield] ?? $settingsfield) ?>: </label>
+								<?php //TODO: add for= to label for accessablity ?>
 								<input type=text name=value value="<?php echo $data["settings"][$settingsfield]; ?>">
 								<input type=submit name=submit value="Overwrite">
 							</form>
@@ -118,7 +122,8 @@ if ($action == "details") {
 				<form method=post>
 					<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
 					<input type=text name=action value=rename style="display: none;">
-					<input type=text name=name 
+					<label for="devicename">Name: </label>
+					<input type=text name=name id="devicename"
 						placeholder="<?php echo $friendlytype." ".$device["id"]; ?>" 
 						value="<?php echo empty($device["name"]) ? "" : $device["name"]; ?>">
 					<input type=submit name=submit value="Rename">
@@ -129,8 +134,8 @@ if ($action == "details") {
 					<input type=text name=action value=delete style="display: none;">
 					<input type=submit name=submit value="Delete">
 				</form>
-				<h4>Debug</h4>
-				<p><?php echo jsonencode($data); ?></p>
+				<h4 style="margin-bottom: 0;">Debug</h4>
+				<p style="margin-top: 0;"><?php echo jsonencode($data); ?></p>
 			</div>
 		</body>
 	</html>
