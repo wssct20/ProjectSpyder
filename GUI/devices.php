@@ -110,7 +110,7 @@ if ($action == "details") {
 								<input type=text name=action value=overwritesettingsfield style="display: none;">
 								<input type=text name=category value=settings style="display: none;">
 								<input type=text name=var value="<?php echo $settingsfield; ?>" style="display: none;">
-								<label><?php sanitizehtml($data["friendly"]["settingsvar"][$datafield] ?? $settingsfield) ?>: </label>
+								<label><?php sanitizehtml($data["friendly"]["settingsvar"][$settingsfield] ?? $settingsfield) ?>: </label>
 								<?php //TODO: add for= to label for accessablity ?>
 								<input type=text name=value value="<?php echo $data["settings"][$settingsfield]; ?>">
 								<input type=submit name=submit value="Overwrite">
