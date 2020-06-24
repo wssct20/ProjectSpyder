@@ -86,36 +86,38 @@ if ($action == "details") {
 				<h2><?php echo $friendlytype." ".$device["id"]; echo empty($device["name"]) ? "" : " - ".$device["name"]; ?></h2>
 				<?php 
 					if (sizeof($data["usermodifiabledata"]) > 0) echo "<h3>Data</h3>";
-					foreach ($data["usermodifiabledata"] as $usermodifiabledatafield => $usermodifiabledatavalue) {
+					foreach ($data["usermodifiabledata"] as $usermodifiabledatafield) {
 						?>
 							<form method=post>
 								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
 								<input type=text name=action value=overwritefield style="display: none;">
 								<input type=text name=category value=data style="display: none;">
-								<input type=text name=var value="<?php echo $usermodifiabledatavalue; ?>" style="display: none;">
-								<label><?php sanitizehtml($data["friendly"]["datavar"][$usermodifiabledatafield] ?? $usermodifiabledatafield) ?>: </label>
-								<?php //TODO: add for= to label for accessablity ?>
-								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatavalue]; ?>">
+								<input type=text name=var value="<?php echo $usermodifiabledatafield; ?>" style="display: none;">
+								<label><?php echo sanitizehtml($data["friendly"]["datavar"][$usermodifiabledatafield] ?? $usermodifiabledatafield) ?>: </label>
+								<?php //TODO: add for= to label for accessibility ?>
+								<input type=text name=value value="<?php echo $data["data"][$usermodifiabledatafield]; ?>">
 								<input type=submit name=submit value="Overwrite">
 							</form>
 						<?php
 					}
 				?>
 				<?php 
-					if (sizeof($data["settings"]) > 0) echo "<h3>Settings</h3>";
-					foreach ($data["settings"] as $settingsfield => $settingsvalue) {
-						?>
-							<form method=post>
-								<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
-								<input type=text name=action value=overwritesettingsfield style="display: none;">
-								<input type=text name=category value=settings style="display: none;">
-								<input type=text name=var value="<?php echo $settingsfield; ?>" style="display: none;">
-								<label><?php sanitizehtml($data["friendly"]["settingsvar"][$settingsfield] ?? $settingsfield) ?>: </label>
-								<?php //TODO: add for= to label for accessablity ?>
-								<input type=text name=value value="<?php echo $data["settings"][$settingsfield]; ?>">
-								<input type=submit name=submit value="Overwrite">
-							</form>
-						<?php
+					if (sizeof($data["settings"]) > 0) {
+						echo "<h3>Settings</h3>";
+						foreach ($data["settings"] as $settingsfield => $settingsvalue) {
+							?>
+								<form method=post>
+									<input type=text name=id value="<?php echo $device["id"]; ?>" style="display: none;">
+									<input type=text name=action value=overwritesettingsfield style="display: none;">
+									<input type=text name=category value=settings style="display: none;">
+									<input type=text name=var value="<?php echo $settingsfield; ?>" style="display: none;">
+									<label><?php echo sanitizehtml($data["friendly"]["settingsvar"][$settingsfield] ?? $settingsfield) ?>: </label>
+									<?php //TODO: add for= to label for accessibility ?>
+									<input type=text name=value value="<?php echo $data["settings"][$settingsfield]; ?>">
+									<input type=submit name=submit value="Overwrite">
+								</form>
+							<?php
+						}
 					}
 				?>
 				<h3>Manage</h3>
