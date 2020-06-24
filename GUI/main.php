@@ -32,9 +32,13 @@ checksession();
 					},
 					dataType: "html"
 				});*/
-				fetch("tilegrid.php").then(data) {
-					document.getElementById("mainframe").innerHTML = data;
-				}.catch() {}
+				fetch("tilegrid.php")
+					.then(data => data.text())
+					.then(data => {
+						console.log(data);
+							document.getElementById("mainframe").innerHTML = data;
+					})
+					.catch(() => console.log("failed to fetch tiles"))
 			}
 			var refreshhandler = setInterval(refreshmainframe, 5000);
 			document.onload = refreshmainframe;
