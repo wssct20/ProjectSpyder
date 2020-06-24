@@ -22,16 +22,8 @@ checksession();
 			    background-color: black;
 			}
 		</style>
-		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
 		<script>
 			async function refreshmainframe() {
-				/*$.ajax({
-					url: "tilegrid.php",
-					success: function(data) {
-						document.getElementById("mainframe").innerHTML = data;
-					},
-					dataType: "html"
-				});*/
 				fetch("tilegrid.php")
 					.then(data => data.text())
 					.then(data => {
@@ -41,7 +33,8 @@ checksession();
 					.catch(() => console.log("failed to fetch tiles"))
 			}
 			var refreshhandler = setInterval(refreshmainframe, 5000);
-			document.onload = refreshmainframe;
+			window.onload = refreshmainframe;
+			setTimeout(refreshmainframe, 250);
 		</script>
 	</head>
 	<body>
