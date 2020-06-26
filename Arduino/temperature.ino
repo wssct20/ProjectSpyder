@@ -1,6 +1,6 @@
 #include "DHTesp.h"
 
-#define datapin 5
+#define datapin 5   //Enter the pin of your datawire here
 
 /*
  * Connection:
@@ -20,6 +20,7 @@ void temperaturesetup() {
   //initialize temperature sensor
   dht.setup(datapin, DHTesp::DHT22);
 
+  //set client specific jsonstructure
   jsonstructure = "{\
 \"data\":{\
 \"temperature\":0,\
@@ -76,6 +77,7 @@ void temperatureloop() {
   //send the values to the server
   updatedata(temperaturedata);
   
+  //go to lightsleep
   lightsleep(requesttimeout);
   
 }

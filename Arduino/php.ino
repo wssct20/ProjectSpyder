@@ -31,6 +31,7 @@ void pair() {
     Serial.println("php connecting to " + String(serverhostname));
   #endif
 
+  //sends a connection request to the server:
   HTTPClient SpyderHub;
 
   SpyderHub.begin("http://spyderhub/pair.php");
@@ -193,6 +194,7 @@ String interact(int requesttype, String data) {
     Serial.println("php connecting to " + String(serverhostname));
   #endif
 
+  //sends data to the server / requests data from the server:
   HTTPClient SpyderHub;
 
   //SpyderHub.begin("http://spyderhub/");
@@ -362,6 +364,7 @@ String interact(int requesttype, String data) {
 
 
 
+//deletes the authcode from the EEPROM (memory)
 void resetauthcode() {
   String empty = "";
   for (int i = 0; i < authcodelength; i++) {

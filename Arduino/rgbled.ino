@@ -17,6 +17,7 @@ void rgbledsetup() {
     ledcAttachPin(pins[i], rgbled_pwmchannel[i]);
   }
 
+  //set client specific jsonstructure
   jsonstructure = "{\
 \"data\":{\
 \"red\":0,\

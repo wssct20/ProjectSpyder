@@ -11,6 +11,7 @@ void addressablergbledstripsetup() {
   ledstrip.Begin();             //starts the connection to the led strip
   ledstrip.SetBrightness(50);   //sets the maximum brightness
 
+  //set client specific jsonstructure
   jsonstructure = "{\
 \"settings\":{\
 \"mode\":0,\
@@ -47,6 +48,7 @@ void addressablergbledstriploop() {
   
   String addressablergbledstripdata;
 
+  //read data from server
   DynamicJsonDocument data(JSONCAPACITY);
   deserializeJson(data, getdata());
 
@@ -57,7 +59,7 @@ void addressablergbledstriploop() {
     Serial.println("mode: " + String(mode));
   #endif
   switch (mode) {
-    case 0:
+    case 0: //values sent by the server
       {
         //read data
         int color[] = {
@@ -71,12 +73,12 @@ void addressablergbledstriploop() {
         ledstrip.Show();
       }
       break;
-    case 1:
-      //
+    /*case 1:
+      //TODO: add non-blocking animation
       break;
     case 2:
-      //
-      break;
+      //TODO: add non-blocking animation
+      break;*/
     default:
       {
         //switch all leds off
@@ -88,6 +90,7 @@ void addressablergbledstriploop() {
       break;
   }
 
+  //go to lightsleep
   lightsleep(requesttimeout);
   
 }

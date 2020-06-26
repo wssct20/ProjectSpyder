@@ -31,6 +31,7 @@ void rgbdetectsetup() {
   pinMode(detectledpin, OUTPUT);
   digitalWrite(detectledpin, LOW);
 
+  //set client specific jsonstructure
   jsonstructure = "{\
 \"data\":{\
 \"red\":0,\
@@ -72,6 +73,7 @@ void rgbdetectloop() {
 
   String rgbdetectdata;
   
+  //get data from system
   DynamicJsonDocument receiveddata(JSONCAPACITY);
   deserializeJson(receiveddata, getdata());
 
@@ -91,7 +93,7 @@ void rgbdetectloop() {
   uint16_t r, g, b, c, colortemp, lux;
   DynamicJsonDocument datadoc(JSONCAPACITY);
 
-  //measure the rgb values and calculate the themperature and brightness
+  //measure the rgb values and calculate the temperature and brightness
   rgbdetect.getRawData(&r, &g, &b, &c);
   colortemp = rgbdetect.calculateColorTemperature_dn40(r, g, b, c);
   lux = rgbdetect.calculateLux(r, g, b);
@@ -139,6 +141,7 @@ void rgbdetectloop() {
   //send the values to the server
   updatedata(rgbdetectdata);
 
+  //go to lightsleep
   lightsleep(requesttimeout);
   
 }

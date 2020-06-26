@@ -2,7 +2,7 @@
 //#include "esp_bt.h"
 #include "esp_wifi.h"
 #include "WifiCredentials.h"
-const String type = "button";      //Enter the type of your client here.
+const String type = "button";      //Enter the type of your client here
 
 #define debugmode               //some more debug information
 //#define reset_authcode          //resets authcode
@@ -24,10 +24,11 @@ String switchtype = type;
 
 void setup() {
 
-  Serial.begin(115200);
+  Serial.begin(115200); //initialize serial
   
-  //esp_bt_controller_disable(); //disable bluetooth controller for power savings, but currently commented out, because I believe its not started if library isnt included
+  //esp_bt_controller_disable();   //disable bluetooth controller for power savings, but currently commented out, because I believe its not started if library isnt included
 
+  //if "reset_authcode" is defined only the authcode is reset
   #ifdef reset_authcode
     resetauthcode();
     Serial.println("Authcode has been reset!");
@@ -43,8 +44,9 @@ void setup() {
     }
   }
   
-  wifisetup();
+  wifisetup();  //set up the wifi connection
   
+  //calls the client specific setup():
   int e = typesstring.indexOf(switchtype);
   if (e == -1) {
     Serial.println("ERROR: Current type invalid.");
@@ -90,6 +92,7 @@ void setup() {
 
 void loop() {
 
+  //calls the client specific loop():
   int e = typesstring.indexOf(switchtype);
   if (e == -1) {
     Serial.println("ERROR: Current type invalid.");
