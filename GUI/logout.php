@@ -1,7 +1,6 @@
-<?php 
+<?php
 
 //require_once("system.php");
-
 session_start();
 
 $_SESSION["login"] = false;

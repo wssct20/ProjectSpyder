@@ -1,6 +1,6 @@
-<?php 
 require_once("system.php");
 if (!sessionvalid()) die("INVALIDSESSION");
+<?php
 
 $devices = getdevices();
 
@@ -22,7 +22,7 @@ function gettile($device) {
 
 <div class="tilegrid">
 	
-	<?php 
+	<?php
 	foreach ($devices as $device) {
 		?>
 		<div class="tile">

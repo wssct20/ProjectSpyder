@@ -40,9 +40,9 @@ if ($action == "overwritefield") {
 	switch ($category) {
 		case "data":
 		case "settings":
-		break;
+			break;
 		default:
-		die("INVALIDCATEGORY");
+			die("INVALIDCATEGORY");
 	}
 	$var = $_POST["var"] ?? "";
 	if ($var == "") die("INVALIDVAR");
@@ -214,8 +214,8 @@ if ($action == "details") {
 						$data = getdata($device);
 						echo "<tr>";
 						echo "<td>" . $device["id"] . "</td>";
-						echo "<td>" . getdevicename($device) . "</td>";
-						echo "<td>" . ($data["friendly"]["type"] ?? $device["type"]) . "</td>";
+						echo "<td>" . sanitizehtml(getdevicename($device)) . "</td>";
+						echo "<td>" . sanitizehtml($data["friendly"]["type"] ?? $device["type"]) . "</td>";
 						echo "<td>" . $device["ipaddress"] . "</td>";
 						?>
 						<td>

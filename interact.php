@@ -22,7 +22,7 @@ if (sizeof($device) == 0) dieerror("AUTHFAILED", "Authentication failed, client 
 if ($device["authcode"] != $authcode) die("AUTHCODESQLFATALERROR"); //should never happen
 
 //check if device type matches
-if ($device["type"] != $type) dieerror("TYPEMISMATCH","Type doesn't match.");
+if ($device["type"] != $type) dieerror("TYPEMISMATCH", "Type doesn't match.");
 
 if (!empty($data)) {
 	if (jsondecode($data) == null) dieerror("DATAINVALID", "Data is invalid, maybe the JSON is not complete");

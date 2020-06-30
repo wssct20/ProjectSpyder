@@ -135,29 +135,6 @@ function updatedevicename($id, $name) {
 	}
 }
 
-/*function getdata($id) {
-	//getdata: get data of a device from the according type table
-	global $db;
-	// Stage 1: prepare
-	if (!($statement = $db->prepare("SELECT * FROM devices WHERE id=?"))) {
-		dieerror("ERRSQLTABLE", "getdata Prepare failed: (" . $db->errno . ") " . $db->error);
-	}
-	// Stage 2: bind parameters
-	if (!$statement->bind_param("i", $id)) {
-		dieerror("ERRSQLTABLE", "getdata Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
-	}
-	// Stage 3: execute
-	if (!$statement->execute()) {
-		dieerror("ERRSQLTABLE", "getdata Execute failed: (" . $statement->errno . ") " . $statement->error);
-	}
-	// Stage 4: get results
-	if (!($result = $statement->get_result())) {
-		dieerror("ERRSQLTABLE", "getdata Getting result set failed: (" . $statement->errno . ") " . $statement->error);
-	}
-	// Stage 5: fetch data from row
-	return $result->fetch_array()["data"];
-}*/
-
 function sqlupdatedata($id, $data) {
 	//added sql in front because updatedata in functions needs to encode json string first
 	//updatedata: set data of a device in the according type table

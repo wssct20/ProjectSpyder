@@ -58,7 +58,9 @@ if ($action == "details") {
 	$edit = true;
 }
 
-//collect all variables sorted per device for selection in conditions
+//collect all variables sorted per device for selection in con
+//TODO: include friendly namesy names
+//TODO: include current values
 $variables = array();
 foreach (getdevices() as $device) {
 	$variables[$device["id"]] = array();
@@ -123,13 +125,13 @@ foreach (getdevices() as $device) {
 					foreach ($conditions as $condition) {
 						echo "<tr>";
 						echo "<td>" . $condition["id"] . "</td>";
-						echo "<td>" . $condition["name"] . "</td>";
-						echo "<td>" . getdevicename(getdevicebyid($condition["ifid"])) . "</td>";
-						echo "<td>" . $condition["ifvar"] . "</td>";
-						echo "<td>" . $condition["ifvalue"] . "</td>";
-						echo "<td>" . getdevicename(getdevicebyid($condition["thenid"])) . "</td>";
-						echo "<td>" . $condition["thenvar"] . "</td>";
-						echo "<td>" . $condition["thenvalue"] . "</td>";
+						echo "<td>" . sanitizehtml($condition["name"]) . "</td>";
+						echo "<td>" . sanitizehtml(getdevicename(getdevicebyid($condition["ifid"]))) . "</td>";
+						echo "<td>" . sanitizehtml($condition["ifvar"]) . "</td>";
+						echo "<td>" . sanitizehtml($condition["ifvalue"]) . "</td>";
+						echo "<td>" . sanitizehtml(getdevicename(getdevicebyid($condition["thenid"]))) . "</td>";
+						echo "<td>" . sanitizehtml($condition["thenvar"]) . "</td>";
+						echo "<td>" . sanitizehtml($condition["thenvalue"]) . "</td>";
 						?>
 						<td>
 							<form method=post style="margin: 0;">

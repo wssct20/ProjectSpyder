@@ -7,6 +7,7 @@
     //unprepared query: drop all tables
     if (!$db->query(
             "DECLARE @sql NVARCHAR(max)=''
+die("SYSTEM RESET IS CURRENTLY DISABLED.");
 
             SELECT @sql += ' Drop table ' + QUOTENAME(TABLE_SCHEMA) + '.'+ QUOTENAME(TABLE_NAME) + '; '
             FROM   INFORMATION_SCHEMA.TABLES

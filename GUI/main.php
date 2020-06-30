@@ -1,4 +1,4 @@
-<?php 
+<?php
 //this is the main screen of the gui
 
 require_once("system.php");
@@ -27,8 +27,7 @@ checksession();
 				fetch("tilegrid.php")
 					.then(data => data.text())
 					.then(data => {
-						console.log(data);
-							document.getElementById("mainframe").innerHTML = data;
+						document.getElementById("mainframe").innerHTML = data;
 					})
 					.catch(() => console.log("failed to fetch tiles"))
 			}

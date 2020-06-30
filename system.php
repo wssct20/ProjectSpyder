@@ -45,6 +45,4 @@ if ($db->connect_errno) {
 
 checktables(); //check for sql tables
 
-
-
 ?>

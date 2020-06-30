@@ -1,4 +1,4 @@
-<?php 
+<?php
 $now = time();
 require_once("system.php");
 $PARAM = getparameters();

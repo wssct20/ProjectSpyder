@@ -91,9 +91,9 @@ if ($action == "delete") {
 					foreach ($users as $user) {
 						echo "<tr>";
 						echo "<td>" . $user["id"] . "</td>";
-						echo "<td>" . $user["name"] . "</td>";
 						echo "<td>" . $user["role"] . "</td>";
 						?>
+						echo "<td>" . sanitizehtml($user["name"]) . "</td>";
 						<td>
 							<form method=post style="margin: 0;">
 								<input type=text name=username value="<?php echo $user["name"]; ?>" style="display: none;">
