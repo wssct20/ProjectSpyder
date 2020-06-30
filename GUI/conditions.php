@@ -58,7 +58,6 @@ foreach (getdevices() as $device) {
 		array_push($variables[$device["id"]], $datafieldname);
 	}
 }
-$variables = jsonencode($variables);
 
 ?>
 
@@ -141,7 +140,7 @@ $variables = jsonencode($variables);
 			?>
 			
 			
-			<p id="variables" style="display: none;"><?php echo $variables; ?></p>
+			<p id="variables" style="display: none;"><?php echo jsonencode($variables); ?></p>
 			<script>
 				function getel(id) {return document.getElementById(id);}
 				function rendervars(type) {
@@ -168,16 +167,27 @@ $variables = jsonencode($variables);
 							<select name=ifid id=ifid onchange="rendervars('if')">
 								<?php 
 									foreach (getdevices() as $device) {
-										echo "<option value=".$device["id"].">".getdevicename($device)."</option>";
+										if (empty(getdata($device)["data"])) continue;
+										$selected = $edit && $editcondition["ifid"] == $device["id"] ? " selected" : "";
+										echo "<option value=\"".$device["id"]."\"".$selected.">".getdevicename($device)."</option>";
 									}
 								?>
 							</select>
 						</td>
 						<td>
-							<select name=ifvar id=ifvar disabled onchange="getel('ifvalue').removeAttribute('disabled');">
+							<select name=ifvar id=ifvar <?php echo $edit ? "" : "disabled";?> onchange="getel('ifvalue').removeAttribute('disabled');">
+								<?php
+									if ($edit) {
+										foreach ($variables as $variable) {
+											$selected = $editcondition["ifvar"] == $variable ? " selected" : "";
+											echo "<option value=\"".$variable."\"".$selected.">" . $variable . "</option>";
+										}
+									}
+								?>
+							</select>
 						</td>
 						<td>
-							<input name=ifvalue id=ifvalue placeholder="Value" disabled>
+							<input name=ifvalue id=ifvalue placeholder="Value" <?php echo $edit ? "value=\"".$editcondition["ifvalue"]."\"" : "disabled";?>>
 						</td>
 					</tr>
 					<tr>
@@ -186,16 +196,27 @@ $variables = jsonencode($variables);
 							<select name=thenid id=thenid onchange="rendervars('then')">
 								<?php 
 									foreach (getdevices() as $device) {
-										echo "<option value=".$device["id"].">".getdevicename($device)."</option>";
+										if (empty(getdata($device)["data"])) continue;
+										$selected = $edit && $editcondition["thenid"] == $device["id"] ? " selected" : "";
+										echo "<option value=\"".$device["id"]."\"".$selected.">".getdevicename($device)."</option>";
 									}
 								?>
 							</select>
 						</td>
 						<td>
-							<select name=thenvar id=thenvar disabled onchange="getel('thenvalue').removeAttribute('disabled');">
+							<select name=thenvar id=thenvar <?php echo $edit ? "" : "disabled";?> onchange="getel('thenvalue').removeAttribute('disabled');">
+								<?php
+									if ($edit) {
+										foreach ($variables as $variable) {
+											$selected = $editcondition["thenvar"] == $variable ? " selected" : "";
+											echo "<option value=\"".$variable."\"".$selected.">" . $variable . "</option>";
+										}
+									}
+								?>
+							</select>
 						</td>
 						<td>
-							<input name=thenvalue id=thenvalue placeholder="Value" disabled>
+							<input name=thenvalue id=thenvalue placeholder="Value" <?php echo $edit ? "value=\"".$editcondition["thenvalue"]."\"" : "disabled";?>>
 						</td>
 					</tr>
 				</table>
