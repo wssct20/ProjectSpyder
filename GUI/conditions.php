@@ -54,7 +54,7 @@ if ($action == "details") {
 $variables = array();
 foreach (getdevices() as $device) {
 	$variables[$device["id"]] = array();
-	foreach ($device["data"] as $datafieldname => $datafieldvalue) {
+	foreach (getdata($device) as $datafieldname => $datafieldvalue) {
 		array_push($variables[$device["id"]], $datafieldname);
 	}
 }
@@ -145,10 +145,10 @@ $variables = jsonencode($variables);
 			<script>
 				function getel(id) {return document.getElementById(id);}
 				function rendervars(type) {
-					let variables = JSON.parse(getel(type + "id").innerHTML)
+					let variables = JSON.parse(getel("variables").innerHTML)
 					let select = getel(type + "var")
 					select.innerHTML = "";
-					variables[getel(type + "id").value].forEach(var => select.innerHTML += "<option value=" + var + ">" + var + "</option>");
+					variables[getel(type + "id").value].forEach(variable => select.innerHTML += "<option value=" + variable + ">" + variable + "</option>");
 					select.removeAttribute("disabled");
 				}
 			</script>			
