@@ -1,6 +1,6 @@
+<?php
 require_once("system.php");
 if (!sessionvalid()) die("INVALIDSESSION");
-<?php
 
 $devices = getdevices();
 
