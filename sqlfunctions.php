@@ -219,6 +219,29 @@ function getconditions() {
 	return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+function getconditionbyid($id) {
+	//getconditionbyid: get a condition using its unique id
+	global $db;
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("SELECT * FROM conditions WHERE id=?"))) {
+		dieerror("ERRSQLTABLE", "getconditionbyid Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind parameters
+	if (!$statement->bind_param("i", $id)) {
+		dieerror("ERRSQLTABLE", "getconditionbyid Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "getconditionbyid Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 4: get results
+	if (!($result = $statement->get_result())) {
+		dieerror("ERRSQLTABLE", "getconditionbyid Getting result set failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 5: fetch row
+	return $result->fetch_array();
+}
+
 function addcondition($ifid, $ifvar, $ifvalue, $thenid, $thenvar, $thenvalue, $name) {
 	//TODO: untested code
 	//addcondition: add a condition

@@ -24,10 +24,41 @@ if ($action == "create") {
 	die();
 }
 
-if ($action == "details") {
-    //TODO: add details config
-    header("Location: conditions.php",true,303);
+if ($action == "save") {
+	$id = $_POST["id"] ?? die("INVALIDCONDITIONID");
+	$ifid = $_POST["ifid"] ?? die("INVALIDIFID");
+	$ifvar = $_POST["ifvar"] ?? die("INVALIDIFVAR");
+	$ifvalue = $_POST["ifvalue"] ?? die("INVALIDIFVALUE");
+	$thenid = $_POST["thenid"] ?? die("INVALIDTHENID");
+	$thenvar = $_POST["thenvar"] ?? die("INVALIDTHENVAR");
+	$thenvalue = $_POST["thenvalue"] ?? die("INVALIDTHENVALUE");
+	$ifid = intval($ifid);
+	$thenid = intval($thenid);
+	$name = $_POST["name"] ?? "";
+	$name = sanitizehtml($name);
+	updatecondition($id, $ifid, $ifvar, $ifvalue, $thenid, $thenvar, $thenvalue, $name);
+	header("DEBUG: conditions.php save condition successful");
+	header("Location: conditions.php",true,303);
+	die();
 }
+
+$editcondition = null;
+$edit = false;
+if ($action == "details") {
+	$id = $_POST["id"] ?? die("INVALIDID");
+	$editcondition = getconditionbyid($id);
+	$edit = true;
+}
+
+//collect all variables sorted per device for selection in conditions
+$variables = array();
+foreach (getdevices() as $device) {
+	$variables[$device["id"]] = array();
+	foreach ($device["data"] as $datafieldname => $datafieldvalue) {
+		array_push($variables[$device["id"]], $datafieldname);
+	}
+}
+$variables = jsonencode($variables);
 
 ?>
 
@@ -109,7 +140,20 @@ if ($action == "details") {
 			}
 			?>
 			
-			<h3>Create Condition</h3>
+			
+			<p id="variables" style="display: none;"><?php echo $variables; ?></p>
+			<script>
+				function getel(id) {return document.getElementById(id);}
+				function rendervars(type) {
+					let variables = JSON.parse(getel(type + "id").innerHTML)
+					let select = getel(type + "var")
+					select.innerHTML = "";
+					variables[getel(type + "id").value].forEach(var => select.innerHTML += "<option value=" + var + ">" + var + "</option>");
+					select.removeAttribute("disabled");
+				}
+			</script>			
+			
+			<h3><?php echo $edit ? "Edit" : "Create";?> Condition</h3>
 			<form method="post">
 				<table>
 					<tr>
@@ -121,7 +165,7 @@ if ($action == "details") {
 					<tr>
 						<td>IF</td>
 						<td>
-							<select name=ifid>
+							<select name=ifid id=ifid onselect="rendervars('if')">
 								<?php 
 									foreach (getdevices() as $device) {
 										echo "<option value=".$device["id"].">".getdevicename($device)."</option>";
@@ -130,16 +174,16 @@ if ($action == "details") {
 							</select>
 						</td>
 						<td>
-							<input name=ifvar placeholder="Variable">
+							<select name=ifvar id=ifvar disabled onselect="getel('ifvalue').removeAttribute('disabled');">
 						</td>
 						<td>
-							<input name=ifvalue placeholder="Value">
+							<input name=ifvalue id=ifvalue placeholder="Value" disabled>
 						</td>
 					</tr>
 					<tr>
 						<td>THEN</td>
 						<td>
-							<select name=thenid>
+							<select name=thenid id=thenid onselect="rendervars('then')">
 								<?php 
 									foreach (getdevices() as $device) {
 										echo "<option value=".$device["id"].">".getdevicename($device)."</option>";
@@ -148,16 +192,23 @@ if ($action == "details") {
 							</select>
 						</td>
 						<td>
-							<input name=thenvar placeholder="Variable">
+							<select name=thenvar id=thenvar disabled onselect="getel('thenvalue').removeAttribute('disabled');">
 						</td>
 						<td>
-							<input name=thenvalue placeholder="Value">
+							<input name=thenvalue id=thenvalue placeholder="Value" disabled>
 						</td>
 					</tr>
 				</table>
-				<input type=text name=name placeholder=Name>
-				<input type=text name=action value=create style="display: none;">
-				<input type=submit value="Create Condition">
+				<?php 
+					if ($edit) {
+						?>
+						<input type=text name=id value=<?php echo $editcondition["id"];?> style="display: none;">
+						<?php 
+					}
+				?>
+				<input type=text name=name placeholder="Name">
+				<input type=text name=action value=<?php echo $edit ? "save" : "create";?> style="display: none;">
+				<input type=submit value="<?php echo $edit ? "Save" : "Create";?> Condition">
 			</form>
 			
 		</div>
