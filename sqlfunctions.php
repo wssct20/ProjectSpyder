@@ -279,6 +279,24 @@ function updatecondition($id, $ifid, $ifvar, $ifvalue, $thenid, $thenvar, $thenv
 	}
 }
 
+function deletecondition($id) {
+	//deletecondition: delete a condition
+	global $db;
+	// delete condition entry
+	// Stage 1: prepare
+	if (!($statement = $db->prepare("DELETE FROM conditions WHERE id=?"))) {
+		dieerror("ERRSQLTABLE", "deletecondition Prepare failed: (" . $db->errno . ") " . $db->error);
+	}
+	// Stage 2: bind
+	if (!$statement->bind_param("i", $id)) {
+		dieerror("ERRSQLTABLE", "deletecondition Binding parameters failed: (" . $statement->errno . ") " . $statement->error);
+	}
+	// Stage 3: execute
+	if (!$statement->execute()) {
+		dieerror("ERRSQLTABLE", "deletecondition Execute failed: (" . $statement->errno . ") " . $statement->error);
+	}
+}
+
 // USER MANAGEMENT
 
 function getuserbyusername($username) {

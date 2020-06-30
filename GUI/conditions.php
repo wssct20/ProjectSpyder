@@ -42,6 +42,14 @@ if ($action == "save") {
 	die();
 }
 
+if ($action == "delete") {
+	$id = $_POST["id"] ?? die("INVALIDCONDITIONID");
+	deletecondition($id);
+	header("DEBUG: conditions.php delete condition successful");
+	header("Location: conditions.php",true,303);
+	die();
+}
+
 $editcondition = null;
 $edit = false;
 if ($action == "details") {
@@ -104,22 +112,22 @@ foreach (getdevices() as $device) {
 					echo "<tr>";
                     echo "<th>" . "ID" . "</th>";
                     echo "<th>" . "Name" . "</th>";
-					echo "<th>" . "IF ID" . "</th>";
+					echo "<th>" . "IF Device" . "</th>";
 					echo "<th>" . "IF Variable" . "</th>";
 					echo "<th>" . "IF Value" . "</th>";
-					echo "<th>" . "THEN ID" . "</th>";
+					echo "<th>" . "THEN Device" . "</th>";
 					echo "<th>" . "THEN Variable" . "</th>";
 					echo "<th>" . "THEN Value" . "</th>";
-					echo "<th>" . "" . "</th>"; //line with manage button
+					echo "<th>" . "" . "</th>"; //line with manage and delete button
 					echo "</tr>";
 					foreach ($conditions as $condition) {
 						echo "<tr>";
 						echo "<td>" . $condition["id"] . "</td>";
 						echo "<td>" . $condition["name"] . "</td>";
-						echo "<td>" . $condition["ifid"] . "</td>";
+						echo "<td>" . getdevicename(getdevicebyid($condition["ifid"])) . "</td>";
 						echo "<td>" . $condition["ifvar"] . "</td>";
 						echo "<td>" . $condition["ifvalue"] . "</td>";
-						echo "<td>" . $condition["thenid"] . "</td>";
+						echo "<td>" . getdevicename(getdevicebyid($condition["thenid"])) . "</td>";
 						echo "<td>" . $condition["thenvar"] . "</td>";
 						echo "<td>" . $condition["thenvalue"] . "</td>";
 						?>
@@ -128,6 +136,13 @@ foreach (getdevices() as $device) {
 								<input type=text name=id value="<?php echo $condition["id"]; ?>" style="display: none;">
 								<input type=text name=action value=details style="display: none;">
 								<input type=submit name=submit value="Manage">
+							</form>
+						</td>
+						<td>
+							<form method=post style="margin: 0;">
+								<input type=text name=id value="<?php echo $condition["id"]; ?>" style="display: none;">
+								<input type=text name=action value=delete style="display: none;">
+								<input type=submit name=submit value="Delete">
 							</form>
 						</td>
 						<?php
@@ -141,7 +156,7 @@ foreach (getdevices() as $device) {
 			
 			
 			<p id="variables" style="display: none;"><?php echo jsonencode($variables); ?></p>
-			<script>
+			<script type="text/javascript">
 				function getel(id) {return document.getElementById(id);}
 				function rendervars(type) {
 					let variables = JSON.parse(getel("variables").innerHTML)
@@ -150,11 +165,7 @@ foreach (getdevices() as $device) {
 					variables[getel(type + "id").value].forEach(variable => select.innerHTML += "<option value=" + variable + ">" + variable + "</option>");
 					select.removeAttribute("disabled");
 				}
-				rendervars("if");
-				rendervars("then");
-				getel('ifvalue').removeAttribute('disabled');
-				getel('thenvalue').removeAttribute('disabled');
-			</script>			
+			</script>		
 			
 			<h3><?php echo $edit ? "Edit" : "Create";?> Condition</h3>
 			<form method="post">
@@ -182,7 +193,7 @@ foreach (getdevices() as $device) {
 							<select name=ifvar id=ifvar <?php echo $edit ? "" : "disabled";?>>
 								<?php
 									if ($edit) {
-										foreach ($variables as $variable) {
+										foreach ($variables[$editcondition["id"]] as $variable) {
 											$selected = $editcondition["ifvar"] == $variable ? " selected" : "";
 											echo "<option value=\"".$variable."\"".$selected.">" . $variable . "</option>";
 										}
@@ -211,7 +222,7 @@ foreach (getdevices() as $device) {
 							<select name=thenvar id=thenvar <?php echo $edit ? "" : "disabled";?>>
 								<?php
 									if ($edit) {
-										foreach ($variables as $variable) {
+										foreach ($variables[$editcondition["id"]] as $variable) {
 											$selected = $editcondition["thenvar"] == $variable ? " selected" : "";
 											echo "<option value=\"".$variable."\"".$selected.">" . $variable . "</option>";
 										}
@@ -235,7 +246,12 @@ foreach (getdevices() as $device) {
 				<input type=text name=action value=<?php echo $edit ? "save" : "create";?> style="display: none;">
 				<input type=submit value="<?php echo $edit ? "Save" : "Create";?> Condition">
 			</form>
-			
+			<script type="text/javascript">
+				rendervars("if");
+				rendervars("then");
+				getel('ifvalue').removeAttribute('disabled');
+				getel('thenvalue').removeAttribute('disabled');
+			</script>
 		</div>
 	</body>
 </html>
