@@ -137,7 +137,7 @@ foreach (getdevices() as $device) {
 							<form method=post style="margin: 0;">
 								<input type=text name=id value="<?php echo $condition["id"]; ?>" style="display: none;">
 								<input type=text name=action value=details style="display: none;">
-								<input type=submit name=submit value="Manage">
+								<input type=submit name=submit value="Edit">
 							</form>
 						</td>
 						<td>
