@@ -242,7 +242,7 @@ foreach (getdevices() as $device) {
 						<?php 
 					}
 				?>
-				<input type=text name=name placeholder="Name">
+				<input type=text name=name placeholder="Name" <?php echo $edit ? "value=\"".$editcondition["name"]."\"" : "";?>>
 				<input type=text name=action value=<?php echo $edit ? "save" : "create";?> style="display: none;">
 				<input type=submit value="<?php echo $edit ? "Save" : "Create";?> Condition">
 			</form>
