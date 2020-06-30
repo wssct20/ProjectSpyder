@@ -150,6 +150,10 @@ foreach (getdevices() as $device) {
 					variables[getel(type + "id").value].forEach(variable => select.innerHTML += "<option value=" + variable + ">" + variable + "</option>");
 					select.removeAttribute("disabled");
 				}
+				rendervars("if");
+				rendervars("then");
+				getel('ifvalue').removeAttribute('disabled');
+				getel('thenvalue').removeAttribute('disabled');
 			</script>			
 			
 			<h3><?php echo $edit ? "Edit" : "Create";?> Condition</h3>
@@ -175,7 +179,7 @@ foreach (getdevices() as $device) {
 							</select>
 						</td>
 						<td>
-							<select name=ifvar id=ifvar <?php echo $edit ? "" : "disabled";?> onchange="getel('ifvalue').removeAttribute('disabled');">
+							<select name=ifvar id=ifvar <?php echo $edit ? "" : "disabled";?>>
 								<?php
 									if ($edit) {
 										foreach ($variables as $variable) {
@@ -204,7 +208,7 @@ foreach (getdevices() as $device) {
 							</select>
 						</td>
 						<td>
-							<select name=thenvar id=thenvar <?php echo $edit ? "" : "disabled";?> onchange="getel('thenvalue').removeAttribute('disabled');">
+							<select name=thenvar id=thenvar <?php echo $edit ? "" : "disabled";?>>
 								<?php
 									if ($edit) {
 										foreach ($variables as $variable) {

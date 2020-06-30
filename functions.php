@@ -89,6 +89,7 @@ function gettimeout($device) {
 	//TODO: calculate dynamic timeout
 	global $updatetime;
 	$thisupdatetime = (intval(getdata($device)["preferredupdatetime"]) ?? $updatetime);
+	if ($thisupdatetime <= 0) $thisupdatetime = $updatetime;
 	return $thisupdatetime;
 }
 
