@@ -1,11 +1,12 @@
 
-#define buttonPin 4
+#define buttonPin 4   //Enter the pin of your button here
 //#define touchthreshold 40
 
 void buttonsetup() {
   
   pinMode(buttonPin, INPUT_PULLUP);
 
+  //set client specific jsonstructure
   jsonstructure = "{\
 \"data\":{\
 \"state\":0\
@@ -32,6 +33,7 @@ void buttonloop() {
 
   String buttondata;
   
+  //read data from server
   DynamicJsonDocument datadoc(JSONCAPACITY);
   JsonObject data = datadoc.createNestedObject("data");
   JsonObject friendly = datadoc.createNestedObject("friendly");
@@ -55,8 +57,10 @@ void buttonloop() {
   datavalue["state"] = friendlybuttonstate[buttonstate];
   serializeJson(datadoc, buttondata);
 
+  //send the values to the server
   updatedata(buttondata);
 
+  //go to lightsleep + wake up if button is pressed
   lightsleepgpio(requesttimeout, buttonPin, 0);
   
 }

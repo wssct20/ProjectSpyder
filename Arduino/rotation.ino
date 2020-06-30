@@ -26,6 +26,7 @@ void rotationsetup() {
 
   rotation.setExtCrystalUse(true);
 
+  //set client specific jsonstructure
   jsonstructure = "{\
 \"settings\":{\
 \"resetreferenceposition\":0\
@@ -65,6 +66,7 @@ void rotationloop() {
 
   String rotationdata;
 
+  //get data from system
   DynamicJsonDocument receiveddata(JSONCAPACITY);
   deserializeJson(receiveddata, getdata());
 
@@ -171,7 +173,9 @@ void rotationloop() {
 
   serializeJson(datadoc, rotationdata);
 
+  //send the values to the server
   updatedata(rotationdata);
 
+  //go to lightsleep
   lightsleep(requesttimeout);
 }

@@ -4,14 +4,14 @@
 const char * clienthostname = "SpyderClient";
 
 void wifisetup() {
-  WiFi.mode(WIFI_STA);
-  WiFi.setHostname(clienthostname);
+  WiFi.mode(WIFI_STA);  //sets the wifi-mode
+  WiFi.setHostname(clienthostname); //sets hosname
 
   #ifdef debugmode
     Serial.print("Connecting...");
   #endif
   
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid, password); //starts the wifi connection
   delay(1000);
   
   while(WiFi.status() != WL_CONNECTED) {

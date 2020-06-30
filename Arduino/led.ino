@@ -13,6 +13,7 @@ void ledsetup() {
   ledcSetup(led_pwmchannel, led_frequency, led_resolution);
   ledcAttachPin(led_pin, led_pwmchannel);
 
+  //set client specific jsonstructure
   jsonstructure = "{\
 \"data\":{\
 \"brightness\":0\

@@ -5,6 +5,7 @@ void digitaloutputsetup() {
 
   digitalWrite(output_pin, LOW);
   
+  //set client specific jsonstructure
   jsonstructure = "{\
 \"data\":{\
 \"state\":0\
