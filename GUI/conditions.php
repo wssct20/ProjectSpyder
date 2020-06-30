@@ -54,7 +54,7 @@ if ($action == "details") {
 $variables = array();
 foreach (getdevices() as $device) {
 	$variables[$device["id"]] = array();
-	foreach (getdata($device) as $datafieldname => $datafieldvalue) {
+	foreach (getdata($device)["data"] as $datafieldname => $datafieldvalue) {
 		array_push($variables[$device["id"]], $datafieldname);
 	}
 }
@@ -165,7 +165,7 @@ $variables = jsonencode($variables);
 					<tr>
 						<td>IF</td>
 						<td>
-							<select name=ifid id=ifid onselect="rendervars('if')">
+							<select name=ifid id=ifid onchange="rendervars('if')">
 								<?php 
 									foreach (getdevices() as $device) {
 										echo "<option value=".$device["id"].">".getdevicename($device)."</option>";
@@ -174,7 +174,7 @@ $variables = jsonencode($variables);
 							</select>
 						</td>
 						<td>
-							<select name=ifvar id=ifvar disabled onselect="getel('ifvalue').removeAttribute('disabled');">
+							<select name=ifvar id=ifvar disabled onchange="getel('ifvalue').removeAttribute('disabled');">
 						</td>
 						<td>
 							<input name=ifvalue id=ifvalue placeholder="Value" disabled>
@@ -183,7 +183,7 @@ $variables = jsonencode($variables);
 					<tr>
 						<td>THEN</td>
 						<td>
-							<select name=thenid id=thenid onselect="rendervars('then')">
+							<select name=thenid id=thenid onchange="rendervars('then')">
 								<?php 
 									foreach (getdevices() as $device) {
 										echo "<option value=".$device["id"].">".getdevicename($device)."</option>";
@@ -192,7 +192,7 @@ $variables = jsonencode($variables);
 							</select>
 						</td>
 						<td>
-							<select name=thenvar id=thenvar disabled onselect="getel('thenvalue').removeAttribute('disabled');">
+							<select name=thenvar id=thenvar disabled onchange="getel('thenvalue').removeAttribute('disabled');">
 						</td>
 						<td>
 							<input name=thenvalue id=thenvalue placeholder="Value" disabled>
