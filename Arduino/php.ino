@@ -34,7 +34,7 @@ void pair() {
   //sends a connection request to the server:
   HTTPClient SpyderHub;
 
-  SpyderHub.begin("http://spyderhub/pair.php");
+  SpyderHub.begin("http://" + String(serverhostname) + "/pair.php");
   SpyderHub.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
   String postrequest = "type=";
@@ -198,7 +198,7 @@ String interact(int requesttype, String data) {
   HTTPClient SpyderHub;
 
   //SpyderHub.begin("http://spyderhub/");
-  SpyderHub.begin("http://spyderhub/interact.php");
+  SpyderHub.begin("http://" + String(serverhostname) + "/interact.php");
   SpyderHub.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
   String postrequest = "authcode=";
