@@ -74,13 +74,13 @@ function updateconditions() {
 	$conditions = getconditions();
 	foreach($conditions as $condition) {
 		$ifdevice = getdevicebyid($condition["ifid"]);
-		$ifdata = getdata($device);
-		if ($ifdata[$condition["ifvar"]] != $condition["ifvalue"]) continue;
+		$ifdata = getdata($ifdevice);
+		if ($ifdata["data"][$condition["ifvar"]] != $condition["ifvalue"]) continue;
 		$thendevice = getdevicebyid($condition["thenid"]);
 		$thendata = getdata($thendevice);
 		//TODO: check if thenvar exists
-		$thendata[$condition["thenvar"]] = $condition["thenvalue"];
-		updatedata($thendevice["id"], jsonencode($thendata));
+		$thendata["data"][$condition["thenvar"]] = $condition["thenvalue"];
+		updatedata($thendevice["id"], $thendata);
 	}
 }
 
